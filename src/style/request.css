@@ -1,0 +1,81 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 20px;
+}
+
+th:nth-child(1) {
+    border-radius: 0 10px 10px 0;
+}
+
+th:nth-last-child(1) {
+    border-radius: 10px 0 0 10px;
+}
+
+th {
+    /*border: 1px solid #dddddd;*/
+    background-color: #2A2A2A;
+    text-align: right;
+}
+
+td {
+    font-size: 15px;
+}
+
+tr {
+    border-top: 1px solid #fff3;
+}
+tr:first-child , tr:nth-child(2) {
+    border-top: none;
+}
+
+.statusSuccessful {
+    background-color: rgba(33, 186, 85, 0.15);
+    width: fit-content;
+    color: #21BA55;
+    padding: 2px 15px;
+    border-radius: 20px;
+}
+
+.statusFailed {
+    background-color: rgb(229, 76, 76);
+    width: fit-content;
+    color: #f37272;
+    padding: 2px 15px;
+    border-radius: 20px;
+}
+.authorizedSuccessful {
+    background-color: #42d57e;
+    width: fit-content;
+    color: #000000;
+    padding: 2px 15px;
+    border-radius: 20px;
+}
+
+.authorizedFailed {
+    background-color: rgb(229, 76, 76);
+    width: fit-content;
+    color: #ffffff;
+    padding: 2px 15px;
+    border-radius: 20px;
+}
+
+.status {
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 4px 23px;
+    border-radius: 10px;
+}
+
+.statusPending {
+    background-color: #2a2a2a;
+    width: fit-content;
+    color: #858585;
+    padding: 2px 15px;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar{
+    height: 0;
+}

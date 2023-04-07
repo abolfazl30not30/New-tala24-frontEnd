@@ -1,0 +1,24 @@
+
+.Mui-focused {
+    border: none !important;
+    height: auto;
+}
+
+.muirtl-9ddj71-MuiInputBase-root-MuiOutlinedInput-root * {
+    color: #000 !important;
+}
+.field {
+    border: 1px solid #eee;
+}
+
+/*.muirtl-14s5rfu-MuiFormLabel-root-MuiInputLabel-root,*/
+/*.muirtl-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused*/
+/*{*/
+/*    color: #000 !important;*/
+/*}*/
+tr {
+    border: none !important;
+}
+span.MuiSwitch-track.css-1yjjitx-MuiSwitch-track {
+    background-color: #f9f9f9;
+}

@@ -1,0 +1,19 @@
+@media (min-width: 1000px) {
+    .stream-style {
+        background-image: url(../images/bgTala24.svg);
+        background-repeat: no-repeat;
+        background-position: 80%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .stream-style {
+        background-image: url(../images/bgTala24.svg);
+        background-repeat: no-repeat;
+        background-position: 50% 10%;
+    }
+}
+
+.highlight5{
+    width: 180px;
+}

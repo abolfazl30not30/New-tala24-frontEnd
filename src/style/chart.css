@@ -1,0 +1,22 @@
+.details {
+    background: linear-gradient(95.72deg, #302D2D 0%, rgba(54, 53, 53, 0) 97.97%, rgba(121, 121, 121, 0) 97.97%);
+    border-radius: 8px;
+    margin: 10px;
+}
+
+.register {
+    background-color: #FFC800;
+    border-radius: 8px;
+}
+
+.details-container {
+    background-color: #141414;
+}
+
+.mainPrice {
+    border-bottom: 2px solid #4F4F4F;
+}
+
+.wrapper {
+    width: 500px;
+}

@@ -1,0 +1,15 @@
+.otp-input {
+    background-color: #d0d0d0;
+    direction: ltr;
+    box-shadow: white 0 0 1px 0;
+}
+
+.otp-input::-webkit-outer-spin-button,
+.otp-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.otp-input[type=number] {
+    -moz-appearance: textfield;
+}

@@ -1,0 +1,31 @@
+.container {
+    /*background-color: #d0a94d;*/
+    border-radius: 8px;
+}
+
+.text {
+    border-bottom: 1px solid #6D6D6D;
+}
+
+.field {
+    border: 1px solid #FFC800;
+}
+
+.MuiInputBase-root {
+    border: 1px solid #FFC800 !important;
+    height: auto;
+}
+
+.Mui-focused {
+    border: none !important;
+    height: 45px;
+}
+
+.Mui-error {
+     border: none !important;
+     height: 45px;
+ }
+
+.MuiInputBase-input {
+    color: white !important;
+}

@@ -1,0 +1,25 @@
+.footer-style {
+    border-bottom: 1px solid #636363;
+}
+
+.f1 {
+    border-bottom: 1px solid #3A3A3A;
+}
+.footer-title{
+    position: relative;
+    display: inline-block;
+    color: #FFC800;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: -1.3px;
+    padding: 0 0.4rem;
+}
+.footer-title::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 2.5rem;
+    height: 1px;
+    background: linear-gradient(to right, #ffd700 0, #ffd700 35%, #ffd700 65%, transparent 100%);
+}

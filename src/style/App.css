@@ -1,0 +1,55 @@
+@font-face {
+    font-family: "IRANYekan";
+    src: url("../font/Qs_Iranyekan.ttf");
+}
+
+body{
+    direction: rtl;
+    font-family: IRANYekan;
+    background-color: #1E1E1E;
+    min-height: 100%;
+}
+
+h1{
+    background-color: #252525;
+    color:#d0a94d;
+}
+
+.heading-title{
+    position: relative;
+    display: inline-block;
+    color: #FFC800;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: -1.3px;
+    padding: 0 0.4rem;
+}
+
+.heading-title::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -25%;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, #ffd700 0, #ffd700 35%, #ffd700 65%, transparent 100%);
+}
+
+.heading-title::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -22%;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to left, #ffd700 0, #ffd700 35%, #ffd700 65%, transparent 100%);
+}
+
+.active{
+    color: #ffd700;
+    background-color: #1E1E1E;
+}
+.active-navbar{
+    color: #1E1E1E;
+    background-color: #ffd700;
+}

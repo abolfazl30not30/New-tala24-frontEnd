@@ -1,0 +1,81 @@
+.c1 {
+    border-left: 1px solid #777777;
+}
+
+.shade {
+    background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.modal {
+    width: 500px;
+    height: 300px;
+    background: rgb(34, 34, 34);
+    box-shadow: 1px 1px 15px 1px #444444;
+    border-radius: 10px;
+    padding: 15px
+}
+
+.container {
+    /*height: 100%;*/
+}
+
+/*.dot span:nth-child(1):after {*/
+/*    !*content: 'wew';*!*/
+/*}*/
+
+.active-dot {
+    width: 1.5rem !important;
+    height: 0.6rem;
+    margin: 0 0.2rem;
+    background-color: #FFC800 !important;
+    border-radius: 50rem;
+    transition: all 0.5s linear;
+}
+
+.dot-comments {
+    background-color: white;
+    border-radius: 50rem;
+}
+.comments-container{
+    background-image: url("../images/cartographer.png");
+    background-position: center center;
+    background-repeat: repeat;
+}
+
+.heading-title-comment{
+    position: relative;
+    display: inline-block;
+    color: #FFC800;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: -1.3px;
+    padding: 0 0.4rem;
+}
+.heading-title-comment::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -53%;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, #ffd700 0, #ffd700 35%, #ffd700 65%, transparent 100%);
+}
+.heading-title-comment::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -49%;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to left, #ffd700 0, #ffd700 35%, #ffd700 65%, transparent 100%);
+}
+.slick-dots li button::before{
+    color: white !important;
+}
+.slick-dots li.slick-active button::before{
+    color: #ffd700 !important;
+}
