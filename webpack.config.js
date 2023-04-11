@@ -1,10 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: path.resolve(__dirname, 'src', 'index.js'),
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
     },
     performance: {
@@ -12,10 +13,10 @@ module.exports = {
         maxEntrypointSize: 512000,
         maxAssetSize: 512000
     },
-    mode: 'development',
+    mode: 'production',
     devServer: {
         static: {
-            directory: path.resolve(__dirname, "dist")
+            directory: path.resolve(__dirname, "build")
         },
         open: true,
         port: 3000,
@@ -25,6 +26,11 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve('./index.html'),
+        }),
+    ],
     module: {
         rules: [
             {
@@ -64,6 +70,7 @@ module.exports = {
                 test: /\.mp4$/,
                 use: 'file-loader?name=videos/[name].[ext]',
             },
-        ]
+        ],
+
     }
 }

@@ -1,6 +1,6 @@
 
 module.exports = {
-    content: ['./src/**/*.{js,jsx}', './dist/index.html'],
+    content: ['./src/**/*.{js,jsx}', './build/index.html'],
     theme: {
         extend: {
             fontWeight: {
