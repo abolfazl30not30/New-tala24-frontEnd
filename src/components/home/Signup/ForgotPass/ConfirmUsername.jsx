@@ -76,7 +76,7 @@ const ConfirmUsername = (props) => {
     return (
         <>
             <div className={'flex justify-center items-center h-screen '}>
-                <div className={'container w-[300px] h-[350px] bg-[#1b1b1b]'}>
+                <div className={'container w-[300px] h-[350px] bg-[#252525]'}>
                     <div className={'flex justify-center'}>
                         <img src={logo} alt={'logo'} className={'w-[90px] mt-[30px]'}/>
                     </div>

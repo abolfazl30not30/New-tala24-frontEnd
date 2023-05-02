@@ -11,7 +11,7 @@ const Hamburger = ({selected, setSelected}) => {
     const info = useContext(signup)
 
     return (
-        <div className={'w-[250px] h-screen bg-[#141414] rounded-l-[35px]'}>
+        <div className={'w-[250px] h-screen bg-[#252525] rounded-l-[35px]'}>
             <div className={'flex justify-end text-white pl-4 pt-4 md1:hidden'}>
                 <AiOutlineClose className={'cursor-pointer'} onClick={() => {
                     document.getElementById('ham').className = 'slide-right absolute top-0 block'

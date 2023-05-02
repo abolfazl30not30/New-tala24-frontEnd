@@ -135,7 +135,7 @@ export default function ConfirmBuyGold() {
     }
 
     return (
-        <div className="bg-[#141414] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
+        <div className="bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
             <div className="text-white text-lg font-medium">درخواست خرید طلا</div>
             <table className='mt-8 text-white break-normal'>
                 <thead>

@@ -8,11 +8,11 @@
 }
 
 .field {
-    border: 1px solid #FFC800;
+    border: 1px solid #DFAF3D;
 }
 
 .MuiInputBase-root {
-    border: 1px solid #FFC800 !important;
+    border: 1px solid #DFAF3D !important;
     height: auto;
 }
 

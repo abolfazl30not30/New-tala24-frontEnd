@@ -7,13 +7,13 @@ module.exports = {
                 medium: 1000,
             },
             colors: {
-                'gold':'#FFC800',
+                'gold':'#DFAF3D',
                 'mainGray':'#303030',
                 'bgGray':'#252525',
-                'mainGold': '#FFC800',
+                'mainGold': '#DFAF3D',
                 'dark': 'rgb(23, 26, 30)',
                 'cardDark': '#252525',
-                'footerColor': '#131212'
+                'footerColor': '#212121'
             },
             height: {
                 '-100%': '-100%',

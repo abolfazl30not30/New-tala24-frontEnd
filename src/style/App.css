@@ -6,7 +6,7 @@
 body{
     direction: rtl;
     font-family: IRANYekan;
-    background-color: #1E1E1E;
+    background-color: #303030;
     min-height: 100%;
 }
 
@@ -18,7 +18,7 @@ h1{
 .heading-title{
     position: relative;
     display: inline-block;
-    color: #FFC800;
+    color: #DFAF3D;
     font-size: 1.2rem;
     font-weight: 400;
     letter-spacing: -1.3px;
@@ -47,9 +47,9 @@ h1{
 
 .active{
     color: #ffd700;
-    background-color: #1E1E1E;
+    background-color: #303030;
 }
 .active-navbar{
-    color: #1E1E1E;
+    color: #303030;
     background-color: #ffd700;
 }

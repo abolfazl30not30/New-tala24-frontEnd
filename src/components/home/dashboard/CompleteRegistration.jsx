@@ -212,7 +212,7 @@ const CompleteRegistration = () => {
     return (
         <>
             <div className={'flex justify-center'}>
-                <div className={'container w-100 pb-4 bg-[#1b1b1b]'}>
+                <div className={'container w-100 pb-4 bg-[#252525]'}>
                     <h3 className={' mx-10  mt-5 font-bold text-gold text-2xl'}>
                         تکمیل مشخصات
                     </h3>

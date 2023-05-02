@@ -23,12 +23,12 @@ const ColorlibConnector = styled(StepConnector)(({theme}) => ({
     },
     [`&.${stepConnectorClasses.active}`]: {
         [`& .${stepConnectorClasses.line}`]: {
-            background: '#FFC800;',
+            background: '#DFAF3D;',
         },
     },
     [`&.${stepConnectorClasses.completed}`]: {
         [`& .${stepConnectorClasses.line}`]: {
-            background: '#FFC800;',
+            background: '#DFAF3D;',
         },
     },
     [`& .${stepConnectorClasses.line}`]: {
@@ -51,11 +51,11 @@ const ColorlibStepIconRoot = styled('div')(({theme, ownerState}) => ({
     justifyContent: 'center',
     alignItems: 'center',
     ...(ownerState.active && {
-        background: '#FFC800;',
+        background: '#DFAF3D;',
         boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
     }),
     ...(ownerState.completed && {
-        background: '#FFC800;',
+        background: '#DFAF3D;',
     }),
 }));
 
@@ -287,7 +287,7 @@ function SellGold(props) {
                             {activeStep === steps.length ? (
                                 <React.Fragment>
                                     <div
-                                        className="text-white bg-[#141414] mt-10 rounded-[8px] p-5 font-bold text-center">
+                                        className="text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold text-center">
                                         <div className="text-sky-50">
                                             فروش با موفقیت انجام شد
                                         </div>
@@ -299,7 +299,7 @@ function SellGold(props) {
                                 </React.Fragment>
                             ) : (
                                 <React.Fragment>
-                                    <div className={'text-white bg-[#141414] mt-10 rounded-[8px] p-5'}>
+                                    <div className={'text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
                                         {(() => {
                                             if (activeStep == 0) {
                                                 return <StepSellType

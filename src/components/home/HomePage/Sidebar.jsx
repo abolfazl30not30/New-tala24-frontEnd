@@ -13,7 +13,7 @@ const Sidebar = (props) => {
         <>
             <div className={"bg-mainGray bg-opacity-60 absolute top-0 right-0 z-20 w-[100%] h-[100vh]"} onClick={()=>{props.toggleNavbar()}}>
             </div>
-            <div className={props.isOpenNav ? "slide-left absolute top-0 right-0 z-50 w-[60%] h-screen bg-[#141414] rounded-l-[35px]" : "slide-right absolute top-0 right-0 z-50 w-[60%] h-screen bg-[#141414] rounded-l-[35px]"}>
+            <div className={props.isOpenNav ? "slide-left absolute top-0 right-0 z-50 w-[60%] h-screen bg-[#252525] rounded-l-[35px]" : "slide-right absolute top-0 right-0 z-50 w-[60%] h-screen bg-[#252525] rounded-l-[35px]"}>
                 <div className={'flex justify-end text-white pl-4 pt-4 md1:hidden'}>
                     <AiOutlineClose className={'cursor-pointer'} onClick={()=>{props.toggleNavbar()}}/>
                 </div>

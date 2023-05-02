@@ -166,7 +166,7 @@ const SellRequest = () => {
                 درخواست فروش
             </h2>
 
-            <div className={'text-white bg-[#141414] mt-10 rounded-2xl p-5'}>
+            <div className={'text-white bg-[#252525] mt-10 rounded-2xl p-5'}>
                 <div className={'flex items-center'}>
                     <FiFilter size={20}/>
                     <h2 className={'mr-1'}>
@@ -406,7 +406,7 @@ const SellRequest = () => {
                     {
                         data?.filter(({status}) => status === "pending").map((data, index) => (
                             <>
-                                <div className="rounded-2xl p-2 bg-[#141414] text-white p-7">
+                                <div className="rounded-2xl p-2 bg-[#252525] text-white p-7">
                                     <div>
                                         <div className="text-center mt-2 mb-5 text-gold ">
                                             <h3 className="heading-title-comment font-bold text-xl"> درخواست

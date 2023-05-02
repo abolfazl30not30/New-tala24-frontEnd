@@ -25,15 +25,15 @@ const Slider = () => {
     const [carouselData, setCarouselData] = useState([
         {
             'id': '1',
-            'src': "https://tala24.co/images/slider1.jpg",
+            'src': image1,
         },
         {
             'id': '2',
-            'src': "https://tala24.co/images/slider2.webp",
+            'src': image2,
         },
         {
             'id': '3',
-            'src': "https://tala24.co/images/slider3.jpg",
+            'src': image3,
         },
     ])
     const [carouselInView, setCarouselInView] = useState([3, 2, 1])

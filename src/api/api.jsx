@@ -1,5 +1,6 @@
 import axios from "axios";
 import LoginApi from "./LoginApi";
+
 const axiosParams = {
     baseURL: 'https://api.tala24.co/api/v1/'
 }

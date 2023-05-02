@@ -34,7 +34,7 @@
     width: calc(var(--carousel-item-width) * 1.2);
     border-radius: 11rem;
     background: linear-gradient(white, white) padding-box,
-    linear-gradient(180deg, #FFC800 0%, rgba(223, 175, 61, 0) 100%) border-box;
+    linear-gradient(180deg, #DFAF3D 0%, rgba(223, 175, 61, 0) 100%) border-box;
     border: 3px solid transparent;
 }
 
@@ -43,7 +43,7 @@
     opacity: 0.5;
     width: calc(var(--carousel-item-width) * 1.7);
     z-index: 1;
-    background: linear-gradient(white, white) padding-box, linear-gradient(180deg, #FFC800 0%, rgba(223, 175, 61, 0) 100%) border-box;
+    background: linear-gradient(white, white) padding-box, linear-gradient(180deg, #DFAF3D 0%, rgba(223, 175, 61, 0) 100%) border-box;
     border: 3px solid transparent;
 }
 
@@ -62,7 +62,7 @@
     z-index: 2;
     border-radius: 11rem;
     background: linear-gradient(white, white) padding-box,
-    linear-gradient(180deg, #FFC800 0%, rgba(223, 175, 61, 0) 100%) border-box;
+    linear-gradient(180deg, #DFAF3D 0%, rgba(223, 175, 61, 0) 100%) border-box;
     border: 3px solid transparent;
 }
 .carousel-item-3::before{
@@ -120,7 +120,7 @@
     width: 1.5rem !important;
     height: 0.6rem;
     margin: 0 0.2rem;
-    background-color: #FFC800 !important;
+    background-color: #DFAF3D !important;
     border-radius: 50rem;
     transition: all 0.5s linear;
 }

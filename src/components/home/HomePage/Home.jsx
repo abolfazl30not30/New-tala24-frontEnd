@@ -15,8 +15,8 @@ const Home = () => {
     const props = {
         sentences: ['لطفا منتظر بمانید...'],
         fadeIn: true,
-        wrapperBackgroundColor: "#252525",
-        textStyles: {color: "#FFC800"}
+        wrapperBackgroundColor: "#303030",
+        textStyles: {color: "#DFAF3D"}
     }
 
     useEffect(() => {

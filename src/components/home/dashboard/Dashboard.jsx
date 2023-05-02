@@ -85,7 +85,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className={'w-screen'}>
-                    <div className={'flex items-center text-white bg-[#141414] h-[79px] mt-10 mx-7 rounded-[20px]'}>
+                    <div className={'flex items-center text-white bg-[#252525] h-[79px] mt-10 mx-7 rounded-[20px]'}>
 
                         <div className={'md1:flex hidden justify-start w-full'}>
                             <p className={'text-white text-[0.8rem] mr-5'}>

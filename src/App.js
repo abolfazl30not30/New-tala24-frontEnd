@@ -1,6 +1,5 @@
 import React, {Component, useContext, useEffect, useState} from 'react';
 import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
-import Home from "./components/home/HomePage/Home";
 import "./style/App.css";
 import "./style/reset.css";
 import SignupOrLogin from "./components/home/Signup/SignupOrLogin";
@@ -24,6 +23,7 @@ import ContactUs from "./components/home/HomePage/ContactUs/ContactUs";
 import AboutUs from "./components/home/HomePage/AboutUs/AboutUs";
 import Services from "./components/home/HomePage/Services/Services";
 import { hot } from "react-hot-loader";
+import MainHomePage from "./components/home/HomePage/MainHomePage";
 
 const App = () => {
     const [OTPAllowed, setOTPAllowed] = useState(false)
@@ -76,7 +76,7 @@ const App = () => {
             }} >
                 <BrowserRouter>
                     <Routes>
-                        <Route exact path="/" element={(<Home/>)}/>
+                        <Route exact path="/" element={(<MainHomePage/>)}/>
                         <Route path="/login" element={(<ProtectedLogin><SignupOrLogin/></ProtectedLogin>)}/>
                         <Route path="/OTP-code" element={(<Signup/>)}/>
                         <Route path="/password" element={(<Login/>)}/>

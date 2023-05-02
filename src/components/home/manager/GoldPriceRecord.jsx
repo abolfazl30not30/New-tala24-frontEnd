@@ -77,7 +77,7 @@ export default function GoldPriceRecord() {
         console.log(newGoldPrice)
     }
     return (
-        <div className="bg-[#141414] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
+        <div className="bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
             <div className="flex flex-col space-y-4 md:flex-row items-center justify-between">
                 <div className="text-white text-lg font-medium">قیمت طلا</div>
                 <button

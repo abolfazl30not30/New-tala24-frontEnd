@@ -31,7 +31,7 @@
     width: 1.5rem !important;
     height: 0.6rem;
     margin: 0 0.2rem;
-    background-color: #FFC800 !important;
+    background-color: #DFAF3D !important;
     border-radius: 50rem;
     transition: all 0.5s linear;
 }
@@ -49,7 +49,7 @@
 .heading-title-comment{
     position: relative;
     display: inline-block;
-    color: #FFC800;
+    color: #DFAF3D;
     font-size: 1.2rem;
     font-weight: 400;
     letter-spacing: -1.3px;

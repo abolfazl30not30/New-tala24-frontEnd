@@ -41,7 +41,7 @@ function ManagerTicket() {
         setOpen(false);
     };
     return (
-        <div className="mx-9 mt-5 text-white bg-[#141414] mt-10 rounded-[8px] p-5 font-bold overflow-scroll">
+        <div className="mx-9 mt-5 text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold overflow-scroll">
             <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row justify-between items-center mb-6">
                 <h2 className="text-lg font-medium">
                     سوابق تیکت ها

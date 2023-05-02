@@ -64,7 +64,7 @@ function UserTicket(props) {
 
 
     return (
-        <div className="mx-9 mt-5 text-white bg-[#141414] mt-10 rounded-[8px] p-5 font-bold">
+        <div className="mx-9 mt-5 text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold">
             <div className="flex flex-row justify-between items-center mb-6">
                 <h2 className="text-xl font-medium">
                     سوابق تیکت ها

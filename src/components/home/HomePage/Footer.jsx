@@ -37,19 +37,19 @@ const Footer = () => {
                         </h2>
                         <div className={'text-xs md:leading-8'}>
                             <div className={'flex md:float-right'}>
-                                <BsTelephone color={'#FFC800'} className={'md:ml-2 md:mt-2 xsm:-mt-1 xsm:mb-3 xsm:ml-2'} size={"16px"}/>
+                                <BsTelephone color={'#DFAF3D'} className={'md:ml-2 md:mt-2 xsm:-mt-1 xsm:mb-3 xsm:ml-2'} size={"16px"}/>
                                 <p>
                                     شماره تماس :021212121
                                 </p>
                             </div>
                             <div className={'flex md:float-right'}>
-                                <IoLocationOutline color={'#FFC800'} className={'md:ml-2 md:mt-2 xsm:mb-3 xsm:ml-2'} size={"18px"}/>
+                                <IoLocationOutline color={'#DFAF3D'} className={'md:ml-2 md:mt-2 xsm:mb-3 xsm:ml-2'} size={"18px"}/>
                                 <p>
                                     آدرس: تهران، پل پارک وی، خیابان ولیعصر
                                 </p>
                             </div>
                             <div className={'flex md:float-right'}>
-                                <HiOutlineMail color={'#FFC800'} className={'md:ml-2 md:mt-2 xsm:mb-3 xsm:ml-2'} size={"18px"}/>
+                                <HiOutlineMail color={'#DFAF3D'} className={'md:ml-2 md:mt-2 xsm:mb-3 xsm:ml-2'} size={"18px"}/>
                                 <p>
                                     milad1380@gmail.com :پست الکترونیک
                                 </p>

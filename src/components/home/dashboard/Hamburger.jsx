@@ -63,7 +63,7 @@ const Hamburger = () => {
     };
 
     return (
-        <div className={'w-[250px] h-screen bg-[#141414] rounded-l-[35px] '} style={{zIndex:"100"}}>
+        <div className={'w-[250px] h-screen bg-[#252525] rounded-l-[35px] '} style={{zIndex:"100"}}>
             <div className={'flex justify-end text-white pl-4 pt-4 md1:hidden'}>
                 <AiOutlineClose className={'cursor-pointer'} onClick={() => {
                     document.getElementById('ham').className = 'slide-right absolute top-0 block'
@@ -79,7 +79,7 @@ const Hamburger = () => {
 
             <CacheProvider value={cacheRtl}>
                 <List
-                    sx={{width: '100%', maxWidth: 360, bgcolor: '#141414', color: "#fff"}}
+                    sx={{width: '100%', maxWidth: 360, bgcolor: '#252525', color: "#fff"}}
                     component="nav"
                     aria-labelledby="nested-list-subheader">
                     <NavLink exact to="/dashboard/home" activeClassName="active-navbar">

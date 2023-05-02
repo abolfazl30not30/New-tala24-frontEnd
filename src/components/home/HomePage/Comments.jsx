@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import '../../../style/comments.css';
 import Slider from "react-slick";
 import {GrFormNext,GrFormPrevious} from "react-icons/gr"
+
 class Comments extends Component {
     render() {
         const settings = {
@@ -41,7 +42,7 @@ class Comments extends Component {
                     <div className="w-[70%] m-auto mt-14">
                         <Slider {...settings}>
                             <div className="p-5">
-                                <div className="flex flex-col items-center bg-mainGray bg-opacity-60 p-5  border rounded-2xl">
+                                <div className="flex flex-col items-center bg-bgGray bg-opacity-60 p-5  border rounded-2xl">
 
                                     <div className="flex justify-center">
                                         <img src={"https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt={"preson1"} className={'mb-4 w-[80px]'}/>
@@ -63,7 +64,7 @@ class Comments extends Component {
                             </div>
 
                             <div className="p-5">
-                                <div className="flex flex-col items-center bg-mainGray bg-opacity-60 p-5  border rounded-2xl">
+                                <div className="flex flex-col items-center bg-bgGray bg-opacity-60 p-5  border rounded-2xl">
 
                                     <div className="flex justify-center">
                                         <img src={"https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt={"preson1"} className={'mb-4 w-[80px]'}/>
@@ -85,7 +86,7 @@ class Comments extends Component {
                             </div>
 
                             <div className="p-5">
-                                <div className="flex flex-col items-center bg-mainGray bg-opacity-60 p-5  border rounded-2xl">
+                                <div className="flex flex-col items-center bg-bgGray bg-opacity-60 p-5  border rounded-2xl">
 
                                     <div className="flex justify-center">
                                         <img src={"https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt={"preson1"} className={'mb-4 w-[80px]'}/>
