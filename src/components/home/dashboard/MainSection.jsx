@@ -10,7 +10,7 @@ import BuyGold from "./BuyGold/BuyGold";
 import SellGold from "./SellGold/SellGold";
 import UserTicket from "./Ticket/UserTicket";
 import UserChat from "./Ticket/UserChat";
-import CompleteRegistration from "./CompleteRegistration";
+import CompleteRegistration from "./CompleteRegisteration/CompleteRegistration";
 import Dashboard from "./Dashboard";
 import dashboard from "../../../contexts/dashboard";
 

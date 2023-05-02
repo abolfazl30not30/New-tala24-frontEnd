@@ -2,17 +2,17 @@ import {useContext, useEffect, useState} from "react";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {TextField} from "@mui/material";
-import signup from "../../../contexts/signup";
-import api from "../../../api/api";
+import signup from "../../../../contexts/signup";
+import api from "../../../../api/api";
 import * as yup from "yup";
-import {EnglishToPersian} from "../../../helper/EnglishToPersian";
-import {PersianToEnglish} from "../../../helper/PersianToEnglish";
+import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
+import {PersianToEnglish} from "../../../../helper/PersianToEnglish";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import {CacheProvider} from '@emotion/react';
 import {prefixer} from 'stylis';
 
-const CompleteRegistration = () => {
+const EditProfile = () => {
 
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
@@ -29,7 +29,6 @@ const CompleteRegistration = () => {
     const [accountNumberErrors, setAccountNumberErrors] = useState([]);
     const [emailErrors, setEmailErrors] = useState([]);
     const [postalCodeErrors, setPostalCodeErrors] = useState([]);
-
     const [firstNameAllowed, setFirstNameAllowed] = useState(true);
     const [lastNameAllowed, setLastNameAllowed] = useState(true);
     const [nationalCodeAllowed, setNationalCodeAllowed] = useState(true);
@@ -38,10 +37,10 @@ const CompleteRegistration = () => {
     const [postalCodeAllowed, setPostalCodeAllowed] = useState(true);
     const [addressAllowed, setAddressAllowed] = useState(true);
     const [fatherNameAllowed, setFatherNameAllowed] = useState(true);
-
     const info = useContext(signup)
 
     const navigate = useNavigate()
+
 
     const validation = async () => {
         const firstNameSchema = yup.object().shape({
@@ -211,11 +210,8 @@ const CompleteRegistration = () => {
 
     return (
         <>
-            <div className={'flex justify-center'}>
+            <div className={'flex justify-center flex-col mx-9 '}>
                 <div className={'container w-100 pb-4 bg-[#252525]'}>
-                    <h3 className={' mx-10  mt-5 font-bold text-gold text-2xl'}>
-                        تکمیل مشخصات
-                    </h3>
                     <CacheProvider value={cacheRtl}>
                         <div className={"mx-10"}>
                             <div className={'flex w-100 mt-10'}>
@@ -346,4 +342,4 @@ const CompleteRegistration = () => {
     )
 }
 
-export default CompleteRegistration;
+export default EditProfile;

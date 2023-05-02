@@ -12,6 +12,7 @@ import {
     Button,
     IconButton,
 } from "@material-tailwind/react";
+
 import Sidebar from "./Sidebar";
 import Menu from "@mui/material/Menu";
 import {MenuItem} from "@mui/material";
@@ -122,6 +123,7 @@ const MainNavbar = () => {
                                     aria-haspopup="true"
                                     aria-expanded={open ? 'true' : undefined}
                                     onClick={handleClick}
+                                    className="bg-transparent shadow-none"
                                     sx={{color: '#000'}}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
