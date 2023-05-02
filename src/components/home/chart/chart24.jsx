@@ -92,7 +92,7 @@ const Chart24 = () => {
 
                 <div className={'md2:hidden flex justify-center -mt-[30px]'}>
                     <button className={'register px-[100px] py-3 flex text-black'}>
-                        <img src={person} alt={'person'} className={'ml-2'}/>
+                        <img src={"https://cloud.tala24.co/images/person.svg"} alt={'person'} className={'ml-2'}/>
                         ثبت نام
                     </button>
                 </div>

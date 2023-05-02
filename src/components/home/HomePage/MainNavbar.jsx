@@ -62,7 +62,7 @@ const MainNavbar = () => {
                             </svg>
                         </button>
                         <a href="#" className="flex items-center">
-                            <img src={logo} className="h-6 mr-3 sm:h-9"
+                            <img src={"https://cloud.tala24.co/images/logo192.png"} className="h-6 mr-2 sm:h-11"
                                  alt="Tala24"/>
                         </a>
                         <div className="hidden mr-8 w-full md:block md:w-auto" id="navbar-default">

@@ -1,7 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import video1 from '../../../videos/videoTest.mp4'
-import highlight5 from '../../../images/Highlight_05.svg'
-import highlight4 from '../../../images/Highlight_04.svg'
 import '../../../style/stream.css'
 
 const Stream = () => {
@@ -28,7 +25,7 @@ const Stream = () => {
                 {/*<LazyLoadImage src={highlight4}*/}
                 {/*               alt={'highlight4'}*/}
                 {/*/>*/}
-                <img src={highlight4} alt={'highlight4'}/>
+                <img src={"https://cloud.tala24.co/images/Highlight_04.svg"} alt={'highlight4'}/>
             </div>
             <div className={'stream-style xsm:block md1:flex justify-center text-white text-right ' +
                 ' xsm:content-center mb-16'}>
@@ -48,12 +45,12 @@ const Stream = () => {
                     {/*<LazyLoadImage src={highlight5}*/}
                     {/*               alt={'highlight5'}*/}
                     {/*/>*/}
-                    <img src={highlight5} alt={'highlight5'}/>
+                    <img src={"https://cloud.tala24.co/images/Highlight_05.svg"} alt={'highlight5'}/>
                 </div>
 
                 <div className={'mx-10 xsm:mt-14 md:mt-10'}>
                     <video className={'w-[70rem]'} controls>
-                        <source src={video1} type="video/mp4" />
+                        <source src={"https://cloud.tala24.co/videos/videoTest.mp4"} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>

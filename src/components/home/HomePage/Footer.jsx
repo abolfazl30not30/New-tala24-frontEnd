@@ -103,13 +103,13 @@ const Footer = () => {
                 <div className={'flex xsm:p-3 justify-center md:items-center'}>
                     <div>
 
-                        <img  src={etemad1}
+                        <img  src={"https://cloud.tala24.co/images/etemad1.png"}
                               className={'xsm:w-[8rem] sm:w-[10rem] md:w-[17rem] lg:w-[17rem]'}
                               alt={'etemad1'}
                         />
                     </div>
                     <div>
-                        <img src={etemad2}
+                        <img src={"https://cloud.tala24.co/images/etemad2.png"}
                              className={'xsm:w-[8rem] sm:w-[10rem] md:w-[17rem] lg:w-[15rem]'}
                              alt={'etemad2'}
                         />

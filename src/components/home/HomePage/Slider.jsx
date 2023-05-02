@@ -4,7 +4,6 @@ import image1 from "../../../images/1744263.jpg"
 import image2 from "../../../images/GettyImages-1130532216.jpg"
 import image3 from "../../../images/GettyImages-1130532216.jpg"
 
-
 const Slider = () => {
 
     const [count, setCount] = useState(0);
@@ -25,15 +24,15 @@ const Slider = () => {
     const [carouselData, setCarouselData] = useState([
         {
             'id': '1',
-            'src': image1,
+            'src': "https://cloud.tala24.co/images/1744263.jpg",
         },
         {
             'id': '2',
-            'src': image2,
+            'src': "https://cloud.tala24.co/images/GettyImages-1130532216.jpg",
         },
         {
             'id': '3',
-            'src': image3,
+            'src': "https://cloud.tala24.co/images/1744263.jpg",
         },
     ])
     const [carouselInView, setCarouselInView] = useState([3, 2, 1])
