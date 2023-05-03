@@ -1,7 +1,5 @@
 import {useContext, useEffect, useState} from "react";
 import React from "react"
-import logo from '../../../images/lastLogo.png';
-import bazaar from '../../../images/bazaar.svg';
 import {AiOutlineStock} from "react-icons/ai";
 import {BiFirstAid} from "react-icons/bi";
 import {TbReportAnalytics} from "react-icons/tb";

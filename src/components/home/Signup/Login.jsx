@@ -1,4 +1,4 @@
-import logo from '../../../images/lastLogo.png';
+
 import React from "react"
 import '../../../style/signupOrLogin.css';
 import {TextField} from "@mui/material";
@@ -68,7 +68,7 @@ const Login = () => {
             <div className={'flex justify-center items-center h-screen'}>
                 <div className={'container w-[300px] h-[350px] bg-[#252525]'}>
                     <div className={'flex justify-center'}>
-                        <img src={logo} alt={'logo'} className={'w-[90px] mt-[30px]'}/>
+                        <img src={"https://cloud.tala24.co/images/logo192.png" } alt={'logo'} className={'w-[90px] mt-[30px]'}/>
                     </div>
                     <p className={'text text-center text-white mt-4 pb-4 mx-4'}>
                         مطمئن ترین راه برای نگهداری <span className={'text-mainGold'}>طلا</span> شما

@@ -1,8 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import "../../../style/slider.css"
-import image1 from "../../../images/1744263.jpg"
-import image2 from "../../../images/GettyImages-1130532216.jpg"
-import image3 from "../../../images/GettyImages-1130532216.jpg"
 
 const Slider = () => {
 

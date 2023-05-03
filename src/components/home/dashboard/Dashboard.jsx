@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import Bazaar from "./Bazaar";
 import BuyGold from './BuyGold/BuyGold'
-import bazaar from '../../../images/bazaar.svg';
 import {IoCalendarOutline} from "react-icons/io5";
 import {RxHamburgerMenu} from "react-icons/rx";
 import Hamburger from "./Hamburger";

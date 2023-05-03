@@ -1,23 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {GiGoldBar} from "react-icons/gi";
-import '../../../style/cards.css'
-import image1 from '../../../images/image1.svg'
-import image2 from '../../../images/Frame 10.svg'
-import image3 from '../../../images/image3.svg'
+import '../../../style/cards.css';
 
 const Cards = () => {
-    const [pictures, setPictures] = useState([
-        {
-            fileName: '../../images/image3.svg',
-        }
-    ]);
-
-    useEffect(() => {
-        pictures.forEach((picture) => {
-            const img = new Image();
-            img.src = picture.fileName;
-        });
-    }, [])
 
     return (
         <div className={'cards-style flex text-white p-5 flex-col md:flex-row text-center md1:text-right w-full'}>

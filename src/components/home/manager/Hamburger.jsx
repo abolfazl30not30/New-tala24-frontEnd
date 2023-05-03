@@ -1,4 +1,4 @@
-import logo from "../../../images/lastLogo.png";
+
 import React from "react"
 import {AiOutlineClose, AiOutlineStock} from "react-icons/ai";
 import {Link} from "react-router-dom"
@@ -22,7 +22,7 @@ const Hamburger = ({selected, setSelected}) => {
             </div>
 
             <div className={'flex justify-center md1:pt-8'}>
-                <img src={logo} alt={'logo'} className={'w-1/2'}/>
+                <img src={"https://cloud.tala24.co/images/logo192.png"} alt={'logo'} className={'w-1/2'}/>
             </div>
 
             <div className={'text-white'}>

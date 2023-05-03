@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../../images/lastLogo.png";
 import {AiOutlineClose, AiOutlineStock} from "react-icons/ai";
 import {BiFirstAid} from "react-icons/bi";
 import {TbReportAnalytics} from "react-icons/tb";
@@ -45,7 +44,7 @@ const Hamburger = () => {
             </div>
 
             <div className={'flex justify-center md1:pt-8'}>
-                <img src={logo} alt={'logo'} className={'w-1/2'}/>
+                <img src={"https://cloud.tala24.co/images/logo192.png"} alt={'logo'} className={'w-1/2'}/>
             </div>
 
             <CacheProvider value={cacheRtl}>

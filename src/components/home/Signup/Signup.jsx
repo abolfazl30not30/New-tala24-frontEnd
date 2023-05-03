@@ -1,4 +1,4 @@
-import logo from '../../../images/lastLogo.png';
+
 import '../../../style/signupOrLogin.css';
 import React from "react"
 import {useContext, useEffect, useState} from "react";
@@ -58,7 +58,7 @@ const Signup = () => {
             <div className={'flex justify-center items-center h-screen'}>
                 <div className={'container w-[300px] h-[390px] bg-[#252525]'}>
                     <div className={'flex justify-center'}>
-                        <img src={logo} alt={'logo'} className={'w-[90px] mt-[30px]'}/>
+                        <img src={"https://cloud.tala24.co/images/logo192.png"} alt={'logo'} className={'w-[90px] mt-[30px]'}/>
                     </div>
 
                     <p className={'text text-center text-white mt-4 pb-4 mx-4'}>

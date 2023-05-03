@@ -1,11 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import logo from '../../../images/lastLogo.png';
-import bazaar from '../../../images/bazaar.svg';
-import {AiOutlineStock} from "react-icons/ai";
-import {BiFirstAid} from "react-icons/bi";
-import {TbReportAnalytics} from "react-icons/tb";
 import {IoCalendarOutline} from "react-icons/io5";
-import {FcPlus} from "react-icons/fc";
 import {RxHamburgerMenu} from "react-icons/rx";
 import Hamburger from "./Hamburger";
 import {Link, Outlet} from "react-router-dom";

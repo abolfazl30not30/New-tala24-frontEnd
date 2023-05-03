@@ -2,29 +2,9 @@ import React, {useEffect, useState} from 'react';
 import '../../../style/stream.css'
 
 const Stream = () => {
-
-    const [pictures, setPictures] = useState([
-        {
-            fileName: '../../images/Highlight_05.svg',
-        },
-        {
-            fileName: '../../images/Highlight_04.svg',
-        }
-    ]);
-
-    useEffect(() => {
-        pictures.forEach((picture) => {
-            const img = new Image();
-            img.src = picture.fileName;
-        });
-    }, [])
-
     return (
         <div>
             <div className={'highlight4 flex justify-start md:mb-[50px] lg:mb-0 mr-[100px] mt-[20px]'}>
-                {/*<LazyLoadImage src={highlight4}*/}
-                {/*               alt={'highlight4'}*/}
-                {/*/>*/}
                 <img src={"https://cloud.tala24.co/images/Highlight_04.svg"} alt={'highlight4'}/>
             </div>
             <div className={'stream-style xsm:block md1:flex justify-center text-white text-right ' +
@@ -42,9 +22,6 @@ const Stream = () => {
                     </div>
                 </div>
                 <div className={'highlight5 flex items-end md:mr-4 md:mb-[0.2rem] md:-ml-[50px] xsm:hidden md1:flex'}>
-                    {/*<LazyLoadImage src={highlight5}*/}
-                    {/*               alt={'highlight5'}*/}
-                    {/*/>*/}
                     <img src={"https://cloud.tala24.co/images/Highlight_05.svg"} alt={'highlight5'}/>
                 </div>
 

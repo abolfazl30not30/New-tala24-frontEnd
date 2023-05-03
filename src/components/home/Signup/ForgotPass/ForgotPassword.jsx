@@ -4,7 +4,6 @@ import signup from "../../../../contexts/signup";
 import {useNavigate} from "react-router-dom";
 import * as yup from "yup";
 import ResgisterApi from "../../../../api/RegisterApi";
-import logo from "../../../../images/lastLogo.png";
 import {TextField} from "@mui/material";
 import PasswordStrengthIndicator from "../../PasswordStrengthIndicator";
 import ConfirmUsername from "./ConfirmUsername";
@@ -71,7 +70,7 @@ const ForgotPassword = () => {
                 className={'flex justify-center items-center h-screen bg-[#000] '}>
                 <div className={'container w-[300px] pb-4 bg-[#1D1C1C]'}>
                     <div className={'flex justify-center'}>
-                        <img src={logo} alt={'logo'} className={'w-[90px] mt-[30px]'}/>
+                        <img src={"https://cloud.tala24.co/images/logo192.png"} alt={'logo'} className={'w-[90px] mt-[30px]'}/>
                     </div>
                     <p className={'text text-center text-white mt-4 pb-4 mx-4'}>
                         مطمئن ترین راه برای نگهداری <span className={'text-mainGold'}>طلا</span> شما
