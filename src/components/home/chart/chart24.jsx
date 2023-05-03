@@ -3,6 +3,9 @@ import '../../../style/chart.css'
 import {Line, Bar} from "react-chartjs-2";
 import {useEffect, useState} from "react";
 import api from "../../../api/api";
+import Chart from 'chart.js/auto';
+import {CategoryScale} from 'chart.js';
+Chart.register(CategoryScale);
 
 const Chart24 = () => {
     const [userData, setUserData] = useState({
@@ -65,10 +68,10 @@ const Chart24 = () => {
                                     </div>
 
                                     <button className={'register m-2.5 px-6 py-3 flex text-black hidden md2:flex'}>
-                                        <img src={person} alt={'person'} className={'ml-2'}/>
+                                        <img src={"https://cloud.tala24.co/images/person.svg"} alt={'person'} className={'ml-2'}/>
                                         ثبت نام
                                     </button>
-                                </div>
+                                </div>T
 
                                 <div className={''}>
                                     <div className={'details text-[0.62rem] p-2 pl-[50px] leading-5'}>
