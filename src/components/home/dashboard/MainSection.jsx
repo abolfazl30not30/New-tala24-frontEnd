@@ -13,6 +13,9 @@ import UserChat from "./Ticket/UserChat";
 import CompleteRegistration from "./CompleteRegisteration/CompleteRegistration";
 import Dashboard from "./Dashboard";
 import dashboard from "../../../contexts/dashboard";
+import InventoryIncrease from './InventoryIncrease'
+import UserProfile from './UserProfile'
+import BankAccounts from "./BankAccounts";
 
 const MainSection = () => {
     const context = useContext(dashboard)
@@ -24,6 +27,9 @@ const MainSection = () => {
                 <Route path="/sell-request" element={<ProtectedRoute><SellRequest/></ProtectedRoute>}/>
                 <Route path="/sell-report" element={<ProtectedRoute><SellReport/></ProtectedRoute>}/>
                 <Route path="/buy-report" element={<ProtectedRoute><BuyReport/></ProtectedRoute>}/>
+                <Route path="/inventory-increase" element={<ProtectedRoute><InventoryIncrease/></ProtectedRoute>}/>
+                <Route path="/user-profile" element={<ProtectedRoute><UserProfile/></ProtectedRoute>}/>
+                <Route path="/bank-accounts" element={<ProtectedRoute><BankAccounts/></ProtectedRoute>}/>
                 {
                     context.completeRegistrationStatus ?
                         <Route path="/buy-gold" element={<ProtectedRoute><BuyGold/></ProtectedRoute>}/> : null

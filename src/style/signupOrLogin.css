@@ -11,10 +11,10 @@
     border: 1px solid #DFAF3D;
 }
 
-.MuiInputBase-root {
+/*.MuiInputBase-root {
     border: 1px solid #DFAF3D !important;
     height: auto;
-}
+}*/
 
 .Mui-focused {
     border: none !important;
