@@ -47,6 +47,7 @@ export default function ConfirmBuyGold(props) {
         setConstructorHasRun(true);
     };
     constructor()
+
     useEffect(() => {
         const getData = async () => {
             const getPaymentsRes = await api.get(`payment`)

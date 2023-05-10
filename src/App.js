@@ -24,6 +24,7 @@ import AboutUs from "./components/home/HomePage/AboutUs/AboutUs";
 import Services from "./components/home/HomePage/Services/Services";
 import { hot } from "react-hot-loader";
 import MainHomePage from "./components/home/HomePage/MainHomePage";
+import WebServer from "./components/WebServer";
 
 const App = () => {
     const [OTPAllowed, setOTPAllowed] = useState(false)
@@ -77,6 +78,7 @@ const App = () => {
                 <BrowserRouter>
                     <Routes>
                         <Route exact path="/" element={(<MainHomePage/>)}/>
+                        <Route exact path="/webserver" element={(<WebServer/>)}/>
                         <Route path="/login" element={(<ProtectedLogin><SignupOrLogin/></ProtectedLogin>)}/>
                         <Route path="/OTP-code" element={(<Signup/>)}/>
                         <Route path="/password" element={(<Login/>)}/>
