@@ -232,7 +232,6 @@ export default function BuyCoin(props) {
     };
 
     return (
-
         <CacheProvider value={cacheRtl}>
             <ThemeProvider theme={theme}>
                 <div dir="rtl">
