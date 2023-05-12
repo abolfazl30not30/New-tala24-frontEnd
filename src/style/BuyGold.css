@@ -50,3 +50,6 @@ svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.muirtl-1hbvpl3-MuiSvgIcon-root {
 .muirtl-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input{
     color: #fff !important;
 }
+.MuiSelect-select {
+    text-align: right!important;
+}

@@ -14,7 +14,7 @@ import CompleteRegistration from "./CompleteRegisteration/CompleteRegistration";
 import Dashboard from "./Dashboard";
 import dashboard from "../../../contexts/dashboard";
 import InventoryIncrease from './InventoryIncrease'
-import UserProfile from './UserProfile'
+import UserProfile from './UserProfile/UserProfile'
 import BankAccounts from "./BankAccounts";
 
 const MainSection = () => {
