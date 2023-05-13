@@ -1,4 +1,5 @@
 import React, {Fragment,useState} from 'react'
+import "../../../../style/buycoin.css"
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -8,7 +9,7 @@ import PropTypes from 'prop-types';
 import {NumericFormat} from 'react-number-format';
 import * as yup from "yup";
 import coins from "../../../../images/icons.svg"
-import {RiAddFill} from "react-icons/ri";
+import {RiAddFill, RiHandCoinFill} from "react-icons/ri";
 import {BsTrashFill} from "react-icons/bs"
 import {Dialog, Transition} from '@headlessui/react'
 import {CacheProvider} from "@emotion/react";
@@ -16,6 +17,7 @@ import api from "../../../../api/api";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis'
+
 
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
     props,
@@ -60,7 +62,7 @@ function StepAddCoin() {
     const [Coin, setCoin] = useState(["test"])
     const [coinWight, setCoinWight] = useState("")
     const [selectedCoin, setSelectedCoin] = useState("")
-    
+
     const handleOpenCoin = () => {
         setIsOpenCoin(true);
     }
@@ -81,7 +83,6 @@ function StepAddCoin() {
         // })
         //
         // await getCoin()
-
         setNewCoin("")
         setIsOpenCoin(false)
     };
@@ -92,11 +93,16 @@ function StepAddCoin() {
                 <div className="my-2 px-4">
                     <h2 className="text-white text-l font-bold" >تعیین تعداد سکه</h2>
                 </div>
-                <div>
+                <div className="inventory-box bg-mainGray rounded-xl p-5 flex justify-center mx-10 mt-3 mb-4">
+                    <div className="flex flex-col rounded-xl justify-center p-3 border-dashed border-2 border-neutral-700 ">
+                        <div className="flex justify-center mb-3"><RiHandCoinFill className="text-gold" fontSize="2rem"/></div>
+                        <h5 className="mb-3 text-[1rem] text-gold">موجودی طلایی</h5>
+                        <div className="text-[0.8rem] flex justify-center"><span className="ml-2">14.5222</span>گرم</div>
+                    </div>
                 </div>
-                <div className="coins flex justify-center items-center flex-col border-dashed border-2 border-neutral-700 p-3 mx-10 rounded-xl " >
-                    <div className="coin bg-mainGray rounded-2xl py-3 w-[55%] flex border-5 border-sky-100 mb-3">
-                        <div className="icons flex justify-center items-center">
+                        <div className="coins flex justify-center items-center flex-col border-dashed border-2 border-neutral-700 p-3 mx-10 rounded-xl " >
+                            <div className="coin bg-mainGray rounded-2xl py-3 w-[55%] flex border-5 border-sky-100 mb-3">
+                            <div className="icons flex justify-center items-center">
                             <img src={coins} className="w-3/4" alt="coins"/>
                         </div>
                         <div className="text-section flex items-center">
