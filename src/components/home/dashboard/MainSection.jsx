@@ -13,6 +13,8 @@ import UserChat from "./Ticket/UserChat";
 import CompleteRegistration from "./CompleteRegisteration/CompleteRegistration";
 import Dashboard from "./Dashboard";
 import dashboard from "../../../contexts/dashboard";
+import BuyCoin from "./BuyCoin/BuyCoin";
+import NotFound from "../../Other/NotFound";
 import InventoryIncrease from './InventoryIncrease'
 import UserProfile from './UserProfile'
 import BankAccounts from "./BankAccounts";
@@ -22,6 +24,7 @@ const MainSection = () => {
     return (
         <>
             <Routes>
+                <Route path="/buy-coin" element={<ProtectedRoute><BuyCoin/></ProtectedRoute>}/>
                 <Route path="/home" element={<ProtectedRoute><Bazaar/></ProtectedRoute>}/>
                 <Route path="/buy-request" element={<ProtectedRoute><BuyRequest/></ProtectedRoute>}/>
                 <Route path="/sell-request" element={<ProtectedRoute><SellRequest/></ProtectedRoute>}/>

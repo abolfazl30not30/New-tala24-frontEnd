@@ -18,6 +18,8 @@ function StepReceiveType(props) {
 
         setAddress(addressesResponse)
     }
+
+
     useEffect(() => {
         getAddress()
     }, []);
