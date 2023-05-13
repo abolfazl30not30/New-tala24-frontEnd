@@ -1,21 +1,21 @@
-.inventory-box{
-    position: relative !important;
-}
-.inventory-box::after{
-    content: "";
-    width: 400px;
-    height: 400px;
-    background: url("../images/group1.svg") no-repeat !important;
-    position: absolute;
-    bottom:10px;
-    left: 10px;
-}
-.inventory-box::before{
-    content: "";
-    width: 400px;
-    height: 400px;
-    background: url("../images/group2.svg") no-repeat !important;
-    position: absolute;
-    bottom:10px;
-    left: 10px;
-}
+/*.inventory-box{*/
+/*    position: relative !important;*/
+/*}*/
+/*.inventory-box::after{*/
+/*    content: "";*/
+/*    width: 400px;*/
+/*    height: 400px;*/
+/*    background: url("../images/group1.svg") no-repeat !important;*/
+/*    position: absolute;*/
+/*    bottom:10px;*/
+/*    left: 10px;*/
+/*}*/
+/*.inventory-box::before{*/
+/*    content: "";*/
+/*    width: 400px;*/
+/*    height: 400px;*/
+/*    background: url("../images/group2.svg") no-repeat !important;*/
+/*    position: absolute;*/
+/*    bottom:10px;*/
+/*    left: 10px;*/
+/*}*/
