@@ -1,164 +1,491 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import { Dialog, Transition } from '@headlessui/react'
-import {Link} from "react-router-dom";
-import api from "../../../api/api";
+import React, {useState, Fragment} from "react";
+import {Dialog, Transition} from "@headlessui/react";
+import {CacheProvider} from "@emotion/react";
+import {TextField} from "@mui/material";
+import createCache from "@emotion/cache";
+import rtlPlugin from "stylis-plugin-rtl";
+import {prefixer} from 'stylis';
 
-export default function BankAccounts(props) {
+const cacheRtl = createCache({
+    key: 'muirtl',
+    stylisPlugins: [prefixer, rtlPlugin],
+});
 
-    const [constructorHasRun, setConstructorHasRun] = useState(false);
-    const [tickets, setTickets] = useState([])
-    let [isOpen, setIsOpen] = useState(false)
+export default function BankAccounts() {
 
-
-    useEffect(() => {
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
-            props.history.push("/login")
+    const [bankAccounts, setBankAccounts] = useState([
+        {
+            accountNumber: '11111111111',
+            cardNumber: '22222222222',
+            shabaNumber: '333333333',
+            bankName: 'A',
+            id: 1
+        },
+        {
+            accountNumber: '4444444',
+            cardNumber: '55555555555',
+            shabaNumber: '666666666666666',
+            bankName: 'B',
+            id: 2
+        },
+        {
+            accountNumber: '77777777777',
+            cardNumber: '8888888888888',
+            shabaNumber: '9999999999',
+            bankName: 'B',
+            id: 3
         }
-    }, [props.history]);
-    const constructor = () => {
-        if (constructorHasRun) return;
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
-            window.location = ("/login")
+    ])
+    const [targetBankAccounts, setTargetBankAccounts] = useState([
+        {
+            accountNumber: '',
+            cardNumber: '',
+            shabaNumber: '',
+            bankName: '',
+            id: ''
         }
-        setConstructorHasRun(true);
-    };
-    constructor()
+    ])
+    const [newAccount,setNewAccount] = useState({
+        accountNumber: '',
+        cardNumber: '',
+        shabaNumber: '',
+        bankName: '',
+    })
+    const [isOpenNewAccounts, setIsOpenNewAccounts] = useState(false)
+    const [isOpenEditAccount, setIsOpenEditAccount] = useState(false)
+    const [isOpenDeleteAccount, setIsOpenDeleteAccount] = useState(false)
+    const [targetAccountByDelete, setTargetAccountByDelete] = React.useState('');
 
-    const [title, setTitle] = useState("");
-    const getTickets = async () => {
-        const getTicketsResponse = await api.get(`ticket/search?userId=${localStorage.getItem("username")}`)
-        setTickets(getTicketsResponse)
-    }
-    useEffect(() => {
-        getTickets()
-    }, []);
-
-
-
-    function closeModal() {
-        setIsOpen(false)
+    function closeModalNewAccounts() {
+        setIsOpenNewAccounts(false)
     }
 
-    function openModal() {
-        setIsOpen(true)
+    function openModalNewAccounts() {
+        setIsOpenNewAccounts(true)
     }
 
-    const handleSubmitTicket = async () => {
-       /* const accountResponse = await api.get(`account/user/${localStorage.getItem("username")}`)
-        await api.post("ticket", {
-            accountId: accountResponse.id,
-            userId: localStorage.getItem("username"),
-            title: title,
-            status: "pending"
-        })
-        getTickets()*/
-        closeModal()
-
+    function closeModalEditAccount() {
+        setIsOpenEditAccount(false)
     }
 
-    return(
-        <div className="mx-9 mt-5 text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold">
-            <div className="flex flex-row justify-between items-center mb-6">
-                <h2 className="text-xl font-medium text-gold">
-                    حساب های من
-                </h2>
-                <button  className='bg-gold text-black px-2 py-1 font-normal rounded hover:cursor-pointer transition' onClick={openModal}>حساب جدید</button>
-                <Transition appear show={isOpen} as={Fragment}>
-                    <Dialog as="div" className="relative z-10" onClose={closeModal}>
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0"
-                            enterTo="opacity-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
+    async function openModalEditAccount(id) {
+        const targetAccount = bankAccounts.find(Account => Account.id === id)
+        setTargetBankAccounts(targetAccount);
+        setIsOpenEditAccount(true)
+    }
+
+    function closeModalDeleteAccount() {
+        setTargetAccountByDelete('');
+        setIsOpenDeleteAccount(false)
+    }
+
+    async function openModalDeleteAccount(id) {
+        setTargetAccountByDelete(id);
+        setIsOpenDeleteAccount(true)
+    }
+
+    const addNewAccounts = () => {
+        console.log(newAccount);
+        setIsOpenNewAccounts(false)
+    }
+
+    const editAccount = () => {
+        console.log(targetBankAccounts)
+        setIsOpenEditAccount(false)
+    }
+
+    const deleteAccount = () => {
+        console.log(targetAccountByDelete)
+        setIsOpenDeleteAccount(false)
+    }
+
+    return (
+        <>
+            <div className="bg-[#252525] p-4 mx-8 my-6 rounded text-white">
+                <div className="flex flex-col space-y-4">
+                    <div className="flex flex-col md:flex-row justify-between">
+                        <h3 className='font-bold text-gold text-xl mb-4 md:mb-0'>
+                            حساب های من
+                        </h3>
+                        <button
+                            className="bg-gold text-black p-2 rounded-md w-fit flex flex-row items-center"
+                            onClick={openModalNewAccounts}
                         >
-                            <div className="fixed inset-0 bg-black bg-opacity-25" />
-                        </Transition.Child>
-
-                        <div className="fixed inset-0 overflow-y-auto">
-                            <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                                 stroke="currentColor" className="w-4 h-4 ml-2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                            </svg>
+                            افزودن آدرس
+                        </button>
+                        <Transition appear show={isOpenNewAccounts} as={Fragment}>
+                            <Dialog as="div" className="relative z-10" onClose={closeModalNewAccounts}>
                                 <Transition.Child
                                     as={Fragment}
                                     enter="ease-out duration-300"
-                                    enterFrom="opacity-0 scale-95"
-                                    enterTo="opacity-100 scale-100"
+                                    enterFrom="opacity-0"
+                                    enterTo="opacity-100"
                                     leave="ease-in duration-200"
-                                    leaveFrom="opacity-100 scale-100"
-                                    leaveTo="opacity-0 scale-95"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
                                 >
-                                    <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                        <Dialog.Title
-                                            as="h3"
-                                            className="text-lg font-medium leading-6 text-gray-900"
-                                        >
-                                            Payment successful
-                                        </Dialog.Title>
-                                        <div className="mt-2">
-                                            <p className="text-sm text-gray-500">
-                                                Your payment has been successfully submitted. We’ve sent
-                                                you an email with all of the details of your order.
-                                            </p>
-                                        </div>
-
-                                        <div className="mt-4">
-                                            <button
-                                                type="button"
-                                                className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                                onClick={closeModal}
-                                            >
-                                                Got it, thanks!
-                                            </button>
-                                        </div>
-                                    </Dialog.Panel>
+                                    <div className="fixed inset-0 bg-black bg-opacity-25"/>
                                 </Transition.Child>
-                            </div>
-                        </div>
-                    </Dialog>
-                </Transition>
-            </div>
 
-            <div className="table w-full shadow-sm overflow-hidden">
-                <div className="table-header-group bg-[#2a2a2a] font-medium shadow-sm overflow-hidden">
-                    <div className="table-row">
-                        <div className="table-cell p-4 rounded-r-lg">#</div>
-                        <div className="table-cell p-4">شماره کارت</div>
-                        <div className="table-cell p-4">شماره حساب</div>
-                        <div className="table-cell p-4">بانک</div>
-                        <div className="table-cell p-4 rounded-l-lg">عملیات</div>
+                                <div className="fixed inset-0 overflow-y-auto">
+                                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                                        <Transition.Child
+                                            as={Fragment}
+                                            enter="ease-out duration-300"
+                                            enterFrom="opacity-0 scale-95"
+                                            enterTo="opacity-100 scale-100"
+                                            leave="ease-in duration-200"
+                                            leaveFrom="opacity-100 scale-100"
+                                            leaveTo="opacity-0 scale-95"
+                                        >
+                                            <Dialog.Panel
+                                                className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#303030] p-6 text-left align-middle shadow-xl transition-all">
+                                                <Dialog.Title
+                                                    as="h3"
+                                                    className="text-center text-lg font-medium leading-6 text-white"
+                                                >
+                                                    افزودن حساب
+                                                </Dialog.Title>
+                                                <div className="mt-6" dir="rtl">
+                                                    <CacheProvider value={cacheRtl}>
+                                                        <div className="flex flex-col space-y-4 justify-center">
+                                                            <TextField
+                                                                label={"شماره حساب"}
+                                                                value={newAccount.accountNumber}
+                                                                type={"number"}
+                                                                sx={{
+                                                                    label: {color: '#fff !important'},
+                                                                    input: {color: '#fff !important'}
+                                                                }}
+                                                                name='accountNumber'
+                                                                onChange={(e) => setNewAccount(
+                                                                    {
+                                                                        ...newAccount,
+                                                                        [e.target.name]: e.target.value
+                                                                    }
+                                                                )}
+                                                            />
+                                                            <TextField
+                                                                label={"شماره کارت"}
+                                                                value={newAccount.cardNumber}
+                                                                type={"number"}
+                                                                sx={{
+                                                                    label: {color: '#fff !important'},
+                                                                    input: {color: '#fff !important'}
+                                                                }}
+                                                                name='cardNumber'
+                                                                onChange={(e) => setNewAccount(
+                                                                    {
+                                                                        ...newAccount,
+                                                                        [e.target.name]: e.target.value
+                                                                    }
+                                                                )}
+                                                            />
+                                                            <TextField
+                                                                label={"شماره شبا"}
+                                                                // error={errors.length !== 0}
+                                                                /* disabled={!firstNameAllowed}*/
+                                                                value={newAccount.shabaNumber}
+                                                                type={"text"}
+                                                                sx={{
+                                                                    label: {color: '#fff !important'},
+                                                                    input: {color: '#fff !important'}
+                                                                }}
+                                                                name='shabaNumber'
+                                                                onChange={(e) => setNewAccount(
+                                                                    {
+                                                                        ...newAccount,
+                                                                        [e.target.name]: e.target.value
+                                                                    }
+                                                                )}
+                                                            />
+                                                            <TextField
+                                                                label={"نام بانک"}
+                                                                // error={errors.length !== 0}
+                                                                /* disabled={!firstNameAllowed}*/
+                                                                value={newAccount.bankName}
+                                                                type={"text"}
+                                                                sx={{
+                                                                    label: {color: '#fff !important'},
+                                                                    input: {color: '#fff !important'}
+                                                                }}
+                                                                name='bankName'
+                                                                onChange={(e) => setNewAccount(
+                                                                    {
+                                                                        ...newAccount,
+                                                                        [e.target.name]: e.target.value
+                                                                    }
+                                                                )}
+                                                            />
+                                                        </div>
+                                                    </CacheProvider>
+                                                </div>
+                                                <div className="mt-4 flex flex-row justify-center">
+                                                    <button
+                                                        type="button"
+                                                        className="inline-flex justify-center rounded-md border border-transparent ml-4 bg-gold text-black px-4 py-2 text-sm font-medium"
+                                                        onClick={addNewAccounts}
+                                                    >
+                                                        ثبت
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="inline-flex justify-center rounded-md border border-transparent bg-dark text-white px-4 py-2 text-sm font-medium"
+                                                        onClick={closeModalNewAccounts}
+                                                    >
+                                                        بستن
+                                                    </button>
+                                                </div>
+                                            </Dialog.Panel>
+                                        </Transition.Child>
+                                    </div>
+                                </div>
+                            </Dialog>
+                        </Transition>
                     </div>
-                </div>
-                <div className="table-row-group p-4 text-sm font-medium">
-                    {
-                        tickets.map((t, i) => (
-                            <div className="table-row text-white transition">
-                                <div
-                                    className="table-cell border-b-[1px] border-[#ddd] border-solid px-2 py-3">{i + 1}</div>
-                                <div
-                                    className="table-cell border-b-[1px] border-[#ddd] border-solid px-2 py-3">{t.title}</div>
-                                <div
-                                    className="table-cell border-b-[1px] border-[#ddd] border-solid px-2 py-3">{
-                                    t.status === "pending" ? "در حال بررسی" : t.status === "answered" ? "پاسخ داده شده" : null
-                                }</div>
-                                <div
-
-                                    className="table-cell border-b-[1px] border-[#ddd] border-solid px-2 py-3">{t.date}</div>
-                                <div
-                                    className="table-cell border-b-[1px] border-[#ddd] border-solid px-2 py-3">
-                                    <Link to={t.id}>
-                                        <button
-                                            className='bg-gold text-black px-2 py-1 font-normal rounded hover:cursor-pointer transition'>مشاهده
-                                        </button>
-                                    </Link>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {bankAccounts.map((account, index) => (
+                            <div
+                                className="flex flex-col justify-between border-2 border-solid border-gold p-4 rounded space-y-2 text-xs">
+                                <div className='flex flex-row'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                                    </svg>
+                                    {account.accountNumber}
+                                </div>
+                                <div className='flex flex-row'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                                    </svg>
+                                    {account.cardNumber}
+                                </div>
+                                <div className='flex flex-row'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                                    </svg>
+                                    {account.shabaNumber}
+                                </div>
+                                <div className='flex flex-row'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                                    </svg>
+                                    {account.bankName}
+                                </div>
+                                <div className="flex flex-row justify-center space-x-2 space-x-reverse">
+                                    <button className='flex flex-row bg-amber-400 text-black p-2 rounded'
+                                            onClick={() => openModalEditAccount(account.id)}>
+                                        ویرایش حساب
+                                    </button>
+                                    <button
+                                        className='flex flex-row bg-red-600 text-white p-2 rounded'
+                                        onClick={() => openModalDeleteAccount(account.id)}>
+                                        حذف حساب
+                                    </button>
                                 </div>
                             </div>
-                        ))
-                    }
+                        ))}
+                    </div>
+                    <Transition appear show={isOpenEditAccount} as={Fragment}>
+                        <Dialog as="div" className="relative z-10" onClose={closeModalEditAccount}>
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0"
+                                enterTo="opacity-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100"
+                                leaveTo="opacity-0"
+                            >
+                                <div className="fixed inset-0 bg-black bg-opacity-25"/>
+                            </Transition.Child>
+
+                            <div className="fixed inset-0 overflow-y-auto">
+                                <div className="flex min-h-full items-center justify-center p-4 text-center">
+                                    <Transition.Child
+                                        as={Fragment}
+                                        enter="ease-out duration-300"
+                                        enterFrom="opacity-0 scale-95"
+                                        enterTo="opacity-100 scale-100"
+                                        leave="ease-in duration-200"
+                                        leaveFrom="opacity-100 scale-100"
+                                        leaveTo="opacity-0 scale-95"
+                                    >
+                                        <Dialog.Panel
+                                            className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#303030] p-6 text-left align-middle shadow-xl transition-all">
+                                            <Dialog.Title
+                                                as="h3"
+                                                className="text-center text-lg font-medium leading-6 text-white"
+                                            >
+                                                ویرایش آدرس
+                                            </Dialog.Title>
+                                            <div className="mt-6" dir="rtl">
+                                                <CacheProvider value={cacheRtl}>
+                                                    <div className="flex flex-col space-y-4 justify-center">
+                                                        <TextField
+                                                            label={"شماره حساب"}
+                                                            value={targetBankAccounts.accountNumber}
+                                                            type={"number"}
+                                                            sx={{
+                                                                label: {color: '#fff !important'},
+                                                                input: {color: '#fff !important'}
+                                                            }}
+                                                            name='accountNumber'
+                                                            onChange={(e) => setTargetBankAccounts(
+                                                                {
+                                                                    ...targetBankAccounts,
+                                                                    [e.target.name]: e.target.value
+                                                                }
+                                                            )}
+                                                        />
+                                                        <TextField
+                                                            label={"شماره کارت"}
+                                                            value={targetBankAccounts.cardNumber}
+                                                            type={"number"}
+                                                            sx={{
+                                                                label: {color: '#fff !important'},
+                                                                input: {color: '#fff !important'}
+                                                            }}
+                                                            name='cardNumber'
+                                                            onChange={(e) => setTargetBankAccounts(
+                                                                {
+                                                                    ...targetBankAccounts,
+                                                                    [e.target.name]: e.target.value
+                                                                }
+                                                            )}
+                                                        />
+                                                        <TextField
+                                                            label={"شماره شبا"}
+                                                            // error={errors.length !== 0}
+                                                            /* disabled={!firstNameAllowed}*/
+                                                            value={targetBankAccounts.shabaNumber}
+                                                            type={"text"}
+                                                            sx={{
+                                                                label: {color: '#fff !important'},
+                                                                input: {color: '#fff !important'}
+                                                            }}
+                                                            name='shabaNumber'
+                                                            onChange={(e) => setTargetBankAccounts(
+                                                                {
+                                                                    ...targetBankAccounts,
+                                                                    [e.target.name]: e.target.value
+                                                                }
+                                                            )}
+                                                        />
+                                                        <TextField
+                                                            label={"نام بانک"}
+                                                            // error={errors.length !== 0}
+                                                            /* disabled={!firstNameAllowed}*/
+                                                            value={targetBankAccounts.bankName}
+                                                            type={"text"}
+                                                            sx={{
+                                                                label: {color: '#fff !important'},
+                                                                input: {color: '#fff !important'}
+                                                            }}
+                                                            name='bankName'
+                                                            onChange={(e) => setTargetBankAccounts(
+                                                                {
+                                                                    ...targetBankAccounts,
+                                                                    [e.target.name]: e.target.value
+                                                                }
+                                                            )}
+                                                        />
+                                                    </div>
+                                                </CacheProvider>
+                                            </div>
+                                            <div className="mt-4 flex flex-row justify-center">
+                                                <button
+                                                    type="button"
+                                                    className="inline-flex justify-center rounded-md border border-transparent ml-4 bg-gold text-black px-4 py-2 text-sm font-medium"
+                                                    onClick={editAccount}
+                                                >
+                                                    ثبت
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="inline-flex justify-center rounded-md border border-transparent bg-dark text-white px-4 py-2 text-sm font-medium"
+                                                    onClick={closeModalEditAccount}
+                                                >
+                                                    بستن
+                                                </button>
+                                            </div>
+                                        </Dialog.Panel>
+                                    </Transition.Child>
+                                </div>
+                            </div>
+                        </Dialog>
+                    </Transition>
+                    <Transition appear show={isOpenDeleteAccount} as={Fragment}>
+                        <Dialog as="div" className="relative z-10" onClose={closeModalDeleteAccount}>
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0"
+                                enterTo="opacity-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100"
+                                leaveTo="opacity-0"
+                            >
+                                <div className="fixed inset-0 bg-black bg-opacity-25"/>
+                            </Transition.Child>
+
+                            <div className="fixed inset-0 overflow-y-auto">
+                                <div className="flex min-h-full items-center justify-center p-4 text-center">
+                                    <Transition.Child
+                                        as={Fragment}
+                                        enter="ease-out duration-300"
+                                        enterFrom="opacity-0 scale-95"
+                                        enterTo="opacity-100 scale-100"
+                                        leave="ease-in duration-200"
+                                        leaveFrom="opacity-100 scale-100"
+                                        leaveTo="opacity-0 scale-95"
+                                    >
+                                        <Dialog.Panel
+                                            className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#303030] p-6 text-left align-middle shadow-xl transition-all">
+                                            <Dialog.Title
+                                                as="h3"
+                                                className="text-center text-lg font-medium leading-6 text-white"
+                                            >
+                                                حذف حساب
+                                            </Dialog.Title>
+                                            <div className="mt-6 text-center text-white">
+                                                آیا از حذف حساب مطئن هستید؟
+                                            </div>
+                                            <div className="mt-4 flex flex-row justify-center">
+                                                <button
+                                                    type="button"
+                                                    className="inline-flex justify-center rounded-md border border-transparent ml-4 bg-red-600 text-white px-4 py-2 text-sm font-medium"
+                                                    onClick={deleteAccount}
+                                                >
+                                                    حذف
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="inline-flex justify-center rounded-md border border-transparent bg-dark text-white px-4 py-2 text-sm font-medium"
+                                                    onClick={closeModalDeleteAccount}
+                                                >
+                                                    بستن
+                                                </button>
+                                            </div>
+                                        </Dialog.Panel>
+                                    </Transition.Child>
+                                </div>
+                            </div>
+                        </Dialog>
+                    </Transition>
                 </div>
             </div>
-        </div>
-    )
+        </>
+    );
 }

@@ -8,6 +8,7 @@ import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis';
 
+
 const theme = createTheme({
     direction: 'rtl', // Both here and <body dir="rtl">
 });

@@ -6,6 +6,7 @@ import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis';
 import Button from "@mui/material/Button";
+import Address from "./Address"
 
 const cacheRtl = createCache({
     key: 'muirtl',
@@ -160,7 +161,7 @@ function UserProfile() {
                                 </CacheProvider>
                             </div>
                         </Tab.Panel>
-                        <Tab.Panel>Content 2</Tab.Panel>
+                        <Tab.Panel><Address /></Tab.Panel>
                         <Tab.Panel>
                             <div className="flex flex-col">
                                 <CacheProvider value={cacheRtl}>
