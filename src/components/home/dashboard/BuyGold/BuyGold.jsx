@@ -1,4 +1,3 @@
-
 import React from "react";
 import PropTypes from 'prop-types';
 import {styled} from '@mui/material/styles';
@@ -72,19 +71,19 @@ function ColorlibStepIcon(props) {
     const {active, completed, className} = props;
 
     const icons = {
-        1: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+        /*1: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                 stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round"
                   d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
         </svg>
-        ,
-        2: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+        ,*/
+        1: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                 stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round"
                   d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z"/>
         </svg>
         ,
-        3: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+        2: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                 stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round"
                   d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
@@ -127,7 +126,7 @@ const cacheRtl = createCache({
 });
 
 
-const steps = ['نوع دریافت', 'خرید طلا', 'پرداخت'];
+const steps = ['خرید طلا', 'پرداخت'];
 
 export default function BuyGold(props) {
     useEffect(() => {
@@ -292,82 +291,98 @@ export default function BuyGold(props) {
 
         <CacheProvider value={cacheRtl}>
             <ThemeProvider theme={theme}>
-                <div dir="rtl">
-                    <div className="mx-9 mt-5">
-                        <Box sx={{width: '100%'}}>
-                            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
-                                {steps.map((label) => (
-                                    <Step key={label}>
-                                        <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                                    </Step>
-                                ))}
-                            </Stepper>
-                            {activeStep === steps.length ? (
-                                <React.Fragment>
-                                    <div
-                                        className="text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold text-center">
-                                        <div className="text-sky-50">
-                                            <h6 className={"mb-3 text-mainGold"}>درخواست خرید شما با موفقیت ارسال
-                                                شد.</h6>
-                                            <p className={"font-light text-[0.8rem]"}>پس از تایید توسط کارشناس سامانه
-                                                امکان خرید برای شما ایجاد شده و با مراجعه به صفحه درخواست ها می توانید
-                                                فرایند خرید را انجام دهید</p>
-                                        </div>
+                <div dir="rtl" className="mx-9 mt-5 w-full">
+                    <Box sx={{width: '100%'}}>
+                        <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                        {activeStep === steps.length ? (
+                            <React.Fragment>
+                                <div
+                                    className="text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold text-center">
+                                    <div className="text-sky-50">
+                                        <h6 className={"mb-3 text-mainGold"}>درخواست خرید شما با موفقیت ارسال
+                                            شد.</h6>
+                                        <p className={"font-light text-[0.8rem]"}>پس از تایید توسط کارشناس سامانه
+                                            امکان خرید برای شما ایجاد شده و با مراجعه به صفحه درخواست ها می توانید
+                                            فرایند خرید را انجام دهید</p>
                                     </div>
+                                </div>
+                                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                    <Box sx={{flex: '1 1 auto'}}/>
+                                    <Button onClick={handleReset}>خرید مجدد</Button>
+                                </Box>
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                <div className={'max-w-[700px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
+                                    {(() => {
+                                        if (activeStep === 0) {
+                                            return <StepBuyGold
+                                                priceErrors={priceErrors}
+                                                weightErrors={weightErrors}
+                                                valuePrice={valuePrice}
+                                                handleChangePrice={handleChangePrice}
+                                                valueWeight={valueWeight}
+                                                handleChangeWeight={handleChangeWeight}
+                                                type={type}
+                                                setType={setType}
+                                            />;
+                                        } else if (activeStep === 1) {
+                                            return <StepPayment valuePrice={valuePrice} value={value}
+                                                                shipmentType={shipmentType}
+                                                                handleChange={handleChange}/>;
+                                        }
+                                    })()}
+                                    {/*{(() => {
+                                        if (activeStep === 0) {
+                                            return <StepReceiveType value={shipmentType}
+                                                                    handleChange={setShipmentType}/>;
+                                        } else if (activeStep === 1) {
+                                            return <StepBuyGold
+                                                priceErrors={priceErrors}
+                                                weightErrors={weightErrors}
+                                                valuePrice={valuePrice}
+                                                handleChangePrice={handleChangePrice}
+                                                valueWeight={valueWeight}
+                                                handleChangeWeight={handleChangeWeight}
+                                                type={type}
+                                                setType={setType}
+                                            />;
+                                        } else if (activeStep === 2) {
+                                            return <StepPayment valuePrice={valuePrice} value={value}
+                                                                shipmentType={shipmentType}
+                                                                handleChange={handleChange}/>;
+                                        }
+                                    })()}*/}
                                     <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                        <Button
+                                            color="inherit"
+                                            disabled={activeStep === 0}
+                                            onClick={handleBack}
+                                            sx={{mr: 1}}
+                                        >
+                                            بازگشت
+                                        </Button>
                                         <Box sx={{flex: '1 1 auto'}}/>
-                                        <Button onClick={handleReset}>خرید مجدد</Button>
-                                    </Box>
-                                </React.Fragment>
-                            ) : (
-                                <React.Fragment>
-                                    <div className={'text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
-                                        {(() => {
-                                            if (activeStep === 0) {
-                                                return <StepReceiveType value={shipmentType}
-                                                                        handleChange={setShipmentType}/>;
-                                            } else if (activeStep === 1) {
-                                                return <StepBuyGold
-                                                    priceErrors={priceErrors}
-                                                    weightErrors={weightErrors}
-                                                    valuePrice={valuePrice}
-                                                    handleChangePrice={handleChangePrice}
-                                                    valueWeight={valueWeight}
-                                                    handleChangeWeight={handleChangeWeight}
-                                                    type={type}
-                                                    setType={setType}
-                                                />;
-                                            } else if (activeStep === 2) {
-                                                return <StepPayment valuePrice={valuePrice} value={value}
-                                                                    shipmentType={shipmentType}
-                                                                    handleChange={handleChange}/>;
-                                            }
-                                        })()}
-                                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                            <Button
-                                                color="inherit"
-                                                disabled={activeStep === 0}
-                                                onClick={handleBack}
-                                                sx={{mr: 1}}
-                                            >
-                                                بازگشت
-                                            </Button>
-                                            <Box sx={{flex: '1 1 auto'}}/>
-                                            {/*{isStepOptional(activeStep) && (
+                                        {/*{isStepOptional(activeStep) && (
                                                 <Button color="inherit" onClick={handleSkip} sx={{mr: 1}}>
                                                     Skip
                                                 </Button>
                                             )}*/}
 
-                                            <Button onClick={handleNext}>
-                                                {activeStep === steps.length - 1 ? 'ثبت درخواست' : 'بعدی'}
-                                            </Button>
-                                        </Box>
-                                    </div>
-                                </React.Fragment>
-                            )}
-                        </Box>
-                    </div>
+                                        <Button onClick={handleNext}>
+                                            {activeStep === steps.length - 1 ? 'ثبت درخواست' : 'بعدی'}
+                                        </Button>
+                                    </Box>
+                                </div>
+                            </React.Fragment>
+                        )}
+                    </Box>
                 </div>
             </ThemeProvider>
         </CacheProvider>

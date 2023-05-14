@@ -70,7 +70,7 @@ function StepSellType(props) {
                                         error={props.priceErrors.length !== 0}
                                         value={props.valuePrice.numberformat}
                                         onChange={props.handleChangePrice}
-                                        sx={{input: {color: '#fff !important'}}}
+                                        sx={{label: {color: '#fff !important'}, input: {color: '#fff !important'}}}
                                         name="numberformat"
                                         id="formatted-numberformat-input"
                                         InputProps={{
@@ -93,7 +93,7 @@ function StepSellType(props) {
                                         error={props.weightErrors.length !== 0}
                                         id="outlined-start-adornment"
                                         value={props.valueWeight}
-                                        sx={{input: {color: '#fff !important'}}}
+                                        sx={{label: {color: '#fff !important'}, input: {color: '#fff !important'}}}
                                         onChange={props.handleChangeWeight}
                                         InputProps={{
                                             endAdornment: <InputAdornment position="start">گرم</InputAdornment>,

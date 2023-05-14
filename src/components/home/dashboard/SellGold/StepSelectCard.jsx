@@ -57,10 +57,26 @@ function StepSelectCard(props) {
     return (
         <>
             <h2 className="text-gold text-xl font-medium mb-6">
-                انتخاب شماره شبا
+                کیف پول
             </h2>
-
-            <div className="px-4 flex md:flex-row flex-col justify-between">
+            <div
+                className="flex flex-col space-y-3 border border-gold rounded-md border-solid border-2 p-3 text-sm mt-4 md:mt-0">
+                <div className='mb-2 text-md text-white'>اطلاعات تکمیلی:</div>
+                <div className="flex flex-row justify-between">
+                    <div>قیمت طلا</div>
+                    <div>{props.valuePrice.numberformat} ریال</div>
+                </div>
+                <div className="flex flex-row justify-between">
+                    <div>کارمزد تراکنش</div>
+                    <div>-50000 ریال</div>
+                </div>
+                <div className="border border-gold border-solid my-2"></div>
+                <div className="flex flex-row justify-between">
+                    <div>قابل پرداخت</div>
+                    <div>{(parseInt(props.valuePrice.numberformat) - 50000)} ریال</div>
+                </div>
+            </div>
+            {/*<div className="px-4 flex md:flex-row flex-col justify-between">
                 <div className="flex flex-col space-y-4 md:w-1/2 md:ml-4">
                     <div>
                         <CacheProvider value={cacheRtl}>
@@ -191,8 +207,7 @@ function StepSelectCard(props) {
                         <div>{(parseInt(props.valuePrice.numberformat) - 50000)} ریال</div>
                     </div>
                 </div>
-            </div>
-
+            </div>*/}
         </>
     )
 }

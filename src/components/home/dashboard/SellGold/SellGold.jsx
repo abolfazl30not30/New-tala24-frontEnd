@@ -112,7 +112,7 @@ const cacheRtl = createCache({
     stylisPlugins: [prefixer, rtlPlugin],
 });
 
-const steps = ['نوع فروش', 'انتخاب شماره شبا'];
+const steps = ['فروش طلا', 'کیف پول'];
 
 function SellGold(props) {
     useEffect(() => {
@@ -190,7 +190,6 @@ function SellGold(props) {
             numberformat: (parseInt(event.target.value) * rialToWeightCoefficient).toString(),
         });
     }
-
 
     const isStepOptional = (step) => {
         return step === 1;
@@ -274,73 +273,71 @@ function SellGold(props) {
     return (
         <CacheProvider value={cacheRtl}>
             <ThemeProvider theme={theme}>
-                <div dir="rtl">
-                    <div className="mx-9 mt-5">
-                        <Box sx={{width: '100%'}}>
-                            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
-                                {steps.map((label) => (
-                                    <Step key={label}>
-                                        <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                                    </Step>
-                                ))}
-                            </Stepper>
-                            {activeStep === steps.length ? (
-                                <React.Fragment>
-                                    <div
-                                        className="text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold text-center">
-                                        <div className="text-sky-50">
-                                            فروش با موفقیت انجام شد
-                                        </div>
+                <div className="mx-9 mt-5 w-full">
+                    <Box sx={{width: '100%'}}>
+                        <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                        {activeStep === steps.length ? (
+                            <React.Fragment>
+                                <div
+                                    className="text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold text-center">
+                                    <div className="text-sky-50">
+                                        فروش با موفقیت انجام شد
                                     </div>
+                                </div>
+                                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                    <Box sx={{flex: '1 1 auto'}}/>
+                                    <Button onClick={handleReset}>فروش مجدد</Button>
+                                </Box>
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                <div className={'max-w-[700px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
+                                    {(() => {
+                                        if (activeStep == 0) {
+                                            return <StepSellType
+                                                priceErrors={priceErrors}
+                                                weightErrors={weightErrors}
+                                                value={value}
+                                                handleChange={handleChange}
+                                                valuePrice={valuePrice}
+                                                handleChangePrice={handleChangePrice}
+                                                valueWeight={valueWeight}
+                                                handleChangeWeight={handleChangeWeight}
+                                            />;
+                                        } else if (activeStep == 1) {
+                                            return <StepSelectCard valuePrice={valuePrice}/>;
+                                        }
+                                    })()}
                                     <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                        <Button
+                                            color="inherit"
+                                            disabled={activeStep === 0}
+                                            onClick={handleBack}
+                                            sx={{mr: 1}}
+                                        >
+                                            بازگشت
+                                        </Button>
                                         <Box sx={{flex: '1 1 auto'}}/>
-                                        <Button onClick={handleReset}>فروش مجدد</Button>
-                                    </Box>
-                                </React.Fragment>
-                            ) : (
-                                <React.Fragment>
-                                    <div className={'text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
-                                        {(() => {
-                                            if (activeStep == 0) {
-                                                return <StepSellType
-                                                    priceErrors={priceErrors}
-                                                    weightErrors={weightErrors}
-                                                    value={value}
-                                                    handleChange={handleChange}
-                                                    valuePrice={valuePrice}
-                                                    handleChangePrice={handleChangePrice}
-                                                    valueWeight={valueWeight}
-                                                    handleChangeWeight={handleChangeWeight}
-                                                />;
-                                            } else if (activeStep == 1) {
-                                                return <StepSelectCard valuePrice={valuePrice}/>;
-                                            }
-                                        })()}
-                                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                            <Button
-                                                color="inherit"
-                                                disabled={activeStep === 0}
-                                                onClick={handleBack}
-                                                sx={{mr: 1}}
-                                            >
-                                                بازگشت
-                                            </Button>
-                                            <Box sx={{flex: '1 1 auto'}}/>
-                                            {/*{isStepOptional(activeStep) && (
+                                        {/*{isStepOptional(activeStep) && (
                                                 <Button color="inherit" onClick={handleSkip} sx={{mr: 1}}>
                                                     Skip
                                                 </Button>
                                             )}*/}
 
-                                            <Button onClick={handleNext}>
-                                                {activeStep === steps.length - 1 ? 'اتمام' : 'بعدی'}
-                                            </Button>
-                                        </Box>
-                                    </div>
-                                </React.Fragment>
-                            )}
-                        </Box>
-                    </div>
+                                        <Button onClick={handleNext}>
+                                            {activeStep === steps.length - 1 ? 'اتمام' : 'بعدی'}
+                                        </Button>
+                                    </Box>
+                                </div>
+                            </React.Fragment>
+                        )}
+                    </Box>
                 </div>
             </ThemeProvider>
         </CacheProvider>

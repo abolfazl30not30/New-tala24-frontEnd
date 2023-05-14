@@ -102,7 +102,7 @@ function InventoryIncrease() {
 
     return (
         <>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
                 <h3 className={'mx-9 my-6 font-bold text-gold text-xl'}>
                     افزایش موجودی
                 </h3>

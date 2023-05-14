@@ -144,7 +144,7 @@ const BuyReport = () => {
     }
 
     return (
-        <div className={'mx-9 mt-5'}>
+        <div className={'mx-9 mt-5 w-full'}>
             <h2 className={'font-bold text-gold text-2xl'}>
                 گزارش خرید
             </h2>

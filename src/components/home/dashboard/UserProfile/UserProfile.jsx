@@ -33,7 +33,7 @@ function UserProfile() {
     }
 
     return (
-        <div className="flex flex-col mx-4 mb-8">
+        <div className="flex flex-col mx-4 mb-8 w-full">
             <h3 className={'mr-6 my-6 font-bold text-gold text-xl'}>
                 پروفایل کاربری
             </h3>
