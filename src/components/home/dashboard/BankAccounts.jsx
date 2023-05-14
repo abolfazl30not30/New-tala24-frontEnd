@@ -5,6 +5,11 @@ import {TextField} from "@mui/material";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis';
+import {EnglishToPersian} from "../../../helper/EnglishToPersian";
+import {MdArrowBackIosNew} from "react-icons/md";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+
 
 const cacheRtl = createCache({
     key: 'muirtl',
@@ -249,52 +254,92 @@ export default function BankAccounts() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {bankAccounts.map((account, index) => (
-                            <div
-                                className="flex flex-col justify-between border-2 border-solid border-gold p-4 rounded space-y-2 text-xs">
-                                <div className='flex flex-row'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                         stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M15.75 19.5L8.25 12l7.5-7.5"/>
-                                    </svg>
-                                    {account.accountNumber}
-                                </div>
-                                <div className='flex flex-row'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                         stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M15.75 19.5L8.25 12l7.5-7.5"/>
-                                    </svg>
-                                    {account.cardNumber}
-                                </div>
-                                <div className='flex flex-row'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                         stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M15.75 19.5L8.25 12l7.5-7.5"/>
-                                    </svg>
-                                    {account.shabaNumber}
-                                </div>
-                                <div className='flex flex-row'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                         stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M15.75 19.5L8.25 12l7.5-7.5"/>
-                                    </svg>
-                                    {account.bankName}
-                                </div>
-                                <div className="flex flex-row justify-center space-x-2 space-x-reverse">
-                                    <button className='flex flex-row bg-amber-400 text-black p-2 rounded'
-                                            onClick={() => openModalEditAccount(account.id)}>
-                                        ویرایش حساب
-                                    </button>
-                                    <button
-                                        className='flex flex-row bg-red-600 text-white p-2 rounded'
-                                        onClick={() => openModalDeleteAccount(account.id)}>
-                                        حذف حساب
-                                    </button>
+                            <div className="rounded-2xl p-2 bg-mainGray text-white p-7">
+                                <div>
+                                    <div className="text-center mt-2 mb-5 text-gold ">
+                                        <h3 className=" font-bold text-xl"> حساب
+                                             {EnglishToPersian((index + 1).toString())}</h3>
+                                    </div>
+                                    <div className='flex flex-row items-center mb-2'>
+                                        <MdArrowBackIosNew className={"text-gold"}/>
+                                        <div className="request-item-title text-gold ml-4">شماره حساب:</div>
+                                        <div>{EnglishToPersian(account.accountNumber?.toString())}</div>
+                                    </div>
+                                    <div className='flex flex-row items-center mb-2'>
+                                        <MdArrowBackIosNew className={"text-gold"}/>
+                                        <div className="request-item-title text-gold ml-4 ">شماره کارت:</div>
+                                        <div>{EnglishToPersian(account.cardNumber?.toString())}</div>
+                                    </div>
+                                    <div className='flex flex-row items-center mb-2'>
+                                        <MdArrowBackIosNew className={"text-gold"}/>
+                                        <div className="request-item-title text-gold ml-4 ">شماره شبا:</div>
+                                        <div>{EnglishToPersian(account.shabaNumber?.toString())}</div>
+                                    </div>
+                                    <div className='flex flex-row items-center mb-2'>
+                                        <MdArrowBackIosNew className={"text-gold"}/>
+                                        <div className="request-item-title text-gold ml-4 ">نام بانک:</div>
+                                        <div>{EnglishToPersian(account.bankName?.toString())}</div>
+                                    </div>
+                                    <div className="mt-6 flex flex-row justify-center space-x-2 space-x-reverse">
+                                        <button className='flex flex-row bg-amber-400 text-black p-1 rounded'
+                                                onClick={() => openModalEditAccount(account.id)}>
+                                            ویرایش حساب
+                                        </button>
+                                        <button
+                                            className='flex flex-row bg-red-600 text-white p-1 rounded'
+                                            onClick={() => openModalDeleteAccount(account.id)}>
+                                            حذف حساب
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+
+                            // <div
+                            //     className="flex flex-col justify-between border-2 border-solid border-gold p-4 rounded space-y-2 text-xs">
+                            //     <div className='flex flex-row'>
+                            //         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            //              stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
+                            //             <path stroke-linecap="round" stroke-linejoin="round"
+                            //                   d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                            //         </svg>
+                            //         {account.accountNumber}
+                            //     </div>
+                            //     <div className='flex flex-row'>
+                            //         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            //              stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
+                            //             <path stroke-linecap="round" stroke-linejoin="round"
+                            //                   d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                            //         </svg>
+                            //         {account.cardNumber}
+                            //     </div>
+                            //     <div className='flex flex-row'>
+                            //         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            //              stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
+                            //             <path stroke-linecap="round" stroke-linejoin="round"
+                            //                   d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                            //         </svg>
+                            //         {account.shabaNumber}
+                            //     </div>
+                            //     <div className='flex flex-row'>
+                            //         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            //              stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-2">
+                            //             <path stroke-linecap="round" stroke-linejoin="round"
+                            //                   d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                            //         </svg>
+                            //         {account.bankName}
+                            //     </div>
+                            //     <div className="flex flex-row justify-center space-x-2 space-x-reverse">
+                            //         <button className='flex flex-row bg-amber-400 text-black p-2 rounded'
+                            //                 onClick={() => openModalEditAccount(account.id)}>
+                            //             ویرایش حساب
+                            //         </button>
+                            //         <button
+                            //             className='flex flex-row bg-red-600 text-white p-2 rounded'
+                            //             onClick={() => openModalDeleteAccount(account.id)}>
+                            //             حذف حساب
+                            //         </button>
+                            //     </div>
+                            // </div>
                         ))}
                     </div>
                     <Transition appear show={isOpenEditAccount} as={Fragment}>
