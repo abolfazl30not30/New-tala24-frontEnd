@@ -23,12 +23,34 @@ import persian_fa from "react-date-object/locales/persian_fa";
 
 
 const SellReport = () => {
+    const [rialReports,setRialReports] = useState([
+        {
+            type: 'withdrawMoney',
+            price : 100000,
+            status: 'pend',
+        },
+        {
+            type: 'deposit',
+            price : 25789000,
+            status: 'accept',
+        }
+    ])
     const [showErrorModal, setShowErrorModal] = useState(false)
     const [showSuccessModal, setShowSuccessModal] = useState(false)
     const [data, setData] = useState([]);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [selectedType, setSelectedType] = useState("all")
+
+    const reportType = {
+        withdrawMoney: 'واریز',
+        deposit: 'برداشت'
+    }
+    const reportStatus = {
+        pend: 'منتظر',
+        reject: 'رد شد',
+        accept: 'تایید شد'
+    }
 
     const handleChangeType = (event) => {
         setSelectedType(event.target.value);
@@ -147,19 +169,17 @@ const SellReport = () => {
     return (
         <div className={'mx-9 mt-5 w-full'}>
             <h2 className={'font-bold text-gold text-2xl'}>
-                گزارش فروش
+                گزارش ریالی
             </h2>
 
             <div className={'text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
-                <div className={'flex items-center'}>
+                {/*<div className={'flex items-center'}>
                     <FiFilter size={20} className={"text-gold"}/>
                     <h2 className={'mr-1 text-gold'}>
                         فیلتر
                     </h2>
-                </div>
-
-                <div className={'sm:flex justify-center text-[0.7rem] mt-6 pb-4'}
-                     style={{borderBottom: '1px solid #6F6F6F'}}>
+                </div>*/}
+                {/*<div className={'sm:flex justify-center text-[0.7rem] mt-6 pb-4'} style={{borderBottom: '1px solid #6F6F6F'}}>
                     <div className={'sm:flex'}>
                         <div className={'mt-2'}>
                             <div className={'mb-2'}>
@@ -289,9 +309,40 @@ const SellReport = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>*/}
 
                 <div className={'overflow-scroll'}>
+
+                    {
+                        data ?
+                            <>
+                                <table>
+                                    <tr>
+                                        <th className={'p-4 text-center'}>شماره</th>
+                                        <th className={'p-4 text-center'}>نوع</th>
+                                        <th className={'p-4 text-center'}>مبلغ</th>
+                                        <th className={'p-4 text-center'}>وضعیت</th>
+                                    </tr>
+                                    {
+                                        rialReports?.map((report,index) => (
+                                            <tr key={index}>
+                                                <td className={'p-3 text-center'}>{index + 1}</td>
+                                                <td className={'p-3 text-center'}>{reportType[report.type]}</td>
+                                                <td className={'p-3 text-center'}>{new Intl.NumberFormat().format(report.price)} ریال</td>
+                                                <td className={'p-3 text-center'}>{reportStatus[report.status]}</td>
+                                            </tr>
+                                        ))
+                                    }
+                                </table>
+                            </>
+                            :
+                            <h2 className={"text-[red] mt-5 text-[1.3rem] text-center"}>
+                                تراکنشی انجام نشده!
+                            </h2>
+                    }
+                </div>
+
+                {/*<div className={'overflow-scroll'}>
 
                     {
                         data ?
@@ -356,7 +407,7 @@ const SellReport = () => {
                                 تراکنشی انجام نشده!
                             </h2>
                     }
-                </div>
+                </div>*/}
             </div>
 
             <Modal

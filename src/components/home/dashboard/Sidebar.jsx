@@ -142,7 +142,7 @@ function Sidebar() {
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <TbReportAnalytics size={'25'} color="#fff"/>
                             <div className="sidebar-list-item-title">
-                                گزارش خرید
+                                گزارش طلایی
                             </div>
                         </div>
                     </NavLink>
@@ -151,7 +151,7 @@ function Sidebar() {
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <TbReportAnalytics size={'25'} color="#fff"/>
                             <div className="sidebar-list-item-title">
-                                گزارش فروش
+                                گزارش ریالی
                             </div>
                         </div>
                     </NavLink>

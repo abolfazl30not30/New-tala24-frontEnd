@@ -24,6 +24,30 @@ import FormControl from "@mui/material/FormControl";
 
 
 const BuyReport = () => {
+    const [goldReports,setGoldReports] = useState([
+        {
+            type: 'buyGold',
+            price : 100000,
+            status: 'pend',
+            weight: '100',
+            deliverType: 'storage',
+            components: {
+                count: 2,
+                weight:100
+            }
+        },
+        {
+            type: 'sellGold',
+            price : 25789000,
+            status: 'accept',
+            weight: '56',
+            deliverType: 'shipment',
+            components: {
+                count: 4,
+                weight:14
+            }
+        }
+    ])
     const [showErrorModal, setShowErrorModal] = useState(false)
     const [showSuccessModal, setShowSuccessModal] = useState(false)
     const [data, setData] = useState([]);
@@ -40,7 +64,6 @@ const BuyReport = () => {
         let convertDate = value.year + '/' + month + '/' + day;
         setStartDate(convertDate)
     }
-
     const handleDateEndInput = (value) => {
         let month = value.month < 10 ? ('0' + value.month) : value.month;
         let day = value.day < 10 ? ('0' + value.day) : value.day;
@@ -48,6 +71,19 @@ const BuyReport = () => {
         setEndDate(convertDate)
     }
 
+    const reportType = {
+        buyGold: 'خرید طلا',
+        sellGold: 'فروش طلا'
+    }
+    const reportStatus = {
+        pend: 'منتظر',
+        reject: 'رد شد',
+        accept: 'تایید شد'
+    }
+    const reportDeliverType = {
+        storage: 'نگهداری',
+        shipment: 'ارسال'
+    }
     useEffect(() => {
         const getData = async () => {
             const getDataRes = await api.get(`account/${localStorage.getItem("id")}`)
@@ -146,19 +182,17 @@ const BuyReport = () => {
     return (
         <div className={'mx-9 mt-5 w-full'}>
             <h2 className={'font-bold text-gold text-2xl'}>
-                گزارش خرید
+                گزارش طلایی
             </h2>
 
             <div className={'text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
-                <div className={'flex items-center'}>
+                {/*<div className={'flex items-center'}>
                     <FiFilter size={20} className={"text-gold"}/>
                     <h2 className={'mr-1 text-gold'}>
                         فیلتر
                     </h2>
-                </div>
-
-                <div className={'sm:flex justify-center text-[0.7rem] mt-6 pb-4'}
-                     style={{borderBottom: '1px solid #6F6F6F'}}>
+                </div>*/}
+                {/*<div className={'sm:flex justify-center text-[0.7rem] mt-6 pb-4'} style={{borderBottom: '1px solid #6F6F6F'}}>
                     <div className={'sm:flex'}>
                         <div className={'mt-2'}>
                             <div className={'mb-2'}>
@@ -287,9 +321,47 @@ const BuyReport = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>*/}
 
                 <div className={'overflow-scroll'}>
+
+                    {
+                        data ?
+                            <>
+                                <table>
+                                    <tr>
+                                        <th className={'p-4 text-center'}>شماره</th>
+                                        <th className={'p-4 text-center'}>نوع</th>
+                                        <th className={'p-4 text-center'}>مبلغ</th>
+                                        <th className={'p-4 text-center'}>وزن</th>
+                                        <th className={'p-4 text-center'}>وضعیت</th>
+                                        <th className={'p-4 text-center'}>نوع تحویل</th>
+                                        <th className={'p-4 text-center'}>اجزا</th>
+                                    </tr>
+                                    {
+                                        goldReports?.map((report,index) => (
+                                            <tr key={index}>
+                                                <td className={'p-3 text-center'}>{index + 1}</td>
+                                                <td className={'p-3 text-center'}>{reportType[report.type]}</td>
+                                                <td className={'p-3 text-center'}>{new Intl.NumberFormat().format(report.price)} ریال</td>
+                                                <td className={'p-3 text-center'}>{new Intl.NumberFormat().format(report.weight)} گرم</td>
+                                                <td className={'p-3 text-center'}>{reportStatus[report.status]}</td>
+                                                <td className={'p-3 text-center'}>{reportDeliverType[report.deliverType]}</td>
+                                                <td className={'p-3 text-center'}>{report.components.count} تا سکه {new Intl.NumberFormat().format(report.components.weight)} گرمی  </td>
+                                            </tr>
+                                        ))
+                                    }
+                                </table>
+                            </>
+                            :
+                            <h2 className={"text-[red] mt-5 text-[1.3rem] text-center"}>
+                                تراکنشی انجام نشده!
+                            </h2>
+                    }
+                </div>
+
+
+                {/*<div className={'overflow-scroll'}>
 
                     {
                         data ?
@@ -343,7 +415,7 @@ const BuyReport = () => {
                                 تراکنشی انجام نشده!
                             </h2>
                     }
-                </div>
+                </div>*/}
             </div>
 
             <Modal
