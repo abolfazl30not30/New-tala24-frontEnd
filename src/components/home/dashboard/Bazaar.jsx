@@ -1,15 +1,12 @@
 import '../../../style/chart.css';
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Line} from "react-chartjs-2";
-import {useContext, useEffect, useState} from "react";
-import signup from "../../../contexts/signup";
 import {useNavigate} from "react-router-dom";
 
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import api from "../../../api/api";
 import {BiErrorCircle} from "react-icons/bi";
@@ -78,36 +75,29 @@ const Bazaar = () => {
         position: 'absolute',
         top: '50%',
         left: '50%',
-        display:"flex",
-        flexDirection:"column",
-        alignItems:"center",
-        textAlign:"center",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
         transform: 'translate(-50%, -50%)',
         width: 400,
         bgcolor: '#303030',
         border: '2px solid #000',
         boxShadow: 24,
-        borderRadius:"1rem",
+        borderRadius: "1rem",
         p: 4,
     };
 
     return (
         <>
-            <div className={'mx-9 mt-5'}>
-                <h2 className={'text-white'}>
-                    بازار
-                </h2>
-
-                <div className={'details-container w-100 md2:flex pb-[50px] md2:p-0 mt-10 rounded-[8px]'}>
+                <div className={'details-container w-3/4 md2:flex pb-[50px] md2:p-0 mt-5 rounded-2xl '}>
                     <div className={'md2:w-2/5 md2:justify-start md1:w-5/12 w-100 whitespace-nowrap flex justify-center'}>
                         <div className={'mr-5 mt-[40px] mb-[40px]'}>
-
-                            <h2 className={'md2:text-right text-center md2:mb-[60px] mb-[20px] text-white text-[1.5rem]'}>
+                            <h2 className={'md2:text-right font-bold text-center md2:mb-[60px] mb-[20px] text-white text-[1.5rem]'}>
                                 نمای بازار
                             </h2>
-                            <div className={''}>
+                            <div>
                                 <div className={'flex float-right'}>
-
                                     <div className={''}>
                                         <div className={'details text-[0.62rem] p-2 pl-[50px] leading-5 text-white'}>
                                             <p>مظنه خرید</p>
@@ -144,7 +134,8 @@ const Bazaar = () => {
 
                     </div>
 
-                    <div className={'xsm:pr-0 sm:pr-[20px] md2:w-3/5 md2:m-0 md2:p-0 md1:block md1:w-7/12 mr-[50px] mb-[50px] '}>
+                    <div
+                        className={'xsm:pr-0 sm:pr-[20px] md2:w-3/5 md2:m-0 md2:p-0 md1:block md1:w-7/12 mr-[50px] mb-[50px] '}>
                         <div className={'main-chart md2:mt-[30px] ml-[30px]'}>
                             <div className={'mainPrice mb-3 pb-5'}>
                                 <p className={'text-[12px] text-white'}>
@@ -160,7 +151,6 @@ const Bazaar = () => {
                         </div>
                     </div>
                 </div>
-            </div>
 
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -168,7 +158,7 @@ const Bazaar = () => {
                 open={open}
                 onClose={handleClose}
                 closeAfterTransition
-                slots={{ backdrop: Backdrop }}
+                slots={{backdrop: Backdrop}}
                 slotProps={{
                     backdrop: {
                         timeout: 500,
@@ -181,7 +171,7 @@ const Bazaar = () => {
                         <Typography id="transition-modal-title" variant="h6" component="h2" color={"#fff"}>
                             براي انجام فرايند خريد و فروش بايد مشخصات خود را تكميل كنيد
                         </Typography>
-                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                        <Typography id="transition-modal-description" sx={{mt: 2}}>
                             <button className={"bg-gold py-2 px-5 rounded-2xl"} onClick={() => {
                                 navigate("/dashboard/complete-info")
                                 info.setSelected("complete-info")
