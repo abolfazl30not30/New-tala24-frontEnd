@@ -149,7 +149,7 @@ export default function ConfirmSellGold(props) {
     }
 
     return (
-        <div className="bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
+        <div className="w-full bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
             <div className="text-gold text-lg font-medium">درخواست فروش طلا</div>
             <table className='mt-8 text-white break-normal'>
                 <thead>

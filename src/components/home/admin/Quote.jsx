@@ -9,6 +9,10 @@ import {InputAdornment, TextField} from "@mui/material";
 import './../../../style/admin.css'
 import api from "../../../api/api";
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
 
 // Create RTL MUI
 const theme = createTheme({
@@ -24,7 +28,7 @@ function RTL(props) {
     return <CacheProvider value={cacheRtl}>{props.children}</CacheProvider>;
 }
 
-export default function GoldPriceRecord(props) {
+export default function Quote(props) {
     useEffect(() => {
         if (localStorage.getItem('role') !== "ADMIN") {
             localStorage.clear()
@@ -44,8 +48,9 @@ export default function GoldPriceRecord(props) {
     constructor()
     let [isOpen, setIsOpen] = useState(false)
     let [isOpenConfirm, setIsOpenConfirm] = useState(false)
-    let [newGoldPrice, setNewGoldPrice] = useState(null)
+    let [quotePrice, setQuotePrice] = useState(null)
     let [goldPriceHistory, setGoldPriceHistory] = useState([])
+    const [quoteType, setQuoteType] = React.useState('');
 
 
     useEffect(() => {
@@ -61,7 +66,7 @@ export default function GoldPriceRecord(props) {
 
     function closeModal() {
         setIsOpen(false)
-        setNewGoldPrice(0)
+        setQuotePrice(0)
     }
 
     function openModal() {
@@ -78,17 +83,16 @@ export default function GoldPriceRecord(props) {
         setIsOpenConfirm(true)
     }
 
-    const getPrice = e => setNewGoldPrice(e.target.value)
-
     async function recordNewPrice() {
-        await api.post("goldPrice",
+        /*await api.post("goldPrice",
             {
                 price: newGoldPrice,
                 adminName: localStorage.getItem("username")
             }
-        )
+        )*/
+        console.log(quoteType,quotePrice)
         setIsOpenConfirm(false)
-        setNewGoldPrice(null)
+        setQuotePrice(null)
 
         const getGoldPriceReq = await api.get("goldPrice")
         if (getGoldPriceReq) {
@@ -100,7 +104,7 @@ export default function GoldPriceRecord(props) {
     return (
         <div className="w-full bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
             <div className="flex flex-col space-y-4 md:flex-row items-center justify-between">
-                <div className="text-white text-lg font-medium">قیمت طلا</div>
+                <div className="text-white text-lg font-medium">مظنه</div>
                 <button
                     type="button"
                     onClick={openModal}
@@ -110,7 +114,7 @@ export default function GoldPriceRecord(props) {
                          stroke="currentColor" className="w-6 h-6 ml-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                     </svg>
-                    ثبت قیمت جدید
+                    ثبت مظنه جدید
                 </button>
                 <Transition appear show={isOpen} as={Fragment}>
                     <Dialog as="div" className="relative z-10" onClose={closeModal} dir="rtl">
@@ -143,19 +147,40 @@ export default function GoldPriceRecord(props) {
                                             as="h3"
                                             className="text-lg font-medium leading-6 text-gold"
                                         >
-                                            ثبت قیمت جدید
+                                            ثبت مظنه جدید
                                         </Dialog.Title>
                                         <div className="mt-6">
                                             <CacheProvider value={cacheRtl}>
                                                 <ThemeProvider theme={theme}>
                                                     <div dir="rtl">
                                                         <div className="flex flex-col space-y-4">
+
+
+
+                                                            <FormControl fullWidth>
+                                                                <InputLabel id="state-select-label" sx={{
+                                                                    color: '#fff',
+                                                                    "&.Mui-focused": {color: '#fff'}
+                                                                }}>نوع</InputLabel>
+                                                                <Select
+                                                                    labelId="state-select-label"
+                                                                    id="state-select"
+                                                                    value={quoteType}
+                                                                    label="نوع"
+                                                                    onChange={(e) => setQuoteType(e.target.value)}
+                                                                >
+                                                                    <MenuItem value={'purchase'}>خرید</MenuItem>
+                                                                    <MenuItem value={'sales'}>فروش</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+
+
                                                             <TextField
                                                                 id="outlined-end-adornment"
                                                                 name="price"
                                                                 label="قیمت"
-                                                                value={newGoldPrice}
-                                                                onChange={getPrice}
+                                                                value={quotePrice}
+                                                                onChange={(e) => setQuotePrice(e.target.value)}
                                                                 InputProps={{
                                                                     endAdornment: <InputAdornment position="end"><span
                                                                         style={{color: "#fff"}}>ریال</span></InputAdornment>,
@@ -232,10 +257,10 @@ export default function GoldPriceRecord(props) {
                                             as="h3"
                                             className="text-lg font-medium leading-6 text-gold"
                                         >
-                                            ثبت قیمت جدید
+                                            ثبت مظنه جدید
                                         </Dialog.Title>
                                         <div className="text-white mt-6">
-                                            آیا از ثبت قیمت جدید مطمئن هستید؟
+                                            آیا از ثبت مظنه جدید مطمئن هستید؟
                                         </div>
                                         <div className="mt-4">
                                             <div className="flex flex-row justify-evenly">
