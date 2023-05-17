@@ -8,6 +8,9 @@ import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis';
 import Num2persian from 'num2persian';
+import {EnglishToPersian} from "../../../helper/EnglishToPersian";
+import {PersianToEnglish} from "../../../helper/PersianToEnglish";
+import {SeparateNumber} from "../../../helper/SeparateNumber";
 
 const theme = createTheme({
     direction: 'rtl', // Both here and <body dir="rtl">
@@ -50,10 +53,16 @@ NumericFormatCustom.propTypes = {
 };
 
 function InventoryIncrease() {
-    const [amountEntered,setAmountEntered] =useState()
+    const [amountEntered,setAmountEntered] =useState("۰")
 
     const handleChangeAmount = (e) => {
-        setAmountEntered(e.target.value)
+        const value = EnglishToPersian(e.target.value)
+        setAmountEntered(value)
+    }
+    const convertRialToToman = (amount) =>{
+        const number = parseInt(PersianToEnglish(amount))
+        const toman = Math.floor(number / 10)
+        return Num2persian(toman)
     }
 
     return (
@@ -91,15 +100,15 @@ function InventoryIncrease() {
                         </div>
                         <div className='mt-5 mb-3 flex flex-row justify-center'>
                             <span className='ml-2'>معادل با</span>
-                            <span>{Num2persian(parseInt(amountEntered))} </span>
+                            <span>{convertRialToToman(amountEntered)}</span>
                             <span className="mr-2">تومان</span>
                         </div>
                         <div className="mt-6 flex justify-between w-3/4">
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs'>100,000 تومان</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs'>500,000 تومان</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs'>1,000,000 تومان</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs'>2,000,000 تومان</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs'>5,000,000 تومان</button>
+                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered("1000000")}}>{EnglishToPersian("1,000,000")} ریال</button>
+                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered("5000000")}}>{EnglishToPersian("5,000,000")} ریال</button>
+                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered("10000000")}}>{EnglishToPersian("10,000,000")} ریال</button>
+                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered("20000000")}}>{EnglishToPersian("20,000,000")} ریال</button>
+                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered("50000000")}}>{EnglishToPersian("50,000,000")} ریال</button>
                         </div>
                         <div className="mt-12 flex justify-center">
                             <button className='bg-gold text-black px-24 py-4 rounded-md text-sm hover:opacity-90'>پرداخت آنلاین</button>

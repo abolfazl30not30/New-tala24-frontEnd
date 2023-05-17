@@ -47,8 +47,7 @@ function Navbar() {
                 onClose={handleClose}
                 MenuListProps={{
                     'aria-labelledby': 'basic-button',
-                }}
-            >
+                }}>
                 <MenuItem>
                     <Link to='/' className="flex flex-row items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}

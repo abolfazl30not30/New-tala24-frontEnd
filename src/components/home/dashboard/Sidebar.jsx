@@ -165,7 +165,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/user-profile" className='w-100' activeClassName="active-navbar">
+                    <NavLink exact to="/dashboard/bank-accounts" className='w-100' activeClassName="active-navbar">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white">
