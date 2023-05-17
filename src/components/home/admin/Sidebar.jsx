@@ -88,7 +88,7 @@ function Sidebar() {
                         </div>
                     </Link>
 
-                    <Link to="/admin/new-blog" className='w-100'>
+                    <Link to="/admin/blogs" className='w-100'>
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
