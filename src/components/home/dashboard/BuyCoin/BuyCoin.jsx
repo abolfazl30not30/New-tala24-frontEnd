@@ -1,27 +1,20 @@
-
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from 'prop-types';
-import {styled} from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
+import {createTheme, styled, ThemeProvider} from '@mui/material/styles';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepConnector, {stepConnectorClasses} from '@mui/material/StepConnector';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import rtlPlugin from 'stylis-plugin-rtl';
 import {prefixer} from 'stylis';
 import {CacheProvider} from '@emotion/react';
 import createCache from '@emotion/cache';
 import StepPayment from "./StepPayment";
 import "./../../../../style/BuyGold.css"
-import {useContext, useEffect, useState} from "react";
 import signup from "../../../../contexts/signup";
 import api from "../../../../api/api";
-import * as yup from "yup";
 import StepAddCoin from "./StepAddCoin";
 
 const ColorlibConnector = styled(StepConnector)(({theme}) => ({
@@ -234,19 +227,21 @@ export default function BuyCoin(props) {
     return (
         <CacheProvider value={cacheRtl}>
             <ThemeProvider theme={theme}>
-                <div dir="rtl" className="mx-9 mt-5 w-full">
+                <div dir="rtl" className="mx-9 mt-4 w-full">
                     <Box sx={{width: '100%'}}>
-                        <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
-                            {steps.map((label) => (
-                                <Step key={label}>
-                                    <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
+                        <div className="md:w-3/4 w-full mx-auto">
+                            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
+                                {steps.map((label) => (
+                                    <Step key={label}>
+                                        <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
+                        </div>
                         {activeStep === steps.length ? (
                             <React.Fragment>
                                 <div
-                                    className   ="text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold text-center">
+                                    className="text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold text-center">
                                     <div className="text-sky-50">
                                         <h6 className={"mb-3 text-mainGold"}>درخواست خرید شما با موفقیت ارسال
                                             شد.</h6>
@@ -262,10 +257,11 @@ export default function BuyCoin(props) {
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
-                                <div className={'text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
+                                <div
+                                    className={'max-w-[1000px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
                                     {(() => {
                                         if (activeStep === 0) {
-                                            return <StepAddCoin />;
+                                            return <StepAddCoin/>;
                                         } else if (activeStep === 1) {
                                             return <StepPayment/>;
                                         }
@@ -278,8 +274,9 @@ export default function BuyCoin(props) {
                                             بازگشت
                                         </button>
                                         <Box sx={{flex: '1 1 auto'}}/>
-                                        <button onClick={handleNext} className="bg-[#21BA55] hover:bg-green-700 text-white py-2 w-[7.5rem] rounded">
-                                            {activeStep === steps.length - 1 ? 'ثبت درخواست' : 'بعدی'}
+                                        <button onClick={handleNext}
+                                                className="bg-[#21BA55] hover:bg-green-700 text-white py-2 w-[7.5rem] rounded">
+                                            {activeStep === steps.length - 1 ? 'پرداخت' : 'بعدی'}
                                         </button>
                                     </Box>
                                 </div>

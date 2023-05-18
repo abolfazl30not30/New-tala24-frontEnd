@@ -112,7 +112,7 @@ const cacheRtl = createCache({
     stylisPlugins: [prefixer, rtlPlugin],
 });
 
-const steps = ['فروش طلا', 'کیف پول'];
+const steps = ['فروش طلا', ' ثبت درخواست فروش'];
 
 function SellGold(props) {
     useEffect(() => {
@@ -275,13 +275,15 @@ function SellGold(props) {
             <ThemeProvider theme={theme}>
                 <div className="mx-9 mt-5 w-full">
                     <Box sx={{width: '100%'}}>
-                        <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
-                            {steps.map((label) => (
-                                <Step key={label}>
-                                    <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
+                        <div className="md:w-3/4 w-full mx-auto">
+                            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
+                                {steps.map((label) => (
+                                    <Step key={label}>
+                                        <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
+                        </div>
                         {activeStep === steps.length ? (
                             <React.Fragment>
                                 <div
@@ -297,7 +299,7 @@ function SellGold(props) {
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
-                                <div className={'max-w-[700px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
+                                <div className={'max-w-[1000px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
                                     {(() => {
                                         if (activeStep == 0) {
                                             return <StepSellType
@@ -315,24 +317,16 @@ function SellGold(props) {
                                         }
                                     })()}
                                     <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                        <Button
-                                            color="inherit"
+                                        <button
+                                            className={"bg-red-600 hover:bg-red-800 text-white py-2 w-[7.5rem] rounded disabled:bg-red-400 disabled:text-red-300 disabled:cursor-not-allowed"}
                                             disabled={activeStep === 0}
-                                            onClick={handleBack}
-                                            sx={{mr: 1}}
-                                        >
+                                            onClick={handleBack}>
                                             بازگشت
-                                        </Button>
+                                        </button>
                                         <Box sx={{flex: '1 1 auto'}}/>
-                                        {/*{isStepOptional(activeStep) && (
-                                                <Button color="inherit" onClick={handleSkip} sx={{mr: 1}}>
-                                                    Skip
-                                                </Button>
-                                            )}*/}
-
-                                        <Button onClick={handleNext}>
-                                            {activeStep === steps.length - 1 ? 'اتمام' : 'بعدی'}
-                                        </Button>
+                                        <button onClick={handleNext} className="bg-[#21BA55] hover:bg-green-700 text-white py-2 w-[7.5rem] rounded">
+                                            {activeStep === steps.length - 1 ? 'ثبت درخواست' : 'بعدی'}
+                                        </button>
                                     </Box>
                                 </div>
                             </React.Fragment>

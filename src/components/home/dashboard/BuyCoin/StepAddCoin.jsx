@@ -1,19 +1,13 @@
-import React, {Fragment,useState} from 'react'
+import React, {Fragment, useState} from 'react'
 import "../../../../style/buycoin.css"
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
 import {InputAdornment, TextField} from "@mui/material";
 import PropTypes from 'prop-types';
 import {NumericFormat} from 'react-number-format';
-import * as yup from "yup";
 import coins from "../../../../images/icons.svg"
 import {RiAddFill, RiHandCoinFill} from "react-icons/ri";
 import {BsTrashFill} from "react-icons/bs"
 import {Dialog, Transition} from '@headlessui/react'
 import {CacheProvider} from "@emotion/react";
-import api from "../../../../api/api";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis'
@@ -58,7 +52,7 @@ function StepAddCoin() {
         stylisPlugins: [prefixer, rtlPlugin],
     });
 
-    const[isOpenCoin,setIsOpenCoin] = useState(false)
+    const [isOpenCoin, setIsOpenCoin] = useState(false)
     const [Coin, setCoin] = useState(["test"])
     const [coinWight, setCoinWight] = useState("")
     const [selectedCoin, setSelectedCoin] = useState("")
@@ -75,7 +69,7 @@ function StepAddCoin() {
         setIsOpenCoin(false)
     };
 
-    const handleAddNewCoin =  () => {
+    const handleAddNewCoin = () => {
         // await api.post(`info`, {
         //     accountId: localStorage.getItem("id"),
         //     value: new,
@@ -91,25 +85,27 @@ function StepAddCoin() {
         <>
             <div className="container">
                 <div className="my-2 px-4">
-                    <h2 className="text-white text-l font-bold" >تعیین تعداد سکه</h2>
+                    <h2 className="text-white text-l font-bold">تعیین تعداد سکه</h2>
                 </div>
-                <div className="inventory-box bg-mainGray rounded-xl p-5 flex justify-center mx-10 mt-3 mb-4">
-                    <div className="flex flex-col rounded-xl justify-center p-3 border-dashed border-2 border-neutral-700 ">
+                <div className="inventory-box bg-mainGray rounded-xl p-3 flex justify-center mx-4 md:mx-10 mt-3 mb-4">
+                    <div className="flex flex-col rounded-xl justify-center p-2 border-dashed border-2 border-neutral-700 ">
                         <div className="flex justify-center mb-3"><RiHandCoinFill className="text-gold" fontSize="2rem"/></div>
                         <h5 className="mb-3 text-[1rem] text-gold">موجودی طلایی</h5>
-                        <div className="text-[0.8rem] flex justify-center"><span className="ml-2">14.5222</span>گرم</div>
+                        <div className="text-[0.8rem] flex justify-center"><span className="ml-2">1.2</span>گرم </div>
                     </div>
                 </div>
-                        <div className="coins flex justify-center items-center flex-col border-dashed border-2 border-neutral-700 p-3 mx-10 rounded-xl " >
-                            <div className="coin bg-mainGray rounded-2xl py-3 w-[55%] flex border-5 border-sky-100 mb-3">
-                            <div className="icons flex justify-center items-center">
+                <div
+                    className="coins flex justify-center items-center flex-col border-dashed border-2 border-neutral-700 p-3 mx-10 rounded-xl ">
+                    <div className="coin bg-mainGray rounded-2xl py-2 w-[70%] flex border-5 border-sky-100 mb-3">
+                        <div className="icons flex justify-center items-center">
                             <img src={coins} className="w-3/4" alt="coins"/>
                         </div>
                         <div className="text-section flex items-center">
                             <h4 className="text-white">سکه طلای 1 گرمی</h4>
                         </div>
-                        <div className="mr-10 flex justify-around flex-col w-[40%] p-1 rounded-xl" style={{border:"1px solid #666666"}}>
-                            <div className="flex p-[0.3rem]" style={{borderBottom:"1px solid #666666"}}>
+                        <div className="mr-10 flex justify-around flex-col w-[40%] p-1 rounded-xl"
+                             style={{border: "1px solid #666666"}}>
+                            <div className="flex p-[0.3rem]" style={{borderBottom: "1px solid #666666"}}>
                                 <div className=" flex-auto w-2/3 flex items-center">
                                     <span className="text-[0.8rem] font-thin text-gold">وزن</span>
                                 </div>
@@ -135,15 +131,16 @@ function StepAddCoin() {
                         </div>
                     </div>
 
-                    <div className="coin bg-mainGray rounded-2xl py-3 w-[55%] flex border-5 border-sky-100 mb-3">
+                    <div className="coin bg-mainGray rounded-2xl py-2 w-[70%] flex border-5 border-sky-100 mb-3">
                         <div className="icons flex justify-center items-center">
                             <img src={coins} className="w-3/4" alt="coins"/>
                         </div>
                         <div className="text-section flex items-center">
                             <h4 className="text-white">سکه طلای 1 گرمی</h4>
                         </div>
-                        <div className="mr-10 flex justify-around flex-col w-[40%] p-1 rounded-xl" style={{border:"1px solid #666666"}}>
-                            <div className="flex p-[0.3rem]" style={{borderBottom:"1px solid #666666"}}>
+                        <div className="mr-10 flex justify-around flex-col w-[40%] p-1 rounded-xl"
+                             style={{border: "1px solid #666666"}}>
+                            <div className="flex p-[0.3rem]" style={{borderBottom: "1px solid #666666"}}>
                                 <div className=" flex-auto w-2/3 flex items-center">
                                     <span className="text-[0.8rem] font-thin text-gold">وزن</span>
                                 </div>
@@ -171,9 +168,10 @@ function StepAddCoin() {
                 </div>
 
                 <div className="flex justify-center mt-7">
-                    <button className="bg-gold rounded text-black py-2 px-16 hover:opacity-70 flex items-center" onClick={handleOpenCoin}>
+                    <button className="bg-gold rounded text-black py-2 px-16 hover:opacity-70 flex items-center"
+                            onClick={handleOpenCoin}>
                         <RiAddFill/>
-                         افـزودن سـکـه جدید
+                        افـزودن سـکـه جدید
                     </button>
                 </div>
 
@@ -211,15 +209,23 @@ function StepAddCoin() {
                                         </Dialog.Title>
                                         <div className="flex flex-col mt-6">
                                             <CacheProvider value={cacheRtl}>
-                                                <TextField id="outlined-basic" className="w-100 " label=" وزن سکه را وارد کنید..."
+                                                <TextField id="outlined-basic" className="w-100 "
+                                                           label=" وزن سکه را وارد کنید..."
                                                            variant="outlined"
                                                            value={coinWight}
                                                            onChange={(e) => setCoinWight(e.target.value)}
                                                            fullWidth
                                                            multiline
-                                                           InputLabelProps={{style: {fontFamily: "dana", fontSize: "0.9rem"}}}
+                                                           InputLabelProps={{
+                                                               style: {
+                                                                   fontFamily: "dana",
+                                                                   fontSize: "0.9rem"
+                                                               }
+                                                           }}
                                                            InputProps={{
-                                                               style: {fontFamily: "dana"},endAdornment: <InputAdornment position="end">گرم</InputAdornment>,
+                                                               style: {fontFamily: "dana"},
+                                                               endAdornment: <InputAdornment
+                                                                   position="end">گرم</InputAdornment>,
                                                            }}/>
 
                                             </CacheProvider>
@@ -229,7 +235,9 @@ function StepAddCoin() {
                                                 <button
                                                     type="button"
                                                     className="bg-[#21BA55] hover:bg-green-700 text-white py-2 w-[7.5rem] rounded"
-                                                    onClick={()=>{handleAddNewCoin()}}>
+                                                    onClick={() => {
+                                                        handleAddNewCoin()
+                                                    }}>
                                                     ثبت
                                                 </button>
                                                 <button
