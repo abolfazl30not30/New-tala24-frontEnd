@@ -104,11 +104,11 @@ function InventoryIncrease() {
                             <span className="mr-2">تومان</span>
                         </div>
                         <div className="mt-6 flex justify-between w-3/4">
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered("1000000")}}>{EnglishToPersian("1,000,000")} ریال</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered("5000000")}}>{EnglishToPersian("5,000,000")} ریال</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered("10000000")}}>{EnglishToPersian("10,000,000")} ریال</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered("20000000")}}>{EnglishToPersian("20,000,000")} ریال</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered("50000000")}}>{EnglishToPersian("50,000,000")} ریال</button>
+                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered(EnglishToPersian("1000000"))}}>{EnglishToPersian("1,000,000")} ریال</button>
+                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered(EnglishToPersian("5000000"))}}>{EnglishToPersian("5,000,000")} ریال</button>
+                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered(EnglishToPersian("10000000"))}}>{EnglishToPersian("10,000,000")} ریال</button>
+                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered(EnglishToPersian("20000000"))}}>{EnglishToPersian("20,000,000")} ریال</button>
+                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered(EnglishToPersian("50000000"))}}>{EnglishToPersian("50,000,000")} ریال</button>
                         </div>
                         <div className="mt-12 flex justify-center">
                             <button className='bg-gold text-black px-24 py-4 rounded-md text-sm hover:opacity-90'>پرداخت آنلاین</button>

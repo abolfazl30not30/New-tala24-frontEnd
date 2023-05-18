@@ -7,6 +7,8 @@ import {InputAdornment, TextField} from "@mui/material";
 import PropTypes from 'prop-types';
 import {NumericFormat} from 'react-number-format';
 import * as yup from "yup";
+import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
+import {RiHandCoinFill} from "react-icons/ri";
 
 
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
@@ -43,25 +45,34 @@ NumericFormatCustom.propTypes = {
 
 
 function StepBuyGold(props) {
-
     return (
         <>
-            <h2 className="text-gold text-xl font-medium mb-6">
+            <h2 className="text-white text-2xl font-medium mb-6">
                 خرید طلا
             </h2>
-            <div className="px-4 flex md:flex-row flex-col items-center">
-                <FormControl className="md:w-1/3">
-                    <RadioGroup
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                        value={props.type}
-                        onChange={(e) => props.setType(e.target.value)}
-                    >
-                        <FormControlLabel value="price" control={<Radio/>} label="بر اساس مبلغ"/>
-                        <FormControlLabel value="weight" control={<Radio/>} label="بر اساس وزن طلا"/>
-                    </RadioGroup>
-                </FormControl>
-                <div className=" mt-3 md:mt-0 buyGoldInput" style={{width: "50%"}}>
+            <div className="inventory-box bg-mainGray rounded-xl p-3 flex justify-center mx-4 md:mx-10 mt-3 mb-4">
+                <div className="flex flex-col rounded-xl justify-center p-2 border-dashed border-2 border-neutral-700 ">
+                    <div className="flex justify-center mb-3"><RiHandCoinFill className="text-gold" fontSize="2rem"/></div>
+                    <h5 className="mb-3 text-[1rem] text-gold">موجودی کیف پول</h5>
+                    <div className="text-[0.8rem] flex justify-center"><span className="ml-2">1200000</span>ریال </div>
+                </div>
+            </div>
+            <div className="px-1 flex flex-col items-center md:border-dashed md:border-2 md:border-neutral-700 md:py-5 md:px-3 mx-4 md:mx-10 rounded-xl">
+                <div className="mb-5">
+                    <FormControl>
+                        <RadioGroup
+                            row
+                            aria-labelledby="demo-controlled-radio-buttons-group"
+                            name="position"
+                            value={props.type}
+                            onChange={(e) => props.setType(e.target.value)}
+                        >
+                            <FormControlLabel  value="price" control={<Radio/>} label="بر اساس مبلغ" />
+                            <FormControlLabel value="weight" control={<Radio/>} label="بر اساس وزن طلا"/>
+                        </RadioGroup>
+                    </FormControl>
+                </div>
+                <div className="mt-3 md:mt-0 buyGoldInput w-full md:w-1/2">
                     {
                         props.type === 'price'
                             ? (
@@ -110,6 +121,21 @@ function StepBuyGold(props) {
                                     }
                                 </div>
                             )
+                    }
+                </div>
+                <div className="w-full md:w-1/2 mt-5">
+                    {
+                        props.type === 'price'?(
+                            <div className="flex justify-center items-center flex-col md:flex-row p-4 text-bgGray rounded w-full background-label">
+                                <h5 className="font-bold ml-4">وزن طلا:</h5>
+                                <span className="font-bold" >{EnglishToPersian("432.152")}<span className="font-bold mr-2">گرم</span></span>
+                            </div>
+                        )  : (
+                            <div className="flex justify-center items-center  flex-col md:flex-row p-4 text-bgGray rounded w-full background-label">
+                                <h5 className="font-bold ml-4">مبلغ پرداختی:</h5>
+                                <span className="font-bold">{EnglishToPersian("1200000")} <span className="font-bold mr-2">تومان</span></span>
+                            </div>
+                        )
                     }
                 </div>
             </div>
