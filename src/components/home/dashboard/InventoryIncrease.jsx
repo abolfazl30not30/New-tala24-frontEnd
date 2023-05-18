@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {InputAdornment, TextField} from "@mui/material";
 import PropTypes from 'prop-types';
 import {NumericFormat} from 'react-number-format';
@@ -10,7 +10,6 @@ import {prefixer} from 'stylis';
 import Num2persian from 'num2persian';
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
 import {PersianToEnglish} from "../../../helper/PersianToEnglish";
-import {SeparateNumber} from "../../../helper/SeparateNumber";
 
 const theme = createTheme({
     direction: 'rtl', // Both here and <body dir="rtl">
@@ -53,13 +52,13 @@ NumericFormatCustom.propTypes = {
 };
 
 function InventoryIncrease() {
-    const [amountEntered,setAmountEntered] =useState("۰")
+    const [amountEntered, setAmountEntered] = useState("۰")
 
     const handleChangeAmount = (e) => {
         const value = EnglishToPersian(e.target.value)
         setAmountEntered(value)
     }
-    const convertRialToToman = (amount) =>{
+    const convertRialToToman = (amount) => {
         const number = parseInt(PersianToEnglish(amount))
         const toman = Math.floor(number / 10)
         return Num2persian(toman)
@@ -67,53 +66,68 @@ function InventoryIncrease() {
 
     return (
         <>
-
-
-                    <div className="mt-5 text-white bg-[#252525] rounded-2xl p-10 w-3/4 flex items-center  flex-col">
-                        <div className="mb-6 flex justify-start w-full">
-                            <h3 className={'font-bold text-white text-2xl'}>
-                                افزایش موجودی
-                            </h3>
-                        </div>
-                        <div className={"w-3/4 mx-auto mt-10"}>
-                            <CacheProvider value={cacheRtl}>
-                                <ThemeProvider theme={theme}>
-                                    <div dir="rtl">
-                                        <div className="">
-                                            <TextField
-                                                fullWidth
-                                                label="مبلغ پرداختی"
-                                                /*error={props.priceErrors.length !== 0}*/
-                                                value={amountEntered}
-                                                onChange={handleChangeAmount}
-                                                sx={{label: {color: '#fff !important'}}}
-                                                name="numberformat"
-                                                id="formatted-numberformat-input"
-                                                InputProps={{
-                                                    endAdornment: <InputAdornment position="start">ریال</InputAdornment>,
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                </ThemeProvider>
-                            </CacheProvider>
-                        </div>
-                        <div className='mt-5 mb-3 flex flex-row justify-center'>
-                            <span className='ml-2'>معادل با</span>
-                            <span>{convertRialToToman(amountEntered)}</span>
-                            <span className="mr-2">تومان</span>
-                        </div>
-                        <div className="mt-6 flex justify-between w-3/4">
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered(EnglishToPersian("1000000"))}}>{EnglishToPersian("1,000,000")} ریال</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered(EnglishToPersian("5000000"))}}>{EnglishToPersian("5,000,000")} ریال</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered(EnglishToPersian("10000000"))}}>{EnglishToPersian("10,000,000")} ریال</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered(EnglishToPersian("20000000"))}}>{EnglishToPersian("20,000,000")} ریال</button>
-                                <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={()=>{setAmountEntered(EnglishToPersian("50000000"))}}>{EnglishToPersian("50,000,000")} ریال</button>
-                        </div>
-                        <div className="mt-12 flex justify-center">
-                            <button className='bg-gold text-black px-24 py-4 rounded-md text-sm hover:opacity-90'>پرداخت آنلاین</button>
-                        </div>
-                    </div>
+            <div className="mt-5 text-white bg-[#252525] rounded-2xl p-10 w-3/4 flex items-center  flex-col">
+                <div className="mb-6 flex justify-start w-full">
+                    <h3 className={'font-bold text-white text-2xl'}>
+                        افزایش موجودی
+                    </h3>
+                </div>
+                <div className={"w-3/4 mx-auto mt-10"}>
+                    <CacheProvider value={cacheRtl}>
+                        <ThemeProvider theme={theme}>
+                            <div dir="rtl">
+                                <div className="">
+                                    <TextField
+                                        fullWidth
+                                        label="مبلغ پرداختی"
+                                        /*error={props.priceErrors.length !== 0}*/
+                                        value={amountEntered}
+                                        onChange={handleChangeAmount}
+                                        sx={{label: {color: '#fff !important'}}}
+                                        name="numberformat"
+                                        id="formatted-numberformat-input"
+                                        InputProps={{
+                                            endAdornment: <InputAdornment position="start">ریال</InputAdornment>,
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </ThemeProvider>
+                    </CacheProvider>
+                </div>
+                <div className='mt-5 mb-3 flex flex-row justify-center'>
+                    <span className='ml-2'>معادل با</span>
+                    <span>{convertRialToToman(amountEntered)}</span>
+                    <span className="mr-2">تومان</span>
+                </div>
+                <div className="mt-6 flex justify-between w-3/4">
+                    <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
+                        setAmountEntered(EnglishToPersian("1000000"))
+                    }}>{EnglishToPersian("1,000,000")} ریال
+                    </button>
+                    <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
+                        setAmountEntered(EnglishToPersian("5000000"))
+                    }}>{EnglishToPersian("5,000,000")} ریال
+                    </button>
+                    <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
+                        setAmountEntered(EnglishToPersian("10000000"))
+                    }}>{EnglishToPersian("10,000,000")} ریال
+                    </button>
+                    <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
+                        setAmountEntered(EnglishToPersian("20000000"))
+                    }}>{EnglishToPersian("20,000,000")} ریال
+                    </button>
+                    <button className='bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
+                        setAmountEntered(EnglishToPersian("50000000"))
+                    }}>{EnglishToPersian("50,000,000")} ریال
+                    </button>
+                </div>
+                <div className="mt-12 flex justify-center">
+                    <button className='bg-gold text-black px-24 py-4 rounded-md text-sm hover:opacity-90'>پرداخت
+                        آنلاین
+                    </button>
+                </div>
+            </div>
         </>
     );
 }

@@ -8,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import api from "../../../../api/api";
+import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 
 function UserTicket(props) {
     useEffect(() => {
@@ -66,10 +67,15 @@ function UserTicket(props) {
     return (
         <div className="w-full mx-9 mt-5 text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold">
             <div className="flex flex-row justify-between items-center mb-6">
-                <h2 className="text-xl font-medium">
+                <h2 className="text-xl font-bold">
                     سوابق تیکت ها
                 </h2>
-                <button  className='bg-gold text-black px-2 py-1 font-normal rounded hover:cursor-pointer transition' onClick={handleClickOpen}>ثبت تیکت جدید</button>
+                <button  className='bg-gold text-black px-4 py-2 rounded-md w-fit flex flex-row items-center' onClick={handleClickOpen}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                         stroke="currentColor" className="w-4 h-4 ml-2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                    </svg>
+                    ثبت تیکت جدید</button>
                 <Dialog open={open} onClose={handleClose} PaperProps={{
                         style: {
                             backgroundColor: '#303030',
@@ -106,7 +112,7 @@ function UserTicket(props) {
 
             <div className="table w-full shadow-sm overflow-hidden">
                 <div className="table-header-group bg-[#2a2a2a] font-medium shadow-sm overflow-hidden">
-                    <div className="table-row">
+                    <div className="table-row text-gold ">
                         <div className="table-cell p-4 rounded-r-lg">#</div>
                         <div className="table-cell p-4">عنوان</div>
                         <div className="table-cell p-4">وضعیت</div>
@@ -117,23 +123,23 @@ function UserTicket(props) {
                 <div className="table-row-group p-4 text-sm font-medium">
                     {
                         tickets.map((t, i) => (
-                            <div className="table-row text-white transition">
+                            <div className="py-10 table-row text-white transition">
                                 <div
-                                    className="table-cell border-b-[1px] border-[#ddd] border-solid px-2 py-3">{i + 1}</div>
+                                    className="table-cell border-b-[1px] border-neutral-400 border-dotted px-2 py-3">{i  + 1}</div>
                                 <div
-                                    className="table-cell border-b-[1px] border-[#ddd] border-solid px-2 py-3">{t.title}</div>
+                                    className="table-cell border-b-[1px] border-neutral-400 border-dotted px-2 py-3">{t.title}</div>
                                 <div
-                                    className="table-cell border-b-[1px] border-[#ddd] border-solid px-2 py-3">{
+                                    className="table-cell border-b-[1px] border-neutral-400 border-dotted px-2 py-3">{
                                     t.status === "pending" ? "در حال بررسی" : t.status === "answered" ? "پاسخ داده شده" : null
                                 }</div>
                                 <div
 
-                                    className="table-cell border-b-[1px] border-[#ddd] border-solid px-2 py-3">{t.date}</div>
+                                    className="table-cell border-b-[1px] border-neutral-400 border-dotted px-2 py-3">{EnglishToPersian(t.date)}</div>
                                 <div
-                                    className="table-cell border-b-[1px] border-[#ddd] border-solid px-2 py-3">
+                                    className="table-cell border-b-[1px] border-neutral-400 border-dotted px-2 py-3">
                                     <Link to={t.id}>
                                         <button
-                                            className='bg-gold text-black px-2 py-1 font-normal rounded hover:cursor-pointer transition'>مشاهده
+                                            className='bg-[#21BA55] text-black px-2 py-1 font-normal rounded hover:cursor-pointer transition'>مشاهده
                                         </button>
                                     </Link>
                                 </div>

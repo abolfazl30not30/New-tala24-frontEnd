@@ -13,7 +13,6 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
 function Sidebar() {
-
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
@@ -44,7 +43,7 @@ function Sidebar() {
 
     return (
         <>
-            <div className='sidebar-dashboard close' id='sidebar'>
+            <div className='sidebar-dashboard' id='sidebar'>
                 <div id='close_sidebar_mobile' onClick={closeSidebar}>
                     بستن
                 </div>

@@ -1,11 +1,10 @@
-import React, {Fragment, useState} from 'react'
+import React, {useState} from 'react'
 import {Tab} from '@headlessui/react'
 import {CacheProvider} from "@emotion/react";
 import {TextField} from "@mui/material";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis';
-import Button from "@mui/material/Button";
 import Address from "./Address"
 
 const cacheRtl = createCache({
@@ -14,6 +13,7 @@ const cacheRtl = createCache({
 });
 
 function UserProfile() {
+
     const [firstName, setFirstName] = useState()
     const [lastName, setLastName] = useState()
     const [phoneNumber, setPhoneNumber] = useState()
@@ -33,11 +33,11 @@ function UserProfile() {
     }
 
     return (
-        <div className="flex flex-col mx-4 mb-8 w-full">
-            <h3 className={'mr-6 my-6 font-bold text-gold text-xl'}>
+        <div className="mt-5 text-white bg-[#252525] rounded-2xl p-10 md:w-3/4">
+            <h3 className={'mt-2 mb-7 font-bold text-white text-xl'}>
                 پروفایل کاربری
             </h3>
-            <div className="mt-4 text-white bg-[#252525] rounded-[8px] p-4 w-full">
+            <div>
                 <Tab.Group>
                     <Tab.List>
                         <Tab className='ml-4'>
@@ -74,7 +74,7 @@ function UserProfile() {
                             )}
                         </Tab>
                     </Tab.List>
-                    <Tab.Panels className='mt-4 pt-4 border-t-[1px] border-solid border-white'>
+                    <Tab.Panels className='mt-4 pt-4 border-dotted border-t-2 border-neutral-400'>
                         <Tab.Panel>
                             <div className="flex flex-col">
                                 <CacheProvider value={cacheRtl}>
@@ -161,7 +161,7 @@ function UserProfile() {
                                 </CacheProvider>
                             </div>
                         </Tab.Panel>
-                        <Tab.Panel><Address /></Tab.Panel>
+                        <Tab.Panel><Address/></Tab.Panel>
                         <Tab.Panel>
                             <div className="flex flex-col">
                                 <CacheProvider value={cacheRtl}>
@@ -197,7 +197,6 @@ function UserProfile() {
                                             className='mt-6 bg-[#DFAF3D] w-fit text-black px-4 py-2 rounded-md text-sm'
                                             onClick={handleChaangePassword}>ثبت تغیرات
                                         </button>
-
                                     </div>
                                 </CacheProvider>
                             </div>
