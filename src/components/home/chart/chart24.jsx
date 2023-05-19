@@ -7,6 +7,19 @@ import Chart from 'chart.js/auto';
 import {CategoryScale} from 'chart.js';
 Chart.register(CategoryScale);
 
+export const options = {
+    scales: {
+        responsive: true,
+        x: {
+            ticks: {
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 90
+            }
+        }
+    }
+}
+
 const Chart24 = () => {
     const [userData, setUserData] = useState({
         labels: null,
@@ -20,7 +33,7 @@ const Chart24 = () => {
             let labelData = []
             let priceData = []
             for (let i = 9; i >= 0; i--) {
-                labelData.push(priceDataRes[i]?.date.slice(10, 16))
+                labelData.push(priceDataRes[i]?.date)
                 priceData.push(priceDataRes[i]?.price)
             }
             setUserData({
@@ -84,20 +97,17 @@ const Chart24 = () => {
                                         <p className={'text-mainGold'}>۰.۵٪ +</p>
                                     </div>
                                 </div>
-
                             </div>
 
                         </div>
                     </div>
                 </div>
-
                 <div className={'md2:hidden flex justify-center -mt-[30px]'}>
                     <button className={'register px-[100px] py-3 flex text-black'}>
                         <img src={"https://cloud.tala24.co/images/person.svg"} alt={'person'} className={'ml-2'}/>
                         ثبت نام
                     </button>
                 </div>
-
                 <div
                     className={'xsm:pr-0 sm:pr-[20px] md2:w-3/5 md2:m-0 md2:p-0 md1:block md1:w-7/12 mr-[50px] mb-[50px] '}>
                     <div className={'main-chart mt-[30px] ml-[30px]'}>
@@ -109,12 +119,9 @@ const Chart24 = () => {
                                 5.987,34
                             </p>
                         </div>
-
-                        <Line className={'md1:p-0 mb-12'} data={userData} type={'line'}/>
-
+                        <Line className={'md1:p-0 mb-12'} options={options} data={userData} type={'line'}/>
                     </div>
                 </div>
-
             </div>
         </>
     )

@@ -12,6 +12,7 @@ import ResgisterApi from "../../../api/RegisterApi";
 import LoginApi from "../../../api/LoginApi";
 
 const CreatePassword= () => {
+
     const info = useContext(signup)
 
     const [errors, setErrors] = useState([])
@@ -73,22 +74,10 @@ const CreatePassword= () => {
 
             await LoginApi();
 
-            const res1 = await api.get(`account/user/${info.newUserPhoneNumber}`)
+            const res1 = await api.get(`account/currentUser`)
             localStorage.setItem("id", res1.id)
 
-            await api.post("info", { // bug not fixed
-                accountId: res1.id,
-                value: localStorage.getItem("username"),
-                infoType: "phoneNumber"
-            })
-
             info.setAccountCompleteRegistrationAllowed(true)
-
-            // console.log(res1)
-            // api.post("info", {
-            //     accountId:
-            // })
-
             navigate("/welcome")
         }
     }

@@ -2,7 +2,6 @@ import '../../../style/chart.css';
 import React, {useContext, useEffect, useState} from "react";
 import {Line} from "react-chartjs-2";
 import {useNavigate} from "react-router-dom";
-
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -11,8 +10,25 @@ import Typography from '@mui/material/Typography';
 import api from "../../../api/api";
 import {BiErrorCircle} from "react-icons/bi";
 import dashboard from "../../../contexts/dashboard";
+import Chart from 'chart.js/auto';
+import {CategoryScale} from 'chart.js';
+Chart.register(CategoryScale);
+
+export const options = {
+        scales: {
+            responsive: true,
+            x: {
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 90,
+                    minRotation: 90
+                }
+            }
+        }
+}
 
 const Bazaar = () => {
+
     const info = useContext(dashboard)
     const navigate = useNavigate()
 
@@ -25,13 +41,14 @@ const Bazaar = () => {
             {}
         ],
     })
+
     useEffect(() => {
         const getPriceData = async () => {
             const priceDataRes = await api.get("goldPrice/chart")
             let labelData = []
             let priceData = []
             for (let i = 9; i >= 0; i--) {
-                labelData.push(priceDataRes[i]?.date.slice(10, 16))
+                labelData.push(priceDataRes[i]?.date)
                 priceData.push(priceDataRes[i]?.price)
             }
             setUserData({
@@ -52,7 +69,12 @@ const Bazaar = () => {
                 ],
             })
         }
+
+        const getQouteData = async ()=>{
+
+        }
         getPriceData()
+        getQouteData()
     }, []);
 
     const handleBuy = () => {
@@ -90,42 +112,40 @@ const Bazaar = () => {
 
     return (
         <>
-                <div className={'details-container w-3/4 md2:flex pb-[50px] md2:p-0 mt-5 rounded-2xl '}>
-                    <div className={'md2:w-2/5 md2:justify-start md1:w-5/12 w-100 whitespace-nowrap flex justify-center'}>
-                        <div className={'mr-5 mt-[40px] mb-[40px]'}>
-                            <h2 className={'md2:text-right font-bold text-center md2:mb-[60px] mb-[20px] text-white text-[1.5rem]'}>
-                                نمای بازار
-                            </h2>
-                            <div>
-                                <div className={'flex float-right'}>
-                                    <div className={''}>
-                                        <div className={'details text-[0.62rem] p-2 pl-[50px] leading-5 text-white'}>
-                                            <p>مظنه خرید</p>
-                                            <p className={'text-mainGold'}> 19,271,425 ریال</p>
-                                        </div>
-
-                                        <button
-                                            onClick={handleBuy}
-                                            className={'flex justify-center items-center rounded-[10px] text-white py-2 w-[135px]'}
-                                            style={{border: '1px solid green'}}>
-                                            خرید
-                                        </button>
+            <div className={'details-container w-full md:w-3/4 md2:flex pb-[50px] md2:p-0 mt-5 rounded-2xl '}>
+                <div className={'md2:w-2/5 md2:justify-start md1:w-5/12 w-100 whitespace-nowrap flex justify-center'}>
+                    <div className={'mr-5 mt-[40px] mb-[40px]'}>
+                        <h2 className={'md2:text-right font-bold text-center md2:mb-[60px] mb-[20px] text-white text-[1.5rem]'}>
+                            نمای بازار
+                        </h2>
+                        <div>
+                            <div className={'flex float-right'}>
+                                <div className={''}>
+                                    <div className={'details text-[0.62rem] p-2 pl-[50px] leading-5 text-white'}>
+                                        <p>مظنه خرید</p>
+                                        <p className={'text-mainGold'}> 19,271,425 ریال</p>
                                     </div>
 
-                                    <div className={''}>
-                                        <div className={'details text-[0.62rem] p-2 pl-[50px] leading-5 text-white'}>
-                                            <p>مظنه فروش</p>
-                                            <p className={'text-mainGold'}> 19,271,425 ریال</p>
-                                        </div>
+                                    <button
+                                        onClick={handleBuy}
+                                        className={'flex justify-center items-center rounded-[10px] text-white py-2 w-[135px]'}
+                                        style={{border: '1px solid green'}}>
+                                        خرید
+                                    </button>
+                                </div>
 
-                                        <button
-                                            onClick={handleSell}
-                                            className={'flex justify-center items-center rounded-[10px] text-white py-2 w-[135px]'}
-                                            style={{border: '1px solid red'}}>
-                                            فروش
-                                        </button>
+                                <div className={''}>
+                                    <div className={'details text-[0.62rem] p-2 pl-[50px] leading-5 text-white'}>
+                                        <p>مظنه فروش</p>
+                                        <p className={'text-mainGold'}> 19,271,425 ریال</p>
                                     </div>
 
+                                    <button
+                                        onClick={handleSell}
+                                        className={'flex justify-center items-center rounded-[10px] text-white py-2 w-[135px]'}
+                                        style={{border: '1px solid red'}}>
+                                        فروش
+                                    </button>
                                 </div>
 
                             </div>
@@ -134,23 +154,25 @@ const Bazaar = () => {
 
                     </div>
 
-                    <div
-                        className={'xsm:pr-0 sm:pr-[20px] md2:w-3/5 md2:m-0 md2:p-0 md1:block md1:w-7/12 mr-[50px] mb-[50px] '}>
-                        <div className={'main-chart md2:mt-[30px] ml-[30px]'}>
-                            <div className={'mainPrice mb-3 pb-5'}>
-                                <p className={'text-[12px] text-white'}>
-                                    طلای ۲۴ عیار
-                                </p>
-                                <p className={'text-mainGold text-[32px]'}>
-                                    5.987,34
-                                </p>
-                            </div>
+                </div>
 
-                            <Line className={'md1:p-0 mb-12'} data={userData} type={'line'}/>
-
+                <div
+                    className={'xsm:pr-0 sm:pr-[20px] md2:w-3/5 md2:m-0 md2:p-0 md1:block md1:w-7/12 mr-[50px] mb-[50px] '}>
+                    <div className={'main-chart md2:mt-[30px] ml-[30px]'}>
+                        <div className={'mainPrice mb-3 pb-5'}>
+                            <p className={'text-[12px] text-white'}>
+                                طلای ۲۴ عیار
+                            </p>
+                            <p className={'text-mainGold text-[32px]'}>
+                                5.987,34
+                            </p>
                         </div>
+
+                        <Line className={'md1:p-0 mb-12'} options={options} data={userData} type={'line'}/>
+
                     </div>
                 </div>
+            </div>
 
             <Modal
                 aria-labelledby="transition-modal-title"

@@ -5,7 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: path.resolve(__dirname, 'src', 'index.js'),
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'public'),
+        publicPath: "/public/",
         filename: 'bundle.js'
     },
     performance: {
@@ -16,7 +17,7 @@ module.exports = {
     mode: 'production',
     devServer: {
         static: {
-            directory: path.resolve(__dirname, "build")
+            directory: path.resolve(__dirname, "public")
         },
         open: true,
         port: 3000,
@@ -28,7 +29,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve('./index.html'),
+            template: path.resolve('public/index.html'),
         }),
     ],
     module: {
