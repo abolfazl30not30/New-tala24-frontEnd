@@ -27,11 +27,10 @@ function Routes(props) {
 Routes.propTypes = {children: PropTypes.node};
 const Dashboard = () => {
 
-    const info = useContext(signup)
+    const context = useContext(signup)
     const navigate = useNavigate()
 
     const [completeRegistrationStatus, setCompleteRegistrationStatus] = useState(true);
-    const [AccountInfo,setAccountInfo] = useState({})
 
     useEffect(() => {
         axios.post("http://localhost:8090/login",
@@ -49,14 +48,11 @@ const Dashboard = () => {
 
         async function GetAccountInfo() {
             const res = await api.get(`account/currentUser`)
-            handleAccountInfo(res)
+            context.setAccountInfo(res)
         }
         GetAccountInfo()
     }, [])
 
-    const handleAccountInfo = (Info) =>{
-        setAccountInfo(info)
-    }
 
     return (
         <>

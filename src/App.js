@@ -35,7 +35,7 @@ const App = () => {
     const [createPassAllowed, setCreatePassAllowed] = useState(false)
     const [successAllowed, setSuccessAllowed] = useState(false)
     const [accountCompleteRegistrationAllowed, setAccountCompleteRegistrationAllowed] = useState(true)
-    const [information, setInformation] = useState([])
+    const [accountInfo, setAccountInfo] = useState({})
     const [verified, setVerified] = useState(false)
     const [selected, setSelected] = useState("bazaar")
     const [newUserPhoneNumber, setNewUserPhoneNumber] = useState("")
@@ -62,8 +62,8 @@ const App = () => {
                 verified: verified,
                 setVerified: setVerified,
 
-                information: information,
-                setInformation: setInformation,
+                accountInfo: accountInfo,
+                setAccountInfo: setAccountInfo,
 
                 selected: selected,
                 setSelected: setSelected,
