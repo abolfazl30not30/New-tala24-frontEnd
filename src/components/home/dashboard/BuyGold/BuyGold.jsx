@@ -65,12 +65,6 @@ function ColorlibStepIcon(props) {
     const {active, completed, className} = props;
 
     const icons = {
-        /*1: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round"
-                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
-        </svg>
-        ,*/
         1: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                 stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round"
@@ -123,6 +117,7 @@ const cacheRtl = createCache({
 const steps = ['خرید طلا', 'ثبت درخواست خرید'];
 
 export default function BuyGold(props) {
+
     useEffect(() => {
         if (localStorage.getItem('role') !== "USER") {
             localStorage.clear()
@@ -130,7 +125,9 @@ export default function BuyGold(props) {
         }
     }, [props.history]);
 
+    const WAGE = 50000;
     const [constructorHasRun, setConstructorHasRun] = useState(false);
+
     const constructor = () => {
         if (constructorHasRun) return;
         if (localStorage.getItem('role') !== "USER") {
@@ -151,8 +148,9 @@ export default function BuyGold(props) {
         const weightSchema = yup.object().shape({
             weight: yup.string().required("لطفا وزن مورد نظر خود را وارد کنید.").matches(/^[0-9]*$/, "لطفا عدد وارد کنید.")
         })
-        const price = valuePrice.numberformat
+        const price = valuePrice
         const weight = valueWeight
+
         if (type === "price") {
             try {
                 return await priceSchema.validate({price}, {abortEarly: false})
@@ -168,16 +166,12 @@ export default function BuyGold(props) {
         }
     }
 
-    const info = useContext(signup)
-
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
-    const [valuePrice, setValuePrice] = React.useState({
-        numberformat: "",
-    });
+    const [valuePrice, setValuePrice] = React.useState("");
     const [valueWeight, setValueWeight] = useState("");
-    const [rialToWeightCoefficient, setRialToWeightCoefficient] = useState(50000000);
     const [type, setType] = useState("price");
+    const [finalPrice , setFinalPrice] = useState("")
     const [shipmentType, setShipmentType] = useState("cash");
     const [value, setValue] = React.useState('cash');
 
@@ -185,28 +179,46 @@ export default function BuyGold(props) {
         await setValue(event.target.value);
     };
 
-    useEffect(() => {
-        const getPrice = async () => {
-            const getPriceRes = await api.get("goldPrice/latestPrice")
-            setRialToWeightCoefficient(getPriceRes.price)
-        }
-        getPrice()
-    }, [activeStep]);
-
-    const handleChangePrice = (event) => {
-        setValuePrice({
-            ...valuePrice,
-            [event.target.name]: event.target.value,
-        });
+    const handleFinalPrice = ()=>{
+        let price = parseInt(valuePrice)
+        price = price + WAGE;
+        setFinalPrice(price)
+    }
+    const handleChangePrice = async (event) => {
+        setValuePrice(event.target.value)
+        await convertPriceToWeight(event.target.value)
     };
 
-    const handleChangeWeight = (event) => {
+    const handleChangeWeight = async (event) => {
         setValueWeight(event.target.value)
-        setValuePrice({
-            ...valuePrice,
-            numberformat: parseInt(event.target.value) * rialToWeightCoefficient,
-        });
+        await convertWeightToPrice(event.target.value)
     }
+
+    const convertPriceToWeight = async (value) =>{
+        await api.post("goldPrice/convert",
+            {
+                price:value
+            }
+        ).then((respond)=>{
+            setValueWeight(respond.weight.toString())
+        }).catch((error)=>{
+            console.log(error)
+        })
+    }
+
+    const convertWeightToPrice = async (value) =>{
+        await api.post("goldPrice/convert",
+            {
+                weight:value
+            }
+        ).then((respond)=>{
+            setValuePrice(respond.price.toString())
+        }).catch((error)=>{
+            console.log(error)
+        })
+    }
+
+
 
     const isStepOptional = (step) => {
         return step === 1;
@@ -219,19 +231,24 @@ export default function BuyGold(props) {
     const handleSubmit = async () => {
         await api.post("payment", {
             weight: valueWeight,
-            price: valuePrice.numberformat,
+            price: valuePrice,
             status: "pending",
             isConverted: false,
-            isStored: shipmentType === "cash" ? "true" : "false",
             accountId: localStorage.getItem("id")
         })
+    }
+
+    const handleSetType = (event) =>{
+        setType(event.target.value)
+        setValueWeight("")
+        setValuePrice("")
     }
 
     const handleNext = async () => {
         if (activeStep === steps.length - 1) {
             handleSubmit()
         }
-        if (activeStep === 1) {
+        if (activeStep === 0) {
             const valid = await validation()
             if (valid !== undefined) {
                 setPriceErrors([])
@@ -241,10 +258,9 @@ export default function BuyGold(props) {
                     newSkipped = new Set(newSkipped.values());
                     newSkipped.delete(activeStep);
                 }
-
+                handleFinalPrice();
                 setActiveStep((prevActiveStep) => prevActiveStep + 1);
                 setSkipped(newSkipped);
-
             }
         } else {
             let newSkipped = skipped;
@@ -252,7 +268,6 @@ export default function BuyGold(props) {
                 newSkipped = new Set(newSkipped.values());
                 newSkipped.delete(activeStep);
             }
-
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
             setSkipped(newSkipped);
         }
@@ -326,12 +341,10 @@ export default function BuyGold(props) {
                                                 valueWeight={valueWeight}
                                                 handleChangeWeight={handleChangeWeight}
                                                 type={type}
-                                                setType={setType}
+                                                handleSetType={handleSetType}
                                             />;
                                         } else if (activeStep === 1) {
-                                            return <StepPayment valuePrice={valuePrice} value={value}
-                                                                shipmentType={shipmentType}
-                                                                handleChange={handleChange}/>;
+                                            return <StepPayment valuePrice={valuePrice} valueWeight={valueWeight} finalPrice={finalPrice} handleFinalPrice={handleFinalPrice}/>;
                                         }
                                     })()}
                                     {/*{(() => {

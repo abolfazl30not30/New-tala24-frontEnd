@@ -245,23 +245,11 @@ const Dashboard = () => {
         }).catch((error) => {
             navigate("/")
         })
-
-        async function test() {
-            const res = await api.get(`account/currentUser`)
-            console.log(res)
-        }
-        test()
     }, [])
-
-    const [AccountInfo,setAccountInfo] = useState({})
-
-    const handleAccountInfo = (Info) =>{
-        setAccountInfo(info)
-    }
 
     return (
         <>
-            <dashboard.Provider value={{completeRegistrationStatus:completeRegistrationStatus, setCompleteRegistrationStatus:setCompleteRegistrationStatus,AccountInfo:AccountInfo,handleAccountInfo:handleAccountInfo}}>
+            <dashboard.Provider value={{completeRegistrationStatus:completeRegistrationStatus, setCompleteRegistrationStatus:setCompleteRegistrationStatus}}>
                 <div className="d-flex flex-column" dir="rtl">
                     <Sidebar />
                     <Navbar />

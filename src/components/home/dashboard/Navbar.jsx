@@ -1,13 +1,20 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {BsList} from 'react-icons/bs';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {Link} from "react-router-dom";
 import {BsPersonCircle} from "react-icons/bs";
+import signup from "../../../contexts/signup";
+import {BsCashCoin} from "react-icons/bs";
+import {GiTwoCoins,} from "react-icons/gi"
+import {EnglishToPersian} from "../../../helper/EnglishToPersian";
+import {SeparateNumber} from "../../../helper/SeparateNumber";
+
 
 
 function Navbar() {
+    const context = useContext(signup);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -28,17 +35,44 @@ function Navbar() {
                     <BsList/>
                 </button>
             </div>
-
-            <Button
-                id="navbar-dropdown-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-                sx={{color: '#fff'}}
-            >
-                <BsPersonCircle className="text-3xl text-white"/>
-            </Button>
+            <div className="flex">
+                <div className="text-white mx-2">
+                    <div className='flex flex-col justify-center items-center'>
+                        <div className="flex justify-center items-center">
+                            <BsCashCoin className="text-labelGreen mt-2"/>
+                            <span className="mr-2 text-labelGreen text-[0.7rem]">موجودی کیف پول</span>
+                        </div>
+                        <div className="text-[0.8rem]">
+                            <span>{EnglishToPersian(SeparateNumber(context.accountInfo.wallet.inventory))}</span>
+                            <span className="mr-2">ریال</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="text-white mx-2">
+                    <div className='flex flex-col justify-center items-center'>
+                        <div className="flex justify-center items-center">
+                            <GiTwoCoins className="text-gold mt-2"/>
+                            <span className="mr-2 text-gold text-[0.7rem]">موجودی طلایی</span>
+                        </div>
+                        <div className="text-[0.8rem]">
+                            <span>{EnglishToPersian(SeparateNumber(context.accountInfo.wallet.weight))}</span>
+                            <span className="mr-2">گرم</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="mx-3">
+                    <Button
+                        id="navbar-dropdown-button"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
+                        sx={{color: '#fff'}}
+                    >
+                        <BsPersonCircle className="text-3xl text-white"/>
+                    </Button>
+                </div>
+            </div>
             <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}

@@ -5,6 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import {FormLabel, TextField} from "@mui/material";
 import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
+import {SeparateNumber} from "../../../../helper/SeparateNumber";
 
 function StepPayment(props) {
     // const [value, setValue] = React.useState('cash');
@@ -29,25 +30,25 @@ function StepPayment(props) {
                             <span>
                                 وزن طلا:
                             </span>
-                            <span><span>1.5</span> گرم </span>
+                            <span><span>{EnglishToPersian(props.valueWeight)}</span> گرم </span>
                         </div>
                         <div className="w-full flex justify-between py-3 border-dotted border-b-2 border-neutral-700">
                             <span>
                                 مبلغ:
                             </span>
-                            <span><span>14000000</span> ریال </span>
+                            <span><span>{EnglishToPersian(SeparateNumber(props.valuePrice))}</span> ریال </span>
                         </div>
                         <div className="w-full flex justify-between py-3 border-dotted border-b-2 border-neutral-700">
                             <span>
                                 کارمزد:
                             </span>
-                            <span><span>50000</span> ریال </span>
+                            <span><span>{EnglishToPersian("50,000")}</span> ریال </span>
                         </div>
                         <div className="mt-5 w-full flex justify-between py-3 px-2  border-solid border-2 border-neutral-700 bg-[#2F3135]">
                             <span>
                                 مبلغ قابل پرداخت:
                             </span>
-                            <span><span>1400000</span> ریال </span>
+                            <span><span>{EnglishToPersian(SeparateNumber(props.finalPrice))}</span> ریال </span>
                         </div>
                     </div>
                 </div>

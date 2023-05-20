@@ -13,6 +13,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import {SeparateNumber} from "../../../helper/SeparateNumber";
 
 // Create RTL MUI
 const theme = createTheme({
@@ -48,25 +49,22 @@ export default function Quote(props) {
     constructor()
     let [isOpen, setIsOpen] = useState(false)
     let [isOpenConfirm, setIsOpenConfirm] = useState(false)
-    let [quotePrice, setQuotePrice] = useState(null)
+    let [quoteBuyPrice, setQuoteBuyPrice] = useState(null)
+    let [quoteSellPrice, setQuoteSellPrice] = useState(null)
     let [goldPriceHistory, setGoldPriceHistory] = useState([])
-    const [quoteType, setQuoteType] = React.useState('');
-
 
     useEffect(() => {
         const getData = async () => {
-            const getGoldPriceReq = await api.get("goldPrice")
+            const getGoldPriceReq = await api.get("quote")
             if (getGoldPriceReq) {
                 setGoldPriceHistory(getGoldPriceReq)
             }
         }
         getData()
-        console.log(goldPriceHistory)
     }, []);
 
     function closeModal() {
         setIsOpen(false)
-        setQuotePrice(0)
     }
 
     function openModal() {
@@ -84,21 +82,18 @@ export default function Quote(props) {
     }
 
     async function recordNewPrice() {
-        /*await api.post("goldPrice",
-            {
-                price: newGoldPrice,
-                adminName: localStorage.getItem("username")
-            }
-        )*/
-        console.log(quoteType,quotePrice)
         setIsOpenConfirm(false)
-        setQuotePrice(null)
+        await api.post("quote",
+            {
+                purchase : quoteBuyPrice,
+                sell : quoteSellPrice
+            }
+        )
 
-        const getGoldPriceReq = await api.get("goldPrice")
+        const getGoldPriceReq = await api.get("quote")
         if (getGoldPriceReq) {
             setGoldPriceHistory(getGoldPriceReq)
         }
-
     }
 
     return (
@@ -154,33 +149,32 @@ export default function Quote(props) {
                                                 <ThemeProvider theme={theme}>
                                                     <div dir="rtl">
                                                         <div className="flex flex-col space-y-4">
-
-
-
-                                                            <FormControl fullWidth>
-                                                                <InputLabel id="state-select-label" sx={{
-                                                                    color: '#fff',
-                                                                    "&.Mui-focused": {color: '#fff'}
-                                                                }}>نوع</InputLabel>
-                                                                <Select
-                                                                    labelId="state-select-label"
-                                                                    id="state-select"
-                                                                    value={quoteType}
-                                                                    label="نوع"
-                                                                    onChange={(e) => setQuoteType(e.target.value)}
-                                                                >
-                                                                    <MenuItem value={'purchase'}>خرید</MenuItem>
-                                                                    <MenuItem value={'sales'}>فروش</MenuItem>
-                                                                </Select>
-                                                            </FormControl>
-
-
                                                             <TextField
                                                                 id="outlined-end-adornment"
                                                                 name="price"
-                                                                label="قیمت"
-                                                                value={quotePrice}
-                                                                onChange={(e) => setQuotePrice(e.target.value)}
+                                                                label="مظنه خرید"
+                                                                value={quoteBuyPrice}
+                                                                onChange={(e) => setQuoteBuyPrice(e.target.value)}
+                                                                InputProps={{
+                                                                    endAdornment: <InputAdornment position="end"><span
+                                                                        style={{color: "#fff"}}>ریال</span></InputAdornment>,
+                                                                }}
+                                                                InputLabelProps={{
+                                                                    style: {
+                                                                        fontSize: "0.9rem"
+                                                                    }
+                                                                }}
+                                                                sx={{
+                                                                    label: {color: '#fff !important'},
+                                                                    input: {color: '#fff !important'}
+                                                                }}
+                                                            />
+                                                            <TextField
+                                                                id="outlined-end-adornment"
+                                                                name="price"
+                                                                label="مظنه فروش"
+                                                                value={quoteSellPrice}
+                                                                onChange={(e) => setQuoteSellPrice(e.target.value)}
                                                                 InputProps={{
                                                                     endAdornment: <InputAdornment position="end"><span
                                                                         style={{color: "#fff"}}>ریال</span></InputAdornment>,
@@ -299,8 +293,8 @@ export default function Quote(props) {
                         </svg>
                     </th>
                     <th className={'p-4'}>تاريخ و ساعت</th>
-                    <th className={'p-4'}>ثبت کننده</th>
-                    <th className={'p-4'}>قیمت</th>
+                    <th className={'p-4'}>مظنه خرید</th>
+                    <th className={'p-4'}>مظنه فروش</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -309,8 +303,8 @@ export default function Quote(props) {
                         <tr>
                             <td className={'p-3'}>{index + 1}</td>
                             <td className={'p-3'}>{EnglishToPersian(item.date)}</td>
-                            <td className={'p-3'}>{item.adminUserName}</td>
-                            <td className={'p-3'}>{item.price}</td>
+                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item.purchase))}</td>
+                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item.sell))}</td>
                         </tr>
                     ))
                 }

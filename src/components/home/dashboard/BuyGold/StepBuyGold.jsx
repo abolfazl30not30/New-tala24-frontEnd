@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -9,7 +9,8 @@ import {NumericFormat} from 'react-number-format';
 import * as yup from "yup";
 import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 import {RiHandCoinFill} from "react-icons/ri";
-
+import signup from "../../../../contexts/signup";
+import {SeparateNumber} from "../../../../helper/SeparateNumber";
 
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
     props,
@@ -45,6 +46,8 @@ NumericFormatCustom.propTypes = {
 
 
 function StepBuyGold(props) {
+    const context = useContext(signup);
+
     return (
         <>
             <h2 className="text-white text-2xl font-medium mb-6">
@@ -54,7 +57,7 @@ function StepBuyGold(props) {
                 <div className="flex flex-col rounded-xl justify-center p-2 border-dashed border-2 border-neutral-700 ">
                     <div className="flex justify-center mb-3"><RiHandCoinFill className="text-gold" fontSize="2rem"/></div>
                     <h5 className="mb-3 text-[1rem] text-gold">موجودی کیف پول</h5>
-                    <div className="text-[0.8rem] flex justify-center"><span className="ml-2">1200000</span>ریال </div>
+                    <div className="text-[0.8rem] flex justify-center"><span className="ml-2">{context.accountInfo.wallet.inventory}</span>ریال </div>
                 </div>
             </div>
             <div className="px-1 flex flex-col items-center md:border-dashed md:border-2 md:border-neutral-700 md:py-5 md:px-3 mx-4 md:mx-10 rounded-xl">
@@ -65,7 +68,7 @@ function StepBuyGold(props) {
                             aria-labelledby="demo-controlled-radio-buttons-group"
                             name="position"
                             value={props.type}
-                            onChange={(e) => props.setType(e.target.value)}
+                            onChange={(e) => props.handleSetType(e)}
                         >
                             <FormControlLabel  value="price" control={<Radio/>} label="بر اساس مبلغ" />
                             <FormControlLabel value="weight" control={<Radio/>} label="بر اساس وزن طلا"/>
@@ -81,7 +84,7 @@ function StepBuyGold(props) {
                                         fullWidth
                                         label="مبلغ پرداختی"
                                         error={props.priceErrors.length !== 0}
-                                        value={props.valuePrice.numberformat}
+                                        value={props.valuePrice}
                                         onChange={props.handleChangePrice}
                                         sx={{input: {color: '#fff !important'}}}
                                         name="numberformat"
@@ -128,12 +131,12 @@ function StepBuyGold(props) {
                         props.type === 'price'?(
                             <div className="flex justify-center items-center flex-col md:flex-row p-4 text-bgGray rounded w-full background-label">
                                 <h5 className="font-bold ml-4">وزن طلا:</h5>
-                                <span className="font-bold" >{EnglishToPersian("432.152")}<span className="font-bold mr-2">گرم</span></span>
+                                <span className="font-bold" >{EnglishToPersian(props.valueWeight)}<span className="font-bold mr-2">گرم</span></span>
                             </div>
                         )  : (
                             <div className="flex justify-center items-center  flex-col md:flex-row p-4 text-bgGray rounded w-full background-label">
                                 <h5 className="font-bold ml-4">مبلغ پرداختی:</h5>
-                                <span className="font-bold">{EnglishToPersian("1200000")} <span className="font-bold mr-2">تومان</span></span>
+                                <span className="font-bold">{EnglishToPersian(SeparateNumber(props.valuePrice))} <span className="font-bold mr-2">تومان</span></span>
                             </div>
                         )
                     }

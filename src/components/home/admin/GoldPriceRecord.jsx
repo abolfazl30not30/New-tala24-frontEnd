@@ -20,9 +20,11 @@ const cacheRtl = createCache({
     stylisPlugins: [prefixer, rtlPlugin],
 });
 
+
 function RTL(props) {
     return <CacheProvider value={cacheRtl}>{props.children}</CacheProvider>;
 }
+
 
 export default function GoldPriceRecord(props) {
     useEffect(() => {
@@ -242,15 +244,13 @@ export default function GoldPriceRecord(props) {
                                                 <button
                                                     type="button"
                                                     className="inline-flex justify-center rounded-md border border-transparent bg-lime-400 px-4 py-2 text-sm font-medium text-gary-700 hover:bg-lime-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                                    onClick={recordNewPrice}
-                                                >
+                                                    onClick={recordNewPrice}>
                                                     ثبت
                                                 </button>
                                                 <button
                                                     type="button"
                                                     className="inline-flex justify-center rounded-md border border-transparent bg-gray-300 px-4 py-2 text-sm font-medium text-gary-700 hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                                    onClick={closeModalConfirm}
-                                                >
+                                                    onClick={closeModalConfirm}>
                                                     بستن
                                                 </button>
                                             </div>

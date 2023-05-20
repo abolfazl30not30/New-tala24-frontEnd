@@ -28,6 +28,7 @@ Routes.propTypes = {children: PropTypes.node};
 const Dashboard = () => {
 
     const context = useContext(signup)
+
     const navigate = useNavigate()
 
     const [completeRegistrationStatus, setCompleteRegistrationStatus] = useState(true);
@@ -56,7 +57,7 @@ const Dashboard = () => {
 
     return (
         <>
-        <dashboard.Provider value={{completeRegistrationStatus:completeRegistrationStatus, setCompleteRegistrationStatus:setCompleteRegistrationStatus,AccountInfo:AccountInfo,handleAccountInfo:handleAccountInfo}}>
+        <dashboard.Provider value={{completeRegistrationStatus:completeRegistrationStatus, setCompleteRegistrationStatus:setCompleteRegistrationStatus}}>
             <div className="d-flex flex-column" dir="rtl">
                 <Sidebar />
                 <Navbar />

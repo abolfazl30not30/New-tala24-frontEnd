@@ -12,6 +12,8 @@ import {BiErrorCircle} from "react-icons/bi";
 import dashboard from "../../../contexts/dashboard";
 import Chart from 'chart.js/auto';
 import {CategoryScale} from 'chart.js';
+import {EnglishToPersian} from "../../../helper/EnglishToPersian";
+import {SeparateNumber} from "../../../helper/SeparateNumber";
 Chart.register(CategoryScale);
 
 export const options = {
@@ -33,6 +35,11 @@ const Bazaar = () => {
     const navigate = useNavigate()
 
     const [open, setOpen] = useState(false);
+    const [lastQuote,setLastQuote] = useState({
+        sell:"",
+        purchase:""
+    });
+
     const handleClose = () => setOpen(false);
 
     const [userData, setUserData] = useState({
@@ -71,8 +78,12 @@ const Bazaar = () => {
         }
 
         const getQouteData = async ()=>{
-
+            const getGoldPriceReq = await api.get("quote/latestQuote")
+            if (getGoldPriceReq) {
+                setLastQuote(getGoldPriceReq)
+            }
         }
+
         getPriceData()
         getQouteData()
     }, []);
@@ -121,9 +132,9 @@ const Bazaar = () => {
                         <div>
                             <div className={'flex float-right'}>
                                 <div className={''}>
-                                    <div className={'details text-[0.62rem] p-2 pl-[50px] leading-5 text-white'}>
+                                    <div className={'details text-[0.8rem] p-2 pl-[50px] leading-5 text-white'}>
                                         <p>مظنه خرید</p>
-                                        <p className={'text-mainGold'}> 19,271,425 ریال</p>
+                                        <p className={'text-mainGold'}> {EnglishToPersian(SeparateNumber(lastQuote.purchase))}<span className="mr-2">ریال</span></p>
                                     </div>
 
                                     <button
@@ -135,9 +146,9 @@ const Bazaar = () => {
                                 </div>
 
                                 <div className={''}>
-                                    <div className={'details text-[0.62rem] p-2 pl-[50px] leading-5 text-white'}>
+                                    <div className={'details text-[0.8rem] p-2 pl-[50px] leading-5 text-white'}>
                                         <p>مظنه فروش</p>
-                                        <p className={'text-mainGold'}> 19,271,425 ریال</p>
+                                        <p className={'text-mainGold'}>{EnglishToPersian(SeparateNumber(lastQuote.sell))}<span className="mr-2">ریال</span></p>
                                     </div>
 
                                     <button
