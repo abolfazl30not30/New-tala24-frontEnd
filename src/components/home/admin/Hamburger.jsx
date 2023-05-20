@@ -14,18 +14,6 @@ import createCache from '@emotion/cache';
 import {prefixer} from 'stylis';
 
 const Hamburger = () => {
-    const info = useContext(signup)
-
-    const [openRequest, setOpenRequest] = useState(false);
-    const [openReport, setOpenReport] = useState(false);
-
-    const handleRequest = () => {
-        setOpenRequest(!openRequest);
-    };
-
-    const handleReport = () => {
-        setOpenReport(!openReport);
-    };
 
     const cacheRtl = createCache({
         key: 'muirtl',

@@ -28,29 +28,10 @@ Routes.propTypes = {children: PropTypes.node};
 const Dashboard = () => {
 
     const info = useContext(signup)
-
-    const [selected, setSelected] = useState('bazaar');
-
     const navigate = useNavigate()
-    const [anchorEl, setAnchorEl] = React.useState(null);
 
     const [completeRegistrationStatus, setCompleteRegistrationStatus] = useState(true);
-
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-     function getProfile () {
-         api.get(`info/profile/${localStorage.getItem("id")}`).then((response) => {
-            if (response.firstName !== null && response.lastName !== null && response.nationalCode !== null) {
-                setCompleteRegistrationStatus(true)
-            }
-        })
-    }
+    const [AccountInfo,setAccountInfo] = useState({})
 
     useEffect(() => {
         axios.post("http://localhost:8090/login",
@@ -66,20 +47,20 @@ const Dashboard = () => {
             navigate("/")
         })
 
-        async function test() {
-            const res = await api.get(`account/user/${localStorage.getItem("username")}`)
-            localStorage.setItem("id", res.id)
-            info.setInformation(res.infos)
+        async function GetAccountInfo() {
+            const res = await api.get(`account/currentUser`)
+            handleAccountInfo(res)
         }
-        test()
-        getProfile()
+        GetAccountInfo()
     }, [])
-    useEffect(()=>{
 
-    },[])
+    const handleAccountInfo = (Info) =>{
+        setAccountInfo(info)
+    }
+
     return (
         <>
-        <dashboard.Provider value={{completeRegistrationStatus:completeRegistrationStatus, setCompleteRegistrationStatus:setCompleteRegistrationStatus}}>
+        <dashboard.Provider value={{completeRegistrationStatus:completeRegistrationStatus, setCompleteRegistrationStatus:setCompleteRegistrationStatus,AccountInfo:AccountInfo,handleAccountInfo:handleAccountInfo}}>
             <div className="d-flex flex-column" dir="rtl">
                 <Sidebar />
                 <Navbar />

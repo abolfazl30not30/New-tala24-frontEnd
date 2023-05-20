@@ -4,9 +4,11 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {Link} from "react-router-dom";
+import {BsPersonCircle} from "react-icons/bs";
 
 
 function Navbar() {
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -26,6 +28,7 @@ function Navbar() {
                     <BsList/>
                 </button>
             </div>
+
             <Button
                 id="navbar-dropdown-button"
                 aria-controls={open ? 'basic-menu' : undefined}
@@ -34,11 +37,7 @@ function Navbar() {
                 onClick={handleClick}
                 sx={{color: '#fff'}}
             >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                     stroke="currentColor" width='24' height='24'>
-                    <path strokeLinecap="round" strokeLinejoin="round"
-                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-                </svg>
+                <BsPersonCircle className="text-3xl text-white"/>
             </Button>
             <Menu
                 id="basic-menu"
@@ -48,6 +47,7 @@ function Navbar() {
                 MenuListProps={{
                     'aria-labelledby': 'basic-button',
                 }}>
+
                 <MenuItem>
                     <Link to='/' className="flex flex-row items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -59,23 +59,13 @@ function Navbar() {
                     </Link>
                 </MenuItem>
                 <MenuItem>
-                    <Link to='/dashboard/account' className="flex flex-row items-center">
+                    <Link to='/dashboard/home' className="flex flex-row items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" width='16' height='16' className="ml-2">
                             <path strokeLinecap="round" strokeLinejoin="round"
                                   d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                         حساب کاربری
-                    </Link>
-                </MenuItem>
-                <MenuItem>
-                    <Link to='/dashboard' className="flex flex-row items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                             stroke="currentColor" width='16' height='16' className="ml-2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/>
-                        </svg>
-                        پنل کاربری
                     </Link>
                 </MenuItem>
                 <MenuItem>

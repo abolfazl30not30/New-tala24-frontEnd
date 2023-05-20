@@ -28,6 +28,7 @@ import WebServer from "./components/WebServer";
 import NotFound from "./components/Other/NotFound";
 
 const App = () => {
+
     const [OTPAllowed, setOTPAllowed] = useState(false)
     const [passwordAllowed, setPasswordAllowed] = useState(false)
     const [dashboardAllowed, setDashboardAllowed] = useState(false)

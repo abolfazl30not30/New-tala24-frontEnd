@@ -232,14 +232,6 @@ const Dashboard = () => {
         setAnchorEl(null);
     };
 
-    function getProfile () {
-        api.get(`info/profile/${localStorage.getItem("id")}`).then((response) => {
-            if (response.firstName !== null && response.lastName !== null && response.nationalCode !== null) {
-                setCompleteRegistrationStatus(true)
-            }
-        })
-    }
-
     useEffect(() => {
         axios.post("http://localhost:8090/login",
             {username: localStorage.getItem("username"), password: localStorage.getItem("password")}, {
@@ -255,19 +247,21 @@ const Dashboard = () => {
         })
 
         async function test() {
-            const res = await api.get(`account/user/${localStorage.getItem("username")}`)
-            localStorage.setItem("id", res.id)
-            info.setInformation(res.infos)
+            const res = await api.get(`account/currentUser`)
+            console.log(res)
         }
         test()
-        getProfile()
     }, [])
-    useEffect(()=>{
 
-    },[])
+    const [AccountInfo,setAccountInfo] = useState({})
+
+    const handleAccountInfo = (Info) =>{
+        setAccountInfo(info)
+    }
+
     return (
         <>
-            <dashboard.Provider value={{completeRegistrationStatus:completeRegistrationStatus, setCompleteRegistrationStatus:setCompleteRegistrationStatus}}>
+            <dashboard.Provider value={{completeRegistrationStatus:completeRegistrationStatus, setCompleteRegistrationStatus:setCompleteRegistrationStatus,AccountInfo:AccountInfo,handleAccountInfo:handleAccountInfo}}>
                 <div className="d-flex flex-column" dir="rtl">
                     <Sidebar />
                     <Navbar />
