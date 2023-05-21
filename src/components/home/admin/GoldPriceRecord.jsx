@@ -48,8 +48,6 @@ export default function GoldPriceRecord(props) {
     let [isOpenConfirm, setIsOpenConfirm] = useState(false)
     let [newGoldPrice, setNewGoldPrice] = useState(null)
     let [goldPriceHistory, setGoldPriceHistory] = useState([])
-
-
     useEffect(() => {
         const getData = async () => {
             const getGoldPriceReq = await api.get("goldPrice")
