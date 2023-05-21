@@ -8,10 +8,7 @@ import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 import {SeparateNumber} from "../../../../helper/SeparateNumber";
 
 function StepPayment(props) {
-    // const [value, setValue] = React.useState('cash');
-    // const handleChange = (event) => {
-    //     setValue(event.target.value);
-    // };
+
     return (
         <>
             <h2 className="text-white text-2xl font-medium mb-6">

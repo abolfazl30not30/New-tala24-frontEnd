@@ -12,6 +12,7 @@ import {RiHandCoinFill} from "react-icons/ri";
 import signup from "../../../../contexts/signup";
 import {SeparateNumber} from "../../../../helper/SeparateNumber";
 
+
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
     props,
     ref,

@@ -10,6 +10,7 @@
     justify-content: center;
     transition: all 0.5s ease;
 }
+
 .sidebar-dashboard.close ~ .navbar-dashboard,
 .sidebar-dashboard.close ~ .main,
 .sidebar-dashboard.close ~ .footer-dashboard
@@ -94,10 +95,11 @@
     justify-content: center;
     padding: .5rem;
 }
+
 .sidebar-dashboard .logo img {
-    width: 50px;
-    height: 50px;
+    width: 50%;
 }
+
 .sidebar-list-item {
     height: 50px;
     color: #ffffff;
@@ -182,10 +184,12 @@
     overflow-x: auto;
     white-space: nowrap;
 }
+
 .box-title {
     font-size: 1.2rem;
     font-weight: 600;
 }
+
 .box-content {
     margin-top: 2rem;
 }
