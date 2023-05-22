@@ -59,7 +59,7 @@ function StepAddCoin(props) {
 
     const [coinsWight, setCoinsWight] = useState(["0.05", "0.100", "0.150", "0.200", "0.300", "0.400", "0.500", "0.600", "0.700", "0.800", "0.900", "1.00", "1.100", "1.200", "1.300", "1.400", "1.500", "2.00"])
     const [selectedCoin, setSelectedCoin] = useState("0.05")
-
+    const [paymentData,paymentDate] = useState()
     const handleOpenCoin = () => {
         setIsOpenCoin(true);
     }
@@ -103,6 +103,7 @@ function StepAddCoin(props) {
                 <div className="my-2 px-4">
                     <h2 className="text-white text-l font-bold">تعیین تعداد سکه</h2>
                 </div>
+
                 <div className="inventory-box bg-mainGray rounded-xl p-3 flex justify-center mx-4 md:mx-10 mt-3 mb-4">
                     <div
                         className="flex flex-col rounded-xl justify-center p-2 border-dashed border-2 border-neutral-700 ">
@@ -112,11 +113,10 @@ function StepAddCoin(props) {
                     </div>
                 </div>
 
-                <div
-                    className="coins flex justify-center items-center flex-col border-dashed border-2 border-neutral-700 p-3 mx-10 rounded-xl ">
+                <div className="coins flex justify-center items-center flex-col border-dashed border-2 border-neutral-700 p-3 mx-10 rounded-xl ">
                     {
                         props.coins.map((coin,index)=>(
-                            <div className="coin bg-mainGray rounded-2xl py-2 w-[70%] flex border-5 border-sky-100 mb-3">
+                            <div className="coin bg-mainGray rounded-2xl py-2 w-[70%] flex border-5 border-sky-100 mb-3 z-10">
                                 <div className="icons flex justify-center items-center">
                                     <img src={coinsImage} className="w-3/4" alt="coins"/>
                                 </div>
@@ -149,9 +149,9 @@ function StepAddCoin(props) {
                                         <BsTrashFill className="text-red-600" fontSize="1.5rem"/>
                                     </button>
                                 </div>
-                            </div>))
-                    }
+                            </div>))}
                 </div>
+
                 <div className="flex justify-center mt-7">
                     <button className="bg-gold rounded text-black py-2 px-16 hover:opacity-70 flex items-center"
                             onClick={handleOpenCoin}>
@@ -159,7 +159,6 @@ function StepAddCoin(props) {
                         افـزودن سـکـه جدید
                     </button>
                 </div>
-
                 <Transition appear show={isOpenCoin} as={Fragment}>
                     <Dialog as="div" className="relative z-10" onClose={closeAddCoin} dir="rtl">
                         <Transition.Child
@@ -169,8 +168,7 @@ function StepAddCoin(props) {
                             enterTo="opacity-100"
                             leave="ease-in duration-200"
                             leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                        >
+                            leaveTo="opacity-0">
                             <div className="fixed inset-0 bg-black bg-opacity-25"/>
                         </Transition.Child>
                         <div className="fixed inset-0 overflow-y-auto">

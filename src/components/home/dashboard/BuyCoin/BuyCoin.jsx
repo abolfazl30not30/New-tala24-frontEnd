@@ -179,10 +179,6 @@ export default function BuyCoin(props) {
         }
     };
 
-    const closeAddCoin = () => {
-        setIsOpenCoin(false)
-    };
-
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
