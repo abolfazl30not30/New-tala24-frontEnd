@@ -41,7 +41,7 @@ tr:first-child , tr:nth-child(2) {
 .statusFailed {
     background-color: rgb(229, 76, 76);
     width: fit-content;
-    color: #f37272;
+    color: #fff;
     padding: 2px 15px;
     border-radius: 20px;
 }
@@ -69,9 +69,9 @@ tr:first-child , tr:nth-child(2) {
 }
 
 .statusPending {
-    background-color: #2a2a2a;
+    background-color: #424242;
     width: fit-content;
-    color: #858585;
+    color: #c4c4c4;
     padding: 2px 15px;
     border-radius: 20px;
 }

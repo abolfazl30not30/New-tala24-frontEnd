@@ -20,7 +20,7 @@ function StepPayment(props) {
                         <img src="https://cloud.tala24.co/images/cartLogo.svg" alt="coin"/>
                     </div>
                     <div className="flex justify-center py-4 border-dotted border-b-2 border-neutral-700 ">
-                        <h4 className="text-[1rem] font-bold">سبد خرید شما</h4>
+                        <h4 className="text-[1rem] font-bold">سبد فروش شما</h4>
                     </div>
                     <div className="flex justify-center flex-col flex-wrap">
                         <div className="w-full flex justify-between flex-wrap py-3 border-dotted border-b-2 border-neutral-700">

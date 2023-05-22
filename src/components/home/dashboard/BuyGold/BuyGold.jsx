@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 import {createTheme, styled, ThemeProvider} from '@mui/material/styles';
 import Stepper from '@mui/material/Stepper';
@@ -18,6 +18,7 @@ import * as yup from "yup";
 import {Fragment} from "react";
 import {Dialog, Transition} from "@headlessui/react";
 import {toast} from "react-toastify";
+import signup from "../../../../contexts/signup";
 
 
 const ColorlibConnector = styled(StepConnector)(({theme}) => ({
@@ -117,8 +118,20 @@ const cacheRtl = createCache({
 
 const steps = ['خرید طلا', 'ثبت درخواست خرید'];
 
+
 export default function BuyGold(props) {
-    const WAGE = 50000;
+
+    const [constructorHasRun, setConstructorHasRun] = useState(false);
+    const constructor = () => {
+        if (constructorHasRun) return;
+        if (localStorage.getItem('role') !== "USER") {
+            localStorage.clear()
+            window.location = ("/login")
+        }
+        setConstructorHasRun(true);
+    };
+
+    constructor()
 
     useEffect(() => {
         if (localStorage.getItem('role') !== "USER") {
@@ -136,28 +149,29 @@ export default function BuyGold(props) {
         }
         getData()
     },[])
-    const [constructorHasRun, setConstructorHasRun] = useState(false);
 
-
-    const constructor = () => {
-        if (constructorHasRun) return;
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
-            window.location = ("/login")
-        }
-        setConstructorHasRun(true);
-    };
-    constructor()
+    const WAGE = 50000;
+    const context = useContext(signup)
 
     const [priceErrors, setPriceErrors] = useState([]);
     const [weightErrors, setWeightErrors] = useState([]);
+    const [activeStep, setActiveStep] = React.useState(0);
+    const [skipped, setSkipped] = React.useState(new Set());
+    const [valuePrice, setValuePrice] = React.useState("");
+    const [valueWeight, setValueWeight] = useState("");
+    const [type, setType] = useState("price");
+    const [finalPrice, setFinalPrice] = useState("")
+    const [value, setValue] = React.useState('cash');
+    const [isOpenSuccessful, setIsOpenSuccessful] = useState(false)
+    const [isOpenFailed, setIsOpenFailed] = useState(false)
+    const [lastPrice, setLastPrice] = useState(0)
 
     const validation = async () => {
         const priceSchema = yup.object().shape({
             price: yup.string().required("لطفا مبلغ مورد نظر خود را وارد کنید.").matches(/^[0-9]*$/, "لطفا عدد وارد کنید.")
         })
         const weightSchema = yup.object().shape({
-            weight: yup.string().required("لطفا وزن مورد نظر خود را وارد کنید.").matches(/^[0-9]*$/, "لطفا عدد وارد کنید.")
+            weight: yup.string().required("لطفا وزن مورد نظر خود را وارد کنید.").matches(/[+-]?([0-9]*[.])?[0-9]+/, "لطفا عدد وارد کنید.")
         })
         const price = valuePrice
         const weight = valueWeight
@@ -177,16 +191,11 @@ export default function BuyGold(props) {
         }
     }
 
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [skipped, setSkipped] = React.useState(new Set());
-    const [valuePrice, setValuePrice] = React.useState("");
-    const [valueWeight, setValueWeight] = useState("");
-    const [type, setType] = useState("price");
-    const [finalPrice, setFinalPrice] = useState("")
-    const [value, setValue] = React.useState('cash');
-    const [isOpenSuccessful, setIsOpenSuccessful] = useState(false)
-    const [isOpenFailed, setIsOpenFailed] = useState(false)
-    const [lastPrice, setLastPrice] = useState(0)
+    const handleTotalInventory = () =>{
+        const valueOfWallet = context.accountInfo.wallet.inventory
+        setValuePrice(valueOfWallet)
+        convertPriceToWeight(valueOfWallet)
+    }
 
     function isCloseSuccessful() {
         setIsOpenSuccessful(false)
@@ -197,23 +206,6 @@ export default function BuyGold(props) {
         setIsOpenFailed(false)
         handleReset()
     }
-
-    const handleSubmit = async () => {
-        await api.post("request/buyGold", {
-            weight: valueWeight,
-            price: finalPrice,
-        }).then((res)=>{
-            if(res){
-                setIsOpenSuccessful(true)
-            }else {
-                setIsOpenFailed(true)
-            }
-        })
-    }
-
-    const handleChange = async (event) => {
-        await setValue(event.target.value);
-    };
 
     const handleFinalPrice = () => {
         let price = parseInt(valuePrice)
@@ -236,15 +228,17 @@ export default function BuyGold(props) {
         convertWeightToPrice(event.target.value)
     }
 
-    const convertPriceToWeight = async (value) => {
+    const convertPriceToWeight =  (value) => {
         const newValue = parseInt(value)
         let weight = newValue / lastPrice;
         setValueWeight(weight.toString())
     }
 
-    const convertWeightToPrice = async (value) => {
-        const newValue = parseInt(value)
+    const convertWeightToPrice =  (value) => {
+        const newValue = parseFloat(value)
         let price = newValue * lastPrice;
+        console.log(newValue)
+        console.log(price)
         setValuePrice(price.toString())
     }
 
@@ -330,6 +324,21 @@ export default function BuyGold(props) {
         setValuePrice("")
     };
 
+
+
+    const handleSubmit = async () => {
+        await api.post("request/buyGold", {
+            weight: valueWeight,
+            price: finalPrice,
+        }).then((res)=>{
+            if(res){
+                setIsOpenSuccessful(true)
+            }else {
+                setIsOpenFailed(true)
+            }
+        })
+    }
+
     return (
         <>
             <CacheProvider value={cacheRtl}>
@@ -354,8 +363,10 @@ export default function BuyGold(props) {
                                                 priceErrors={priceErrors}
                                                 weightErrors={weightErrors}
                                                 valuePrice={valuePrice}
+                                                handleTotalInventory={handleTotalInventory}
                                                 handleChangePrice={handleChangePrice}
                                                 valueWeight={valueWeight}
+                                                handle
                                                 handleChangeWeight={handleChangeWeight}
                                                 type={type}
                                                 handleSetType={handleSetType}
@@ -366,27 +377,6 @@ export default function BuyGold(props) {
                                                                 handleFinalPrice={handleFinalPrice}/>;
                                         }
                                     })()}
-                                    {/*{(() => {
-                                        if (activeStep === 0) {
-                                            return <StepReceiveType value={shipmentType}
-                                                                    handleChange={setShipmentType}/>;
-                                        } else if (activeStep === 1) {
-                                            return <StepBuyGold
-                                                priceErrors={priceErrors}
-                                                weightErrors={weightErrors}
-                                                valuePrice={valuePrice}
-                                                handleChangePrice={handleChangePrice}
-                                                valueWeight={valueWeight}
-                                                handleChangeWeight={handleChangeWeight}
-                                                type={type}
-                                                setType={setType}
-                                            />;
-                                        } else if (activeStep === 2) {
-                                            return <StepPayment valuePrice={valuePrice} value={value}
-                                                                shipmentType={shipmentType}
-                                                                handleChange={handleChange}/>;
-                                        }
-                                    })()}*/}
                                     <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
                                         <button
                                             className={"bg-red-600 hover:bg-red-800 text-white py-2 w-[7.5rem] rounded disabled:bg-red-400 disabled:text-red-300 disabled:cursor-not-allowed"}

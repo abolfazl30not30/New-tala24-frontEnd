@@ -1,21 +1,24 @@
-import React, {useEffect, useState} from "react"
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from 'prop-types';
-import {styled} from '@mui/material/styles';
+import {createTheme, styled, ThemeProvider} from '@mui/material/styles';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepConnector, {stepConnectorClasses} from '@mui/material/StepConnector';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
 import rtlPlugin from 'stylis-plugin-rtl';
 import {prefixer} from 'stylis';
 import {CacheProvider} from '@emotion/react';
 import createCache from '@emotion/cache';
-import StepSellType from "./StepSellType"
-import StepSelectCard from "./StepSelectCard"
+import StepSellGold from "./StepSellGold";
+import StepPayment from "./StepPayment";
 import api from "../../../../api/api";
 import * as yup from "yup";
+import {Fragment} from "react";
+import {Dialog, Transition} from "@headlessui/react";
+import {toast} from "react-toastify";
+import signup from "../../../../contexts/signup";
+
 
 const ColorlibConnector = styled(StepConnector)(({theme}) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -66,16 +69,15 @@ function ColorlibStepIcon(props) {
         1: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                 stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round"
-                  d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/>
+                  d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z"/>
         </svg>
-
         ,
         2: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                 stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round"
                   d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
         </svg>
-
+        ,
     };
 
     return (
@@ -112,15 +114,11 @@ const cacheRtl = createCache({
     stylisPlugins: [prefixer, rtlPlugin],
 });
 
-const steps = ['فروش طلا', ' ثبت درخواست فروش'];
 
-function SellGold(props) {
-    useEffect(() => {
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
-            props.history.push("/login")
-        }
-    }, [props.history]);
+const steps = ['فروش طلا', 'ثبت درخواست فروش'];
+
+
+export default function SellGold(props) {
 
     const [constructorHasRun, setConstructorHasRun] = useState(false);
     const constructor = () => {
@@ -131,27 +129,59 @@ function SellGold(props) {
         }
         setConstructorHasRun(true);
     };
+
     constructor()
+
+    useEffect(() => {
+        if (localStorage.getItem('role') !== "USER") {
+            localStorage.clear()
+            props.history.push("/login")
+        }
+    }, [props.history]);
+
+    useEffect(()=>{
+        const getData = async () => {
+            const getDataRes = await api.get("goldPrice/latestPrice")
+            if (getDataRes) {
+                setLastPrice(getDataRes.price)
+            }
+        }
+        getData()
+    },[])
+
+    const WAGE = 50000;
+    const context = useContext(signup)
 
     const [priceErrors, setPriceErrors] = useState([]);
     const [weightErrors, setWeightErrors] = useState([]);
+    const [activeStep, setActiveStep] = React.useState(0);
+    const [skipped, setSkipped] = React.useState(new Set());
+    const [valuePrice, setValuePrice] = React.useState("");
+    const [valueWeight, setValueWeight] = useState("");
+    const [type, setType] = useState("price");
+    const [finalPrice, setFinalPrice] = useState("")
+    const [value, setValue] = React.useState('cash');
+    const [isOpenSuccessful, setIsOpenSuccessful] = useState(false)
+    const [isOpenFailed, setIsOpenFailed] = useState(false)
+    const [lastPrice, setLastPrice] = useState(0)
 
     const validation = async () => {
         const priceSchema = yup.object().shape({
             price: yup.string().required("لطفا مبلغ مورد نظر خود را وارد کنید.").matches(/^[0-9]*$/, "لطفا عدد وارد کنید.")
         })
         const weightSchema = yup.object().shape({
-            weight: yup.string().required("لطفا وزن مورد نظر خود را وارد کنید.").matches(/^[0-9]*$/, "لطفا عدد وارد کنید.")
+            weight: yup.string().required("لطفا وزن مورد نظر خود را وارد کنید.").matches(/[+-]?([0-9]*[.])?[0-9]+/, "لطفا عدد وارد کنید.")
         })
-        const price = valuePrice.numberformat
+        const price = valuePrice
         const weight = valueWeight
-        if (value === "price") {
+
+        if (type === "price") {
             try {
                 return await priceSchema.validate({price}, {abortEarly: false})
             } catch (error) {
                 setPriceErrors(error.errors)
             }
-        } else if (value === "weight") {
+        } else if (type === "weight") {
             try {
                 return await weightSchema.validate({weight}, {abortEarly: false})
             } catch (error) {
@@ -160,35 +190,56 @@ function SellGold(props) {
         }
     }
 
-    const [activeStep, setActiveStep] = React.useState(0);
+    const handleTotalInventory = () =>{
+        const valueOfWallet = context.accountInfo.wallet.weight.toString()
+        setValueWeight(valueOfWallet)
+        convertWeightToPrice(valueOfWallet)
+    }
 
-    const [skipped, setSkipped] = React.useState(new Set());
-    const [rialToWeightCoefficient, setRialToWeightCoefficient] = useState(50000000);
-    const [type, setType] = useState("price");
+    function isCloseSuccessful() {
+        setIsOpenSuccessful(false)
+        handleReset()
+    }
 
-    const [value, setValue] = React.useState('price');
-    const [valueWeight, setValueWeight] = useState("");
-    const [valuePrice, setValuePrice] = React.useState({
-        numberformat: '',
-    });
+    function isCloseFailed() {
+        setIsOpenFailed(false)
+        handleReset()
+    }
 
-    const handleChangePrice = (event) => {
-        setValuePrice({
-            ...valuePrice,
-            [event.target.name]: event.target.value,
-        });
+    const handleFinalPrice = () => {
+        let price = parseInt(valuePrice)
+        price = price - WAGE;
+        setFinalPrice(price)
+    }
+
+    const handleChangePrice = async (event) => {
+        if(event.target.value === ""){
+            setValueWeight("")
+        }
+        setValuePrice(event.target.value)
+        convertPriceToWeight(event.target.value)
     };
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
-    };
-
-    const handleChangeWeight = (event) => {
+    const handleChangeWeight = async (event) => {
+        if(event.target.value === ""){
+            setValuePrice("")
+        }
         setValueWeight(event.target.value)
-        setValuePrice({
-            ...valuePrice,
-            numberformat: (parseInt(event.target.value) * rialToWeightCoefficient).toString(),
-        });
+        convertWeightToPrice(event.target.value)
+    }
+
+    const convertPriceToWeight =  (value) => {
+        const newValue = parseInt(value)
+        let weight = newValue / lastPrice;
+        setValueWeight(weight.toString())
+    }
+
+    const convertWeightToPrice =  (value) => {
+        const newValue = parseFloat(value)
+        let price = newValue * lastPrice;
+        console.log(newValue)
+        console.log(price)
+        setValuePrice(price.toString())
     }
 
     const isStepOptional = (step) => {
@@ -199,50 +250,51 @@ function SellGold(props) {
         return skipped.has(step);
     };
 
-    const handleSubmit = async () => {
-        await api.post("sellRequest", {
-            weight: valueWeight,
-            price: valuePrice.numberformat,
-            accountId: localStorage.getItem("id")
-        })
+    const handleSetType = (event) => {
+        setType(event.target.value)
+        setValueWeight("")
+        setValuePrice("")
     }
 
-    useEffect(() => {
-        const getPrice = async () => {
-            const getPriceRes = await api.get("goldPrice/latestPrice")
-            setRialToWeightCoefficient(getPriceRes.price)
+    const checkWallet = async () =>{
+        const res = await api.post("request/checkWallet",{
+            weight:valueWeight
+        })
+        if(!res){
+            toast.error("طلای درخواستی شما بیشتر از موجودی کیف پول شما است", {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
-        getPrice()
-    }, [activeStep]);
+        return res
+    }
 
     const handleNext = async () => {
         if (activeStep === steps.length - 1) {
             handleSubmit()
-        }
-        if (activeStep === 0) {
+        } else if (activeStep === 0) {
             const valid = await validation()
             if (valid !== undefined) {
-                setPriceErrors([])
-                setWeightErrors([])
-                let newSkipped = skipped;
-                if (isStepSkipped(activeStep)) {
-                    newSkipped = new Set(newSkipped.values());
-                    newSkipped.delete(activeStep);
+                const isValidPrice = await checkWallet()
+                if(isValidPrice){
+                    setPriceErrors([])
+                    setWeightErrors([])
+                    let newSkipped = skipped;
+                    if (isStepSkipped(activeStep)) {
+                        newSkipped = new Set(newSkipped.values());
+                        newSkipped.delete(activeStep);
+                    }
+                    handleFinalPrice();
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                    setSkipped(newSkipped);
                 }
-
-                setActiveStep((prevActiveStep) => prevActiveStep + 1);
-                setSkipped(newSkipped);
-
             }
-        } else {
-            let newSkipped = skipped;
-            if (isStepSkipped(activeStep)) {
-                newSkipped = new Set(newSkipped.values());
-                newSkipped.delete(activeStep);
-            }
-
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            setSkipped(newSkipped);
         }
     };
 
@@ -267,53 +319,62 @@ function SellGold(props) {
 
     const handleReset = () => {
         setActiveStep(0);
+        setFinalPrice("")
+        setValueWeight("")
+        setValuePrice("")
     };
 
 
+
+    const handleSubmit = async () => {
+        await api.post("request/sellGold", {
+            weight: valueWeight,
+            price: finalPrice,
+        }).then((res)=>{
+            if(res){
+                setIsOpenSuccessful(true)
+            }else {
+                setIsOpenFailed(true)
+            }
+        })
+    }
+
     return (
-        <CacheProvider value={cacheRtl}>
-            <ThemeProvider theme={theme}>
-                <div className="mx-9 mt-5 w-full">
-                    <Box sx={{width: '100%'}}>
-                        <div className="md:w-3/4 w-full mx-auto">
-                            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
-                                {steps.map((label) => (
-                                    <Step key={label}>
-                                        <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                                    </Step>
-                                ))}
-                            </Stepper>
-                        </div>
-                        {activeStep === steps.length ? (
+        <>
+            <CacheProvider value={cacheRtl}>
+                <ThemeProvider theme={theme}>
+                    <div dir="rtl" className="mx-9 mt-5 mb-4 w-full">
+                        <Box sx={{width: '100%'}}>
+                            <div className="md:w-3/4 w-full mx-auto">
+                                <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
+                                    {steps.map((label) => (
+                                        <Step key={label}>
+                                            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                                        </Step>
+                                    ))}
+                                </Stepper>
+                            </div>
                             <React.Fragment>
                                 <div
-                                    className="text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold text-center">
-                                    <div className="text-sky-50">
-                                        فروش با موفقیت انجام شد
-                                    </div>
-                                </div>
-                                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                    <Box sx={{flex: '1 1 auto'}}/>
-                                    <Button onClick={handleReset}>فروش مجدد</Button>
-                                </Box>
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment>
-                                <div className={'max-w-[1000px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
+                                    className={'max-w-[1000px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
                                     {(() => {
-                                        if (activeStep == 0) {
-                                            return <StepSellType
+                                        if (activeStep === 0) {
+                                            return <StepSellGold
                                                 priceErrors={priceErrors}
                                                 weightErrors={weightErrors}
-                                                value={value}
-                                                handleChange={handleChange}
                                                 valuePrice={valuePrice}
+                                                handleTotalInventory={handleTotalInventory}
                                                 handleChangePrice={handleChangePrice}
                                                 valueWeight={valueWeight}
+                                                handle
                                                 handleChangeWeight={handleChangeWeight}
+                                                type={type}
+                                                handleSetType={handleSetType}
                                             />;
-                                        } else if (activeStep == 1) {
-                                            return <StepSelectCard valuePrice={valuePrice}/>;
+                                        } else if (activeStep === 1) {
+                                            return <StepPayment valuePrice={valuePrice} valueWeight={valueWeight}
+                                                                finalPrice={finalPrice}
+                                                                handleFinalPrice={handleFinalPrice}/>;
                                         }
                                     })()}
                                     <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
@@ -324,18 +385,132 @@ function SellGold(props) {
                                             بازگشت
                                         </button>
                                         <Box sx={{flex: '1 1 auto'}}/>
-                                        <button onClick={handleNext} className="bg-[#21BA55] hover:bg-green-700 text-white py-2 w-[7.5rem] rounded">
+                                        <button onClick={handleNext}
+                                                className="bg-[#21BA55] hover:bg-green-700 text-white py-2 w-[7.5rem] rounded">
                                             {activeStep === steps.length - 1 ? 'ثبت درخواست' : 'بعدی'}
                                         </button>
                                     </Box>
                                 </div>
                             </React.Fragment>
-                        )}
-                    </Box>
-                </div>
-            </ThemeProvider>
-        </CacheProvider>
-    )
-}
+                        </Box>
+                    </div>
+                </ThemeProvider>
+            </CacheProvider>
 
-export default SellGold
+            <Transition appear show={isOpenFailed} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={isCloseFailed} dir="rtl">
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25"/>
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel
+                                    className="w-full max-w-md transform overflow-hidden rounded-2xl bg-mainGray p-6 align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-red-600">
+                                        درخواست شما ثبت نشد
+                                    </Dialog.Title>
+                                    <div className="text-white mt-6">
+                                        دقایقی دیگر دوباره تلاش کنید
+                                    </div>
+                                    <div className="mt-4">
+                                        <div className="flex flex-row justify-evenly">
+                                            <button
+                                                type="button"
+                                                className="inline-flex justify-center rounded-md border border-transparent bg-labelGreen px-4 py-2 text-sm font-medium text-black hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                onClick={isCloseFailed}>
+                                                فروش مجدد
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="inline-flex justify-center rounded-md border border-transparent bg-gray-300 px-4 py-2 text-sm font-medium text-gary-700 hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                onClick={isCloseFailed}>
+                                                بستن
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
+
+            <Transition appear show={isOpenSuccessful} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={isCloseSuccessful} dir="rtl">
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25"/>
+                    </Transition.Child>
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95">
+                                <Dialog.Panel
+                                    className="w-full max-w-md transform overflow-hidden rounded-2xl bg-mainGray p-6 align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-labelGreen">
+                                        درخواست شما با موفقیت ثبت شد
+                                    </Dialog.Title>
+                                    <div className="text-white mt-6">
+                                        درخواست شما در حال بررسی توسط کارشناس است.
+                                        پس از تایید مبلغ به موجودی کیف پول شما اضافه می شود
+                                    </div>
+                                    <div className="mt-4">
+                                        <div className="flex flex-row justify-evenly">
+                                            <button
+                                                type="button"
+                                                className="inline-flex justify-center rounded-md border border-transparent bg-labelGreen px-4 py-2 text-sm font-medium text-black hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                onClick={isCloseSuccessful}>
+                                                فروش مجدد
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="inline-flex justify-center rounded-md border border-transparent bg-gray-300 px-4 py-2 text-sm font-medium text-gary-700 hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                onClick={isCloseSuccessful}>
+                                                بستن
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
+        </>
+    );
+}

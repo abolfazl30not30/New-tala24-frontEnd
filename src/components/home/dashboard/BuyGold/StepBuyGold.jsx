@@ -142,6 +142,11 @@ function StepBuyGold(props) {
                         )
                     }
                 </div>
+                <div className="w-full md:w-1/2 mt-5">
+                    <button onClick={props.handleTotalInventory} className="flex justify-center items-center flex-col md:flex-row p-3 text-bgGray rounded w-full bg-gold font-bold hover:opacity-80">
+                        خريد به اندازه كل موجودی
+                    </button>
+                </div>
             </div>
 
         </>
