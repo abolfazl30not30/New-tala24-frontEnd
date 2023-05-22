@@ -17,6 +17,7 @@ import api from "../../../../api/api";
 import * as yup from "yup";
 import {Fragment} from "react";
 import {Dialog, Transition} from "@headlessui/react";
+import {toast} from "react-toastify";
 
 
 const ColorlibConnector = styled(StepConnector)(({theme}) => ({
@@ -117,6 +118,8 @@ const cacheRtl = createCache({
 const steps = ['خرید طلا', 'ثبت درخواست خرید'];
 
 export default function BuyGold(props) {
+    const WAGE = 50000;
+
     useEffect(() => {
         if (localStorage.getItem('role') !== "USER") {
             localStorage.clear()
@@ -124,7 +127,15 @@ export default function BuyGold(props) {
         }
     }, [props.history]);
 
-    const WAGE = 50000;
+    useEffect(()=>{
+        const getData = async () => {
+            const getDataRes = await api.get("goldPrice/latestPrice")
+            if (getDataRes) {
+                setLastPrice(getDataRes.price)
+            }
+        }
+        getData()
+    },[])
     const [constructorHasRun, setConstructorHasRun] = useState(false);
 
 
@@ -172,10 +183,10 @@ export default function BuyGold(props) {
     const [valueWeight, setValueWeight] = useState("");
     const [type, setType] = useState("price");
     const [finalPrice, setFinalPrice] = useState("")
-    const [shipmentType, setShipmentType] = useState("cash");
     const [value, setValue] = React.useState('cash');
     const [isOpenSuccessful, setIsOpenSuccessful] = useState(false)
     const [isOpenFailed, setIsOpenFailed] = useState(false)
+    const [lastPrice, setLastPrice] = useState(0)
 
     function isCloseSuccessful() {
         setIsOpenSuccessful(false)
@@ -210,39 +221,32 @@ export default function BuyGold(props) {
         setFinalPrice(price)
     }
     const handleChangePrice = async (event) => {
+        if(event.target.value === ""){
+            setValueWeight("")
+        }
         setValuePrice(event.target.value)
-        await convertPriceToWeight(event.target.value)
+        convertPriceToWeight(event.target.value)
     };
 
     const handleChangeWeight = async (event) => {
+        if(event.target.value === ""){
+            setValuePrice("")
+        }
         setValueWeight(event.target.value)
-        await convertWeightToPrice(event.target.value)
+        convertWeightToPrice(event.target.value)
     }
 
     const convertPriceToWeight = async (value) => {
-        await api.post("goldPrice/convert",
-            {
-                price: value
-            }
-        ).then((respond) => {
-            setValueWeight(respond.weight.toString())
-        }).catch((error) => {
-            console.log(error)
-        })
+        const newValue = parseInt(value)
+        let weight = newValue / lastPrice;
+        setValueWeight(weight.toString())
     }
 
     const convertWeightToPrice = async (value) => {
-        await api.post("goldPrice/convert",
-            {
-                weight: value
-            }
-        ).then((respond) => {
-            setValuePrice(respond.price.toString())
-        }).catch((error) => {
-            console.log(error)
-        })
+        const newValue = parseInt(value)
+        let price = newValue * lastPrice;
+        setValuePrice(price.toString())
     }
-
 
     const isStepOptional = (step) => {
         return step === 1;
@@ -258,22 +262,44 @@ export default function BuyGold(props) {
         setValuePrice("")
     }
 
+    const checkWallet = async () =>{
+        const res = await api.post("request/checkWallet",{
+            price:valuePrice
+        })
+        if(!res){
+            toast.error("طلای درخواستی شما بیشتر از موجودی کیف پول شما است", {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        return res
+    }
+
     const handleNext = async () => {
         if (activeStep === steps.length - 1) {
             handleSubmit()
         } else if (activeStep === 0) {
             const valid = await validation()
             if (valid !== undefined) {
-                setPriceErrors([])
-                setWeightErrors([])
-                let newSkipped = skipped;
-                if (isStepSkipped(activeStep)) {
-                    newSkipped = new Set(newSkipped.values());
-                    newSkipped.delete(activeStep);
+                const isValidPrice = await checkWallet()
+                if(isValidPrice){
+                    setPriceErrors([])
+                    setWeightErrors([])
+                    let newSkipped = skipped;
+                    if (isStepSkipped(activeStep)) {
+                        newSkipped = new Set(newSkipped.values());
+                        newSkipped.delete(activeStep);
+                    }
+                    handleFinalPrice();
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                    setSkipped(newSkipped);
                 }
-                handleFinalPrice();
-                setActiveStep((prevActiveStep) => prevActiveStep + 1);
-                setSkipped(newSkipped);
             }
         }
     };

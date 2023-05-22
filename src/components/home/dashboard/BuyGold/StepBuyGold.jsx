@@ -45,7 +45,6 @@ NumericFormatCustom.propTypes = {
     onChange: PropTypes.func.isRequired,
 };
 
-
 function StepBuyGold(props) {
     const context = useContext(signup);
 
@@ -58,7 +57,7 @@ function StepBuyGold(props) {
                 <div className="flex flex-col rounded-xl justify-center p-2 border-dashed border-2 border-neutral-700 ">
                     <div className="flex justify-center mb-3"><RiHandCoinFill className="text-gold" fontSize="2rem"/></div>
                     <h5 className="mb-3 text-[1rem] text-gold">موجودی کیف پول</h5>
-                    <div className="text-[0.8rem] flex justify-center"><span className="ml-2">{context.accountInfo.wallet.inventory}</span>ریال </div>
+                    <div className="text-[0.8rem] flex justify-center"><span className="ml-2">{EnglishToPersian(SeparateNumber(context.accountInfo.wallet.inventory))}</span>ریال </div>
                 </div>
             </div>
             <div className="px-1 flex flex-col items-center md:border-dashed md:border-2 md:border-neutral-700 md:py-5 md:px-3 mx-4 md:mx-10 rounded-xl">
@@ -88,6 +87,7 @@ function StepBuyGold(props) {
                                         value={props.valuePrice}
                                         onChange={props.handleChangePrice}
                                         sx={{input: {color: '#fff !important'}}}
+                                        type="number"
                                         name="numberformat"
                                         id="formatted-numberformat-input"
                                         InputProps={{
@@ -129,15 +129,15 @@ function StepBuyGold(props) {
                 </div>
                 <div className="w-full md:w-1/2 mt-5">
                     {
-                        props.type === 'price'?(
+                        props.type === 'price' ? (
                             <div className="flex justify-center items-center flex-col md:flex-row p-4 text-bgGray rounded w-full background-label">
                                 <h5 className="font-bold ml-4">وزن طلا:</h5>
                                 <span className="font-bold" >{EnglishToPersian(props.valueWeight)}<span className="font-bold mr-2">گرم</span></span>
                             </div>
-                        )  : (
+                        ) : (
                             <div className="flex justify-center items-center  flex-col md:flex-row p-4 text-bgGray rounded w-full background-label">
                                 <h5 className="font-bold ml-4">مبلغ پرداختی:</h5>
-                                <span className="font-bold">{EnglishToPersian(SeparateNumber(props.valuePrice))} <span className="font-bold mr-2">تومان</span></span>
+                                <span className="font-bold">{EnglishToPersian(SeparateNumber(props.valuePrice))} <span className="font-bold mr-2">ریال</span></span>
                             </div>
                         )
                     }

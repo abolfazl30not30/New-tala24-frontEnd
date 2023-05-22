@@ -18,7 +18,7 @@ import * as PropTypes from "prop-types";
 import MainSection from "./MainSection";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-
+import { ToastContainer, toast } from 'react-toastify';
 
 function Routes(props) {
     return null;

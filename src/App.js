@@ -26,6 +26,8 @@ import { hot } from "react-hot-loader";
 import MainHomePage from "./components/home/HomePage/MainHomePage";
 import WebServer from "./components/WebServer";
 import NotFound from "./components/Other/NotFound";
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from "react-toastify";
 
 const App = () => {
 
@@ -119,6 +121,17 @@ const App = () => {
                     </Routes>
                 </BrowserRouter>
             </signup.Provider>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"/>
         </>
     )
 }

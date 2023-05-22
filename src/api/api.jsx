@@ -1,5 +1,6 @@
 import axios from "axios";
 import LoginApi from "./LoginApi";
+import { toast } from 'react-toastify';
 
 const axiosParams = {
     baseURL: 'http://localhost:8090/api/v1/'
@@ -30,7 +31,16 @@ const api = {
                     });
                     return response.data
                 } else {
-                    console.log("error in main get api")
+                    toast.error(" خطا در اتصال", {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
                 }
             }
         },
@@ -57,7 +67,16 @@ const api = {
                     });
                     return response.data
                 } else {
-                    console.log("error in main delete api")
+                    toast.error(" خطا در اتصال", {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
                 }
             }
         },
@@ -84,7 +103,16 @@ const api = {
                 });
                 return response.data
             } else {
-                console.log("error in main post api")
+                toast.error(" خطا در اتصال", {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
         }
     },
@@ -111,7 +139,16 @@ const api = {
                 });
                 return response.data
             } else {
-                console.log("error in main put api")
+                toast.error(" خطا در اتصال", {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
         }
     }
