@@ -54,6 +54,9 @@
     background-color: #252525;
 
 }
+.MuiMenu-root ul li {
+    color: white !important;
+}
 .MuiMenu-root ul li a{
     color: white !important;
 }
