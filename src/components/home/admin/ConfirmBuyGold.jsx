@@ -9,6 +9,7 @@ import {prefixer} from 'stylis'
 import api from "../../../api/api";
 import FormControl from "@mui/material/FormControl";
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
+import {SeparateNumber} from "../../../helper/SeparateNumber";
 
 
 const status = [
@@ -50,7 +51,7 @@ export default function ConfirmBuyGold(props) {
 
     useEffect(() => {
         const getData = async () => {
-            const getPaymentsRes = await api.get(`payment`)
+            const getPaymentsRes = await api.get(`request/admin/buyGold`)
             if (getPaymentsRes) {
                 setGoldBuyRequests(getPaymentsRes)
             }
@@ -129,7 +130,6 @@ export default function ConfirmBuyGold(props) {
             setFailedDescriptionContent("")
 
         }else {
-
             await api.put(`payment/${paymentId}`, {
                 isAuthorized: adminConfirm,
                 status:"pending",
@@ -147,25 +147,25 @@ export default function ConfirmBuyGold(props) {
 
     return (
         <div className="w-full bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
-            <div className="text-gold text-lg font-medium">درخواست خرید طلا</div>
+            <div className="text-white text-2xl font-medium">درخواست خرید طلا</div>
             <table className='mt-8 text-white break-normal'>
                 <thead>
 
                 <tr>
-                    <th className={'p-4'}>
+                    <th className={'p-4 text-gold'}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round"
                                   d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"/>
                         </svg>
                     </th>
-                    <th className={'p-4'}>وزن</th>
-                    <th className={'p-4'}>قیمت</th>
-                    <th className={'p-4'}>تاریخ</th>
-                    <th className={'p-4'}>وضعيت پرداخت</th>
-                    <th className={'p-4'}>وضعيت تاييد ادمين</th>
-                    <th className={'p-4'}>تایید ادمین</th>
-                    <th className={'p-4'}>پروفایل درخواست دهنده</th>
+                    <th className={'p-4 text-gold'}>وزن</th>
+                    <th className={'p-4 text-gold'}>قیمت</th>
+                    <th className={'p-4 text-gold'}>تاریخ</th>
+                    <th className={'p-4 text-gold'}>وضعيت پرداخت</th>
+                    <th className={'p-4 text-gold'}>وضعيت تاييد ادمين</th>
+                    <th className={'p-4 text-gold'}>تایید ادمین</th>
+                    <th className={'p-4 text-gold'}>پروفایل درخواست دهنده</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -173,9 +173,9 @@ export default function ConfirmBuyGold(props) {
                     goldBuyRequests.map((requests, index) => (
                         <tr>
                             <td className={'p-3'}>{index + 1}</td>
-                            <td className={'p-3'}>{requests.weight}</td>
-                            <td className={'p-3'}>{requests.price}</td>
-                            <td className={'p-3'}>{requests.date}</td>
+                            <td className={'p-3'}>{EnglishToPersian(requests.weight.toString())}</td>
+                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(requests.price.toString()))}</td>
+                            <td className={'p-3'}>{EnglishToPersian(requests.createAt)}</td>
                             <td className={'p-3'}>
                                 {
                                     requests.status === "pending" ?
@@ -192,17 +192,17 @@ export default function ConfirmBuyGold(props) {
                                                 </span>) : null
                                 }
                             </td>
-                            <td className={'p-3'}>
+                            <td className={'p-3 flex justify-center'}>
                                 {
-                                    requests.isAuthorized === "pending" ?
+                                    requests.status === "pend" ?
                                         (<span className={'text-center bg-neutral-500 p-2 rounded-xl'}>
                                             نامشخص
                                         </span>) :
-                                        requests.isAuthorized === "failed" ?
+                                        requests.status === "reject" ?
                                             (<span className={'text-center bg-red-500 p-2 rounded-xl'}>
                                                 رد شد
                                             </span>) :
-                                            requests.isAuthorized === "successful" ?
+                                            requests.status === "accept" ?
                                                 (<span className={'text-center bg-green-700 p-2 rounded-xl'}>
                                                     موفقیت آمیز
                                                 </span>) : null
@@ -212,7 +212,7 @@ export default function ConfirmBuyGold(props) {
                                 <button
                                     type="button"
                                     onClick={() => openModal(requests.isAuthorized,requests.id)}
-                                    className="relative cursor-default rounded flex border-[1px] border-neutral-700 border-solid bg-transparent text-white py-2 px-3 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                                    className="relative cursor-default rounded flex border-[1px] border-neutral-700 border-solid bg-labelGreen text-black hover:opacity-80 py-2 px-3 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                                     تعيين وضعيت
                                 </button>
                                 <Transition appear show={isOpen} as={Fragment}>
@@ -309,11 +309,11 @@ export default function ConfirmBuyGold(props) {
                                     </Dialog>
                                 </Transition>
                             </td>
-                            <td className={'p-3'}>
+                            <td className={'p-3 flex justify-center'}>
                                 <button
                                     type="button"
                                     onClick={() => openModalProfile(requests.account_id)}
-                                    className="rounded-md flex flex-row items-center bg-[#DFAF3D] text-black text-xs px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                                    className="rounded-md flex flex-row items-center bg-mainGold text-black text-xs px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-1">

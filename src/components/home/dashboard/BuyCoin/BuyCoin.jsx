@@ -15,6 +15,7 @@ import "./../../../../style/BuyGold.css"
 import api from "../../../../api/api";
 import StepAddCoin from "./StepAddCoin";
 import {toast} from "react-toastify";
+import signup from "../../../../contexts/signup";
 
 const ColorlibConnector = styled(StepConnector)(({theme}) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -137,6 +138,7 @@ export default function BuyCoin(props) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
     const [coins, setCoins] = useState([])
+    const [totalWeight , setTotalWeight] = useState(0)
 
     const isStepOptional = (step) => {
         return step === 1;
@@ -206,9 +208,9 @@ export default function BuyCoin(props) {
                                 className={'max-w-[1000px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
                                 {(() => {
                                     if (activeStep === 0) {
-                                        return <StepAddCoin coins={coins} setCoins={setCoins}/>;
+                                        return <StepAddCoin coins={coins} setCoins={setCoins} totalWeight={totalWeight} setTotalWeight={setTotalWeight}/>;
                                     } else if (activeStep === 1) {
-                                        return <StepPayment/>;
+                                        return <StepPayment totalWeight={totalWeight}/>;
                                     }
                                 })()}
                                 <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
@@ -228,9 +230,6 @@ export default function BuyCoin(props) {
                         </React.Fragment>
                     </Box>
                 </div>
-                {/*<div >
-
-                </div>*/}
             </ThemeProvider>
         </CacheProvider>
     );

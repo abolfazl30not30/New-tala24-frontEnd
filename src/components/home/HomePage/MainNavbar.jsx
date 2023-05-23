@@ -2,7 +2,7 @@ import React from 'react';
 import {useState, useEffect} from "react";
 import {RxEnter} from "react-icons/rx"
 import "../../../style/home.css"
-import {Link, NavLink, useNavigate} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 import {
     Navbar,
@@ -69,27 +69,27 @@ const MainNavbar = () => {
                             <ul className="flex flex-col items-center p-4 mt-4 border border-gray-100 rounded-lg bg-transparent md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-transparent"
                                 style={{backgroundColor: "transparent"}}>
                                 <li>
-                                    <NavLink to="/" activeClassName="active"
-                                             className="block ml-7 py-2 pl-3 pr-4 text-white hover:text-gold font-light">خانه</NavLink>
+                                    <Link to="/" activeClassName="active"
+                                             className="block ml-7 py-2 pl-3 pr-4 text-white hover:text-gold font-light">خانه</Link>
                                 </li>
                                 <li>
-                                    <NavLink to="/services" activeClassName="active"
-                                             className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">خدمات</NavLink>
+                                    <Link to="/services" activeClassName="active"
+                                             className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">خدمات</Link>
                                 </li>
                                 <li>
-                                    <NavLink to="/about-us" activeClassName="active"
+                                    <Link to="/about-us" activeClassName="active"
                                              className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">درباره
-                                        ما</NavLink>
+                                        ما</Link>
                                 </li>
                                 <li>
-                                    <NavLink to="/contact-us" activeClassName="active"
+                                    <Link to="/contact-us" activeClassName="active"
                                              className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">تماس
-                                        با ما</NavLink>
+                                        با ما</Link>
                                 </li>
                                 <li>
                                     {
                                         localStorage.getItem("username") && localStorage.getItem("password") && localStorage.getItem("role") && localStorage.getItem("Authorization") ?
-                                            <NavLink onClick={async () => {
+                                            <Link onClick={async () => {
                                                 await LoginApi()
                                                 if (localStorage.getItem("role") === "ADMIN") {
                                                     navigate("/admin")
@@ -103,10 +103,10 @@ const MainNavbar = () => {
                                                 }
                                             }} activeClassName="active"
                                                      className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">ورود به پنل
-                                            </NavLink> :
-                                            <NavLink to="/login" activeClassName="active"
+                                            </Link> :
+                                            <Link to="/login" activeClassName="active"
                                                      className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light "> ورود
-                                                به سامانه</NavLink>
+                                                به سامانه</Link>
                                     }
 
                                 </li>

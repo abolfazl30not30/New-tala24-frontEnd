@@ -44,7 +44,7 @@ function Sidebar() {
 
     return (
         <>
-            <div className='sidebar-dashboard close' id='sidebar'>
+            <div className='sidebar-dashboard' id='sidebar'>
                 <div id='close_sidebar_mobile' onClick={closeSidebar}>
                     بستن
                 </div>
@@ -53,15 +53,15 @@ function Sidebar() {
                 </div>
 
                 <div className="sidebar-list mt-4">
-                    <Link to="/admin/gold-price" className='w-100'>
+                    <NavLink to="/admin/gold-price" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <AiOutlineStock size={'25'} color="#fff" className={'cursor-pointer'}/>
                             <div className="sidebar-list-item-title">
-                                قیمت طلا
+                                ثبت قیمت طلا
                             </div>
                         </div>
-                    </Link>
-                    <Link to="/admin/confirm-buy" className='w-100'>
+                    </NavLink>
+                    <NavLink to="/admin/confirm-buy" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -70,11 +70,11 @@ function Sidebar() {
                                       d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
                             </svg>
                             <div className="sidebar-list-item-title">
-                                خرید طلا
+                                درخواست خرید طلا
                             </div>
                         </div>
-                    </Link>
-                    <Link to="/admin/confirm-sell" className='w-100'>
+                    </NavLink>
+                    <NavLink to="/admin/confirm-sell" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -83,12 +83,12 @@ function Sidebar() {
                                       d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/>
                             </svg>
                             <div className="sidebar-list-item-title">
-                                فروش طلا
+                                درخواست فروش طلا
                             </div>
                         </div>
-                    </Link>
+                    </NavLink>
 
-                    <Link to="/admin/blogs" className='w-100'>
+                    <NavLink to="/admin/blogs" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -100,9 +100,9 @@ function Sidebar() {
                                 بلاگ
                             </div>
                         </div>
-                    </Link>
+                    </NavLink>
 
-                    <Link to="/admin/quote" className='w-100'>
+                    <NavLink to="/admin/quote" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -114,8 +114,8 @@ function Sidebar() {
                                 مظنه
                             </div>
                         </div>
-                    </Link>
-                    <Link to="/admin/ticket" className='w-100'>
+                    </NavLink>
+                    <NavLink to="/admin/ticket" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -127,8 +127,8 @@ function Sidebar() {
                                 تیکت
                             </div>
                         </div>
-                    </Link>
-                    <Link onClick={() => localStorage.clear()} to="/" className={"w-100"}>
+                    </NavLink>
+                    <NavLink onClick={() => localStorage.clear()} to="/" className={"w-100"} activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -139,7 +139,7 @@ function Sidebar() {
                                 خروج
                             </div>
                         </div>
-                    </Link>
+                    </NavLink>
                 </div>
             </div>
 

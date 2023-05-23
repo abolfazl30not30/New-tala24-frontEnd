@@ -101,20 +101,11 @@
 }
 
 .sidebar-list-item {
-    height: 50px;
-    color: #ffffff;
-    transition: .1ms;
-    cursor: pointer;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.sidebar-list-item:hover {
-    background-color: #dfaf3d;
-    color: #fff;
-}
 .sidebar-list-item svg {
-    /*height: 50px;*/
     min-width: 78px;
     text-align: center;
     line-height: 50px;
@@ -192,4 +183,22 @@
 
 .box-content {
     margin-top: 2rem;
+}
+
+.sidebar-list a{
+    height: 50px;
+    color: #ffffff;
+    transition: .1ms;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sidebar-list a:hover{
+    background-color: #444444;
+}
+
+.active{
+    background-color: #dfaf3d !important;
 }

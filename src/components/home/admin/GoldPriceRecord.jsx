@@ -9,6 +9,7 @@ import {InputAdornment, TextField} from "@mui/material";
 import './../../../style/admin.css'
 import api from "../../../api/api";
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
+import {SeparateNumber} from "../../../helper/SeparateNumber";
 
 // Create RTL MUI
 const theme = createTheme({
@@ -283,7 +284,7 @@ export default function GoldPriceRecord(props) {
                             <td className={'p-3'}>{index + 1}</td>
                             <td className={'p-3'}>{EnglishToPersian(item.date)}</td>
                             <td className={'p-3'}>{item.adminUserName}</td>
-                            <td className={'p-3'}>{item.price}</td>
+                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item.price.toString()))}</td>
                         </tr>
                     ))
                 }

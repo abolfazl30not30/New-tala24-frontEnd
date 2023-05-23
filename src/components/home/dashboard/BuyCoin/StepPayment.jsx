@@ -11,6 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import {Link} from "react-router-dom";
 import {RiAddFill} from "react-icons/ri";
+import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 
 function StepPayment(props) {
     const [address, setAddress] = useState(["کاشان-شهرک انقلاب-کوی لاله-کوی نسیم"])
@@ -92,27 +93,27 @@ function StepPayment(props) {
                     <div className="w-96 flex justify-center flex-col">
                         <div className="w-full flex justify-between py-3 border-dotted border-b-2 border-neutral-700">
                             <span>
-                                وزن طلا:
+                                وزن کل:
                             </span>
-                            <span><span>1.5</span> گرم </span>
+                            <span><span>{EnglishToPersian(props.totalWeight.toString())}</span> گرم </span>
                         </div>
                         <div className="w-full flex justify-between py-3 border-dotted border-b-2 border-neutral-700">
                             <span>
-                                مبلغ:
+                                هزینه ارسال:
                             </span>
-                            <span><span>14000000</span> ریال </span>
+                            <span><span>{EnglishToPersian("100,000")}</span> ریال </span>
                         </div>
                         <div className="w-full flex justify-between py-3 border-dotted border-b-2 border-neutral-700">
                             <span>
                                 کارمزد:
                             </span>
-                            <span><span>50000</span> ریال </span>
+                            <span><span>{EnglishToPersian("50,000")}</span> ریال </span>
                         </div>
                         <div className="mt-5 w-full flex justify-between py-3 px-2  border-solid border-2 border-neutral-700 bg-[#2F3135]">
                             <span>
                                 مبلغ قابل پرداخت:
                             </span>
-                            <span><span>1400000</span> ریال </span>
+                            <span><span>{EnglishToPersian("150,000")}</span> ریال </span>
                         </div>
                     </div>
                 </div>

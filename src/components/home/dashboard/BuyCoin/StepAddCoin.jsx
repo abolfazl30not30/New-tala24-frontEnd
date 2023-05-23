@@ -1,6 +1,6 @@
 import React, {Fragment, useContext, useState} from 'react'
 import "../../../../style/buycoin.css"
-import {InputAdornment, InputLabel, MenuItem, Select} from "@mui/material";
+import {InputAdornment, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import PropTypes from 'prop-types';
 import {NumericFormat} from 'react-number-format';
 import coinsImage from "../../../../images/icons.svg"
@@ -15,6 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 import signup from "../../../../contexts/signup";
 import api from "../../../../api/api";
+import * as yup from "yup";
 
 
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
@@ -58,34 +59,55 @@ function StepAddCoin(props) {
     const [isOpenCoin, setIsOpenCoin] = useState(false)
 
     const [coinsWight, setCoinsWight] = useState(["0.05", "0.100", "0.150", "0.200", "0.300", "0.400", "0.500", "0.600", "0.700", "0.800", "0.900", "1.00", "1.100", "1.200", "1.300", "1.400", "1.500", "2.00"])
-    const [selectedCoin, setSelectedCoin] = useState("0.05")
+    const [selectedCoin, setSelectedCoin] = useState(coinsWight[0])
+    const [countOfCoin,setCountOfCoin] = useState();
     const [paymentData,paymentDate] = useState()
+    const [countErrors,setCountErrors] = useState([])
+
     const handleOpenCoin = () => {
         setIsOpenCoin(true);
     }
 
+    const handleCountOfCoin = (event) =>{
+        console.log(typeof (event.target.value))
+        setCountOfCoin(event.target.value)
+    }
+
     const handleAddNewCoin = async () => {
-        await api.post("goldPrice/convert", {
-            weight: selectedCoin
-        }).then((res)=>{
-            if(res){
-                let updatedCoins = [...props.coins]
-                const newCoin = {
-                    price: res.price,
-                    weight:selectedCoin
-                }
-                updatedCoins.push(newCoin)
-                props.setCoins(updatedCoins)
+        const valid = await validation()
+        console.log(valid)
+        if (valid !== undefined){
+            setCountErrors([])
+            let updatedCoins = [...props.coins]
+            let updatedCoinsWight = [...coinsWight]
+            const newCoin = {
+                count: countOfCoin,
+                weight:selectedCoin
             }
-        })
-        closeAddCoin()
+
+            let newTotalWeight = props.totalWeight;
+            newTotalWeight += (countOfCoin * selectedCoin)
+            props.setTotalWeight(newTotalWeight)
+
+            updatedCoins.push(newCoin)
+            props.setCoins(updatedCoins)
+
+            updatedCoinsWight = updatedCoinsWight.filter(c => c !== selectedCoin)
+            setCoinsWight(updatedCoinsWight)
+            setCountOfCoin(null)
+            setIsOpenCoin(false)
+        }
+
     };
 
-    const handleDeleteCoin = (index) =>{
-        let updatedCoin = [...props.coins]
-        updatedCoin.splice(index,1)
-        props.setCoins(updatedCoin)
+    const handleDeleteCoin = (coin) =>{
+        let newTotalWeight = props.totalWeight;
+        newTotalWeight -= (coin.weight * coin.count)
+        props.setTotalWeight(newTotalWeight)
 
+        let updatedCoin = [...props.coins]
+        updatedCoin = updatedCoin.filter(c => c !== coin)
+        props.setCoins(updatedCoin)
     }
 
     const handleChangeCoin = (event) => {
@@ -93,9 +115,21 @@ function StepAddCoin(props) {
     };
 
     const closeAddCoin = () => {
+        setCountErrors([])
         setIsOpenCoin(false)
     };
 
+    const validation = async () => {
+        const priceSchema = yup.object().shape({
+            count: yup.number().required("لطفا تعداد مورد نظر خود را وارد کنید.").min(1,"تعداد نمی تواند کمتر از 1 باشد")
+        })
+        const count = parseInt(countOfCoin)
+        try {
+            return await priceSchema.validate({count}, {abortEarly: false})
+        } catch (error) {
+            setCountErrors(error.errors)
+        }
+    }
 
     return (
         <>
@@ -109,10 +143,9 @@ function StepAddCoin(props) {
                         className="flex flex-col rounded-xl justify-center p-2 border-dashed border-2 border-neutral-700 ">
                         <div className="flex justify-center mb-3"><RiHandCoinFill className="text-gold" fontSize="2rem"/></div>
                         <h5 className="mb-3 text-[1rem] text-gold">موجودی طلایی</h5>
-                        <div className="text-[0.8rem] flex justify-center"><span className="ml-2">{EnglishToPersian(context.accountInfo.wallet.weight.toString())}</span>گرم</div>
+                        <div className="text-[0.8rem] flex justify-center"><span className="ml-2">{EnglishToPersian((context.accountInfo.wallet.weight - props.totalWeight).toString())}</span>گرم</div>
                     </div>
                 </div>
-
                 <div className="coins flex justify-center items-center flex-col border-dashed border-2 border-neutral-700 p-3 mx-10 rounded-xl ">
                     {
                         props.coins.map((coin,index)=>(
@@ -130,29 +163,28 @@ function StepAddCoin(props) {
                                             <span className="text-[0.8rem] font-thin text-gold">وزن</span>
                                         </div>
                                         <div className="flex-auto w-1/3 flex justify-between">
-                                            <span className="text-[0.8rem] font-thin">{EnglishToPersian(coin.weight.toString())}</span>
-                                            <span className="text-[0.8rem] font-thin ">گرم</span>
+                                            <span className="text-[1rem] font-thin">{EnglishToPersian(coin.weight.toString())}</span>
+                                            <span className="text-[1rem] font-thin ">گرم</span>
                                         </div>
                                     </div>
                                     <div className="flex p-[0.3rem]">
                                         <div className="flex-auto w-2/3 flex items-center">
-                                            <span className="text-[0.8rem] font-thin text-gold">قیمت</span>
+                                            <span className="text-[0.8rem] font-thin text-gold">تعداد</span>
                                         </div>
                                         <div className="flex-auto w-1/3 flex justify-between">
-                                            <span className="text-[0.8rem] font-thin">{EnglishToPersian(coin.price.toString())}</span>
-                                            <span className="text-[0.8rem] font-thin">ریال</span>
+                                            <span className="text-[1rem] font-thin">{EnglishToPersian(coin.count.toString())}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="grow flex justify-center items-center">
-                                    <button onClick={()=>{handleDeleteCoin(index)}} className="p-5">
+                                    <button onClick={()=>{handleDeleteCoin(coin)}} className="p-5">
                                         <BsTrashFill className="text-red-600" fontSize="1.5rem"/>
                                     </button>
                                 </div>
                             </div>))}
                 </div>
 
-                <div className="flex justify-center mt-7">
+                <div className="flex justify-center mt-7 z-10">
                     <button className="bg-gold rounded text-black py-2 px-16 hover:opacity-70 flex items-center"
                             onClick={handleOpenCoin}>
                         <RiAddFill/>
@@ -191,25 +223,46 @@ function StepAddCoin(props) {
                                         </Dialog.Title>
                                         <div className="flex flex-col mt-6">
                                             <CacheProvider value={cacheRtl}>
-                                                <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select" style={{color: "#fff"}}>انتخاب وزن سکه</InputLabel>
-                                                    <Select
-                                                        label="انتخاب وزن سکه"
-                                                        id="demo-simple-select"
-                                                        value={selectedCoin}
-                                                        sx={{label: {color: '#fff !important'}}}
-                                                        onChange={handleChangeCoin}
-                                                        InputProps={{
-                                                            endAdornment: <InputAdornment position="start">گرم</InputAdornment>,
-                                                        }}
-                                                    >
-                                                        {
-                                                            coinsWight?.map((coinsWight) => (
-                                                                <MenuItem value={coinsWight}>{EnglishToPersian(coinsWight)} گرم </MenuItem>
-                                                            ))
-                                                        }
-                                                    </Select>
-                                                </FormControl>
+                                                <div>
+                                                    <FormControl fullWidth>
+                                                        <InputLabel id="demo-simple-select" style={{color: "#fff"}}>انتخاب وزن سکه</InputLabel>
+                                                        <Select
+                                                            label="انتخاب وزن سکه"
+                                                            id="demo-simple-select"
+                                                            value={selectedCoin}
+                                                            sx={{label: {color: '#fff !important'}}}
+                                                            onChange={handleChangeCoin}
+                                                            InputProps={{
+                                                                endAdornment: <InputAdornment position="start">گرم</InputAdornment>,
+                                                            }}
+                                                        >
+                                                            {
+                                                                coinsWight?.map((coinsWight) => (
+                                                                    <MenuItem value={coinsWight}>{EnglishToPersian(coinsWight)} گرم </MenuItem>
+                                                                ))
+                                                            }
+                                                        </Select>
+                                                    </FormControl>
+                                                </div>
+                                                <div className="my-3">
+                                                    <TextField
+                                                        fullWidth
+                                                        label="تعداد"
+                                                        error={countErrors.length !== 0}
+                                                        value={countOfCoin}
+                                                        onChange={handleCountOfCoin}
+                                                        sx={{input: {color: '#fff !important'}}}
+                                                        type="number"
+                                                        name="numberformat"
+                                                        id="formatted-numberformat-input"/>
+
+                                                    {
+                                                        countErrors.map((error, index) =>
+                                                            <small key={index}
+                                                                   className={"text-red-600 mt-1 text-[0.6rem]"}>{error}</small>
+                                                        )
+                                                    }
+                                                </div>
                                             </CacheProvider>
                                         </div>
                                         <div className="mt-4">
