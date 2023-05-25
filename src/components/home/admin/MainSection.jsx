@@ -17,15 +17,15 @@ const MainSection = () => {
     return (
         <>
             <Routes>
-                <Route path="gold-price" element={<ProtectedRoute><GoldPriceRecord /></ProtectedRoute>} />
-                <Route path="confirm-buy" element={<ProtectedRoute><ConfirmBuyGold /></ProtectedRoute>} />
-                <Route path="confirm-sell" element={<ProtectedRoute><ConfirmSellGold /></ProtectedRoute>} />
-                <Route path="quote" element={<ProtectedRoute><Quote /></ProtectedRoute>} />
-                <Route path="new-blog" element={<ProtectedRoute><NewBlog /></ProtectedRoute>} />
-                <Route path="edit-blog" element={<ProtectedRoute><EditBlog /></ProtectedRoute>} />
-                <Route path="blogs" element={<ProtectedRoute><Blogs /></ProtectedRoute>} />
-                <Route path="ticket" element={<ProtectedRoute><AdminTicket /></ProtectedRoute>} />
-                <Route path="ticket/:id" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />
+                <Route path="/gold-price" element={<ProtectedRoute><GoldPriceRecord /></ProtectedRoute>} />
+                <Route path="/confirm-buy" element={<ProtectedRoute><ConfirmBuyGold /></ProtectedRoute>} />
+                <Route path="/confirm-sell" element={<ProtectedRoute><ConfirmSellGold /></ProtectedRoute>} />
+                <Route path="/quote" element={<ProtectedRoute><Quote /></ProtectedRoute>} />
+                <Route path="/new-blog" element={<ProtectedRoute><NewBlog /></ProtectedRoute>} />
+                <Route path="/edit-blog" element={<ProtectedRoute><EditBlog /></ProtectedRoute>} />
+                <Route path="/blogs" element={<ProtectedRoute><Blogs /></ProtectedRoute>} />
+                <Route path="/ticket" element={<ProtectedRoute><AdminTicket /></ProtectedRoute>} />
+                <Route path="/ticket/:id" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />
             </Routes>
         </>
     )

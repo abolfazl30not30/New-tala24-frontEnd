@@ -80,6 +80,7 @@ function StepAddCoin(props) {
             setCountErrors([])
             let updatedCoins = [...props.coins]
             let updatedCoinsWight = [...coinsWight]
+
             const newCoin = {
                 count: countOfCoin,
                 weight:selectedCoin

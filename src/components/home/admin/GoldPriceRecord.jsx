@@ -26,7 +26,6 @@ function RTL(props) {
     return <CacheProvider value={cacheRtl}>{props.children}</CacheProvider>;
 }
 
-
 export default function GoldPriceRecord(props) {
     useEffect(() => {
         if (localStorage.getItem('role') !== "ADMIN") {
