@@ -138,7 +138,6 @@ function StepAddCoin(props) {
                 <div className="my-2 px-4">
                     <h2 className="text-white text-l font-bold">تعیین تعداد سکه</h2>
                 </div>
-
                 <div className="inventory-box bg-mainGray rounded-xl p-3 flex justify-center mx-4 md:mx-10 mt-3 mb-4">
                     <div
                         className="flex flex-col rounded-xl justify-center p-2 border-dashed border-2 border-neutral-700 ">
@@ -147,17 +146,17 @@ function StepAddCoin(props) {
                         <div className="text-[0.8rem] flex justify-center"><span className="ml-2">{EnglishToPersian((context.accountInfo.wallet.weight - props.totalWeight).toString())}</span>گرم</div>
                     </div>
                 </div>
-                <div className="coins flex justify-center items-center flex-col border-dashed border-2 border-neutral-700 p-3 mx-10 rounded-xl ">
+                <div className="coins flex justify-center items-center flex-col border-dashed border-2 border-neutral-700 p-3 mx-2 md:mx-10 rounded-xl ">
                     {
                         props.coins.map((coin,index)=>(
-                            <div className="coin bg-mainGray rounded-2xl py-2 w-[70%] flex border-5 border-sky-100 mb-3 z-10">
+                            <div className="coin bg-mainGray rounded-2xl py-2  w-full md:w-[70%] flex flex-col md:flex-row items-center border-5 border-sky-100 mb-3" >
                                 <div className="icons flex justify-center items-center">
-                                    <img src={coinsImage} className="w-3/4" alt="coins"/>
+                                    <img src={coinsImage} className="w-2/3 md:w-3/4" alt="coins"/>
                                 </div>
                                 <div className="text-section flex items-center">
                                     <h4 className="text-white">سکه طلای {EnglishToPersian(coin.weight.toString())} گرمی</h4>
                                 </div>
-                                <div className="mr-10 flex justify-around flex-col w-[40%] p-1 rounded-xl"
+                                <div className="mt-3 md:mt-0 md:mr-10 flex justify-around flex-col w-[90%] md:w-[40%] p-1 rounded-xl"
                                      style={{border: "1px solid #666666"}}>
                                     <div className="flex p-[0.3rem]" style={{borderBottom: "1px solid #666666"}}>
                                         <div className=" flex-auto w-2/3 flex items-center">
@@ -178,15 +177,28 @@ function StepAddCoin(props) {
                                     </div>
                                 </div>
                                 <div className="grow flex justify-center items-center">
-                                    <button onClick={()=>{handleDeleteCoin(coin)}} className="p-5">
+                                    <button onClick={()=>{handleDeleteCoin(coin)}} className="p-5" style={{zIndex:"1"}}>
                                         <BsTrashFill className="text-red-600" fontSize="1.5rem"/>
                                     </button>
                                 </div>
                             </div>))}
+                    {
+                        props.coins.length !== 0 && (
+                            <div className="border-dotted border-t-2 border-neutral-700 flex justify-around w-full md:w-[70%] p-2">
+                                <div className="text-[0.9rem]">
+                                    <span className="text-gold">وزن کل :</span>
+                                    <span className="mr-2">{EnglishToPersian(props.totalWeight.toString())} گرم </span>
+                                </div>
+                                <div className="text-[0.9rem]">
+                                    <span className="text-gold">کارمزد کل :</span>
+                                    <span className="mr-2">{EnglishToPersian("150,000")} ریال </span>
+                                </div>
+                            </div>
+                        )
+                    }
                 </div>
-
                 <div className="flex justify-center mt-7 z-10">
-                    <button className="bg-gold rounded text-black py-2 px-16 hover:opacity-70 flex items-center"
+                    <button className="bg-gold rounded text-black py-2 px-16 hover:opacity-70 flex items-center" style={{zIndex:"1"}}
                             onClick={handleOpenCoin}>
                         <RiAddFill/>
                         افـزودن سـکـه جدید
