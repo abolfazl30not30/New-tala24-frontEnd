@@ -55,7 +55,7 @@ function Navbar() {
                             <span className="mr-2 text-gold text-[0.7rem]">موجودی طلایی</span>
                         </div>
                         <div className="text-[0.8rem]">
-                            <span>{EnglishToPersian(SeparateNumber(context.accountInfo.wallet.weight))}</span>
+                            <span>{EnglishToPersian(context.accountInfo.wallet.weight.toString())}</span>
                             <span className="mr-2">گرم</span>
                         </div>
                     </div>
