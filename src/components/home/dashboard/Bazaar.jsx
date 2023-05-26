@@ -46,6 +46,9 @@ const Bazaar = () => {
         purchase: ""
     });
 
+    const [lastGoldPrice,setLastGoldPrice] = useState({
+        price:""
+    })
     const handleClose = () => setOpen(false);
 
     const [userData, setUserData] = useState({
@@ -84,31 +87,21 @@ const Bazaar = () => {
         }
 
         const getQouteData = async () => {
-            const getGoldPriceReq = await api.get("quote/latestQuote")
-            if (getGoldPriceReq) {
-                setLastQuote(getGoldPriceReq)
+            const getLatestQuoteReq = await api.get("quote/latestQuote")
+            if (getLatestQuoteReq) {
+                setLastQuote(getLatestQuoteReq)
             }
+            const getGoldPriceReq = await api.get("goldPrice/latestPrice")
+            if (getGoldPriceReq) {
+                setLastGoldPrice(getGoldPriceReq)
+            }
+
         }
 
         getPriceData()
         getQouteData()
     }, []);
 
-    const handleBuy = () => {
-        if (info.completeRegistrationStatus === false) {
-            setOpen(true)
-        } else {
-            navigate("/dashboard/buy-gold")
-        }
-    }
-
-    const handleSell = () => {
-        if (info.completeRegistrationStatus === false) {
-            setOpen(true)
-        } else {
-            navigate("/dashboard/buy-gold")
-        }
-    }
 
     const style = {
         position: 'absolute',
@@ -129,43 +122,42 @@ const Bazaar = () => {
 
     return (
         <>
-            <div className="mt-5 text-white  w-3/4 flex items-center  flex-col">
-
-                <div className="w-full flex justify-between">
-                    <div className={'bg-bgGray flex flex-col items-center px-12 py-4 rounded-2xl'}>
+            <div className="mt-5 text-white  w-full md:w-3/4 flex items-center  flex-col">
+                <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
+                    <div className={'bg-bgGray flex flex-col items-center px-12 py-4 mx-2 rounded-2xl my-2 md:my-0'}>
                         <div className="text-labelGreen mb-2 flex items-center">
                             <span className="ml-2"><BiCartDownload/></span>
-                            <h2>مظنه خرید</h2>
+                            <h2 className="text-[0.9rem]">مظنه خرید</h2>
                         </div>
                         <div className={'text-white'}>
                             <span>{EnglishToPersian(SeparateNumber(lastQuote.purchase))}</span>
                             <span className="mr-2">ریال</span>
                         </div>
                     </div>
-                    <div className={'bg-bgGray flex flex-col items-center px-12 py-4 rounded-2xl'}>
+                    <div className={'bg-bgGray flex flex-col items-center px-12 py-4 mx-2 rounded-2xl my-2 md:my-0'}>
                         <div className="text-red-600 mb-2 flex items-center">
                             <span className="ml-2"><MdSell/></span>
-                            <h2>مظنه فروش</h2>
+                            <h2 className="text-[0.9rem]" >مظنه فروش</h2>
                         </div>
                         <div className={'text-white'}>
                             <span>{EnglishToPersian(SeparateNumber(lastQuote.sell))}</span>
                             <span className="mr-2">ریال</span>
                         </div>
                     </div>
-                    <div className={'bg-bgGray flex flex-col items-center px-12 py-4 rounded-2xl'}>
+                    <div className={'bg-bgGray flex flex-col items-center px-12 py-4 mx-2 rounded-2xl my-2 md:my-0'}>
                         <div className="text-labelGreen mb-2 flex items-center">
                             <span className="ml-2"><BsCashCoin/></span>
-                            <h2>موجودی کیف پول</h2>
+                            <h2 className="text-[0.9rem]">موجودی ریالی</h2>
                         </div>
                         <div className={'text-white'}>
                             <span>{EnglishToPersian(SeparateNumber(context.accountInfo.wallet.inventory))}</span>
                             <span className="mr-2">ریال</span>
                         </div>
                     </div>
-                    <div className={'bg-bgGray flex flex-col items-center px-12 py-4 rounded-2xl'}>
+                    <div className={'bg-bgGray flex flex-col items-center px-12 py-4 mx-2 rounded-2xl my-2 md:my-0'}>
                         <div className="text-gold mb-2 flex items-center">
                             <span className="ml-2"><GiTwoCoins/></span>
-                            <h2>موجودی طلایی</h2>
+                            <h2 className="text-[0.9rem]">موجودی طلایی</h2>
                         </div>
                         <div className={'text-white'}>
                             <span>{EnglishToPersian(context.accountInfo.wallet.weight.toString())}</span>
@@ -176,11 +168,13 @@ const Bazaar = () => {
 
                 <div className="w-full rounded-xl bg-bgGray p-10 mt-3">
                     <div className={'mainPrice mb-3 pb-5'}>
-                        <p className={'text-[12px] text-white'}>
-                            طلای ۲۴ عیار
-                        </p>
-                        <p className={'text-mainGold text-[32px]'}>
-                            5.987,34
+                        <span className={'text-[1rem] text-white'}>
+                            آخرین قیمت طلا
+                        </span>
+                        <p className={'text-mainGold text-[2rem]'}>
+                            {
+                                EnglishToPersian(SeparateNumber(lastGoldPrice.price.toString()))
+                            }
                         </p>
                     </div>
 

@@ -95,11 +95,6 @@
     justify-content: center;
     padding: .5rem;
 }
-
-.sidebar-dashboard .logo img {
-    width: 50%;
-}
-
 .sidebar-list-item {
     display: flex;
     flex-direction: row;

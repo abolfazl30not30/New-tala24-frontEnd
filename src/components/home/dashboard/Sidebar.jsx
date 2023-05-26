@@ -49,11 +49,11 @@ function Sidebar() {
                 </div>
 
                 <div className="logo">
-                    <img src={"https://cloud.tala24.co/images/logo192.png"} alt={'logo'}/>
+                    <img src={"https://cloud.tala24.co/images/logo192.png"} className="w-[40%] sm:w-[30%]  md:w-1/2" alt={'logo'}/>
                 </div>
 
                 <div className="sidebar-list mt-4">
-                    <NavLink to="/dashboard/home" className='w-100' activeClassName="active">
+                    <NavLink to="/dashboard/home" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                         <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <AiOutlineStock size={'25'} color="#fff" className={'cursor-pointer'}/>
                             <div className="sidebar-list-item-title">
@@ -62,7 +62,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink to="/dashboard/inventory-increase" className='w-100' activeClassName="active">
+                    <NavLink to="/dashboard/inventory-increase" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                         <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white">
@@ -75,7 +75,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink to="/dashboard/with-draw-money" className='w-100' activeClassName="active">
+                    <NavLink to="/dashboard/with-draw-money" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                         <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white">
@@ -89,7 +89,7 @@ function Sidebar() {
                     </NavLink>
                     {
                         context.completeRegistrationStatus ? (
-                            <NavLink to="/dashboard/buy-gold" className='w-100' activeClassName="active">
+                            <NavLink to="/dashboard/buy-gold" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                                 <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5}
@@ -103,7 +103,7 @@ function Sidebar() {
                                 </div>
                             </NavLink>
                         ):(
-                            <div className='w-100' onClick={handleOpen}>
+                            <div className='w-100' onClick={handleOpen} onClick={window.innerWidth <= 768 && (closeSidebar)}>
                                 <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5}
@@ -120,7 +120,7 @@ function Sidebar() {
                     }
                     {
                         context.completeRegistrationStatus ? (
-                            <NavLink to="/dashboard/sell-gold" className='w-100' activeClassName="active">
+                            <NavLink to="/dashboard/sell-gold" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                                 <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5}
@@ -134,7 +134,7 @@ function Sidebar() {
                                 </div>
                             </NavLink>
                         ):(
-                            <div onClick={handleOpen} className='w-100'>
+                            <div onClick={handleOpen} className='w-100' onClick={window.innerWidth <= 768 && (closeSidebar)}>
                                 <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5}
@@ -150,7 +150,7 @@ function Sidebar() {
                         )
                     }
 
-                    <NavLink exact to="/dashboard/buy-report" className='w-100' activeClassName="active">
+                    <NavLink exact to="/dashboard/buy-report" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                         <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <TbReportAnalytics size={'25'} color="#fff"/>
                             <div className="sidebar-list-item-title">
@@ -159,7 +159,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/sell-report" className='w-100' activeClassName="active">
+                    <NavLink exact to="/dashboard/sell-report" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                         <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <TbReportAnalytics size={'25'} color="#fff"/>
                             <div className="sidebar-list-item-title">
@@ -168,7 +168,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/buy-coin" className='w-100' activeClassName="active">
+                    <NavLink exact to="/dashboard/buy-coin" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                         <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <TbReportAnalytics size={'25'} color="#fff"/>
                             <div className="sidebar-list-item-title">
@@ -177,7 +177,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/bank-accounts" className='w-100' activeClassName="active">
+                    <NavLink exact to="/dashboard/bank-accounts" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                         <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white">
@@ -190,7 +190,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/user-profile" className='w-100' activeClassName="active">
+                    <NavLink exact to="/dashboard/user-profile" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                         <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5} stroke="currentColor" className="text-white w-6 h-6">
@@ -203,7 +203,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/ticket" className='w-100' activeClassName="active">
+                    <NavLink exact to="/dashboard/ticket" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                         <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
