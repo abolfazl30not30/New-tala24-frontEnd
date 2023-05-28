@@ -30,17 +30,31 @@ const api = {
                         }
                     });
                     return response.data
-                } else {
-                    toast.error(" خطا در اتصال", {
-                        position: "bottom-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                    });
+                    }
+                else {
+                    if(error.response.status === 500){
+                        toast.info(error.response.data.message, {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }else {
+                        toast.error(" خطا در اتصال", {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }
                 }
             }
         },
@@ -66,17 +80,30 @@ const api = {
                         }
                     });
                     return response.data
-                } else {
-                    toast.error(" خطا در اتصال", {
-                        position: "bottom-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                    });
+                } else{
+                    if(error.response.status === 500){
+                        toast.info(error.response.data.message, {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }else {
+                        toast.error(" خطا در اتصال", {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }
                 }
             }
         },
@@ -103,16 +130,29 @@ const api = {
                 });
                 return response.data
             } else {
-                toast.error(" خطا در اتصال", {
-                    position: "bottom-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+                if(error.response.status === 500){
+                    toast.info(error.response.data.message, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+                }else {
+                    toast.error(" خطا در اتصال", {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+                }
             }
         }
     },
@@ -138,8 +178,8 @@ const api = {
                     }
                 });
                 return response.data
-            } else {
-                toast.error(" خطا در اتصال", {
+            }else {
+                toast.info(" خطا در اتصال", {
                     position: "bottom-center",
                     autoClose: 5000,
                     hideProgressBar: false,

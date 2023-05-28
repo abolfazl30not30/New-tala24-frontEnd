@@ -231,6 +231,7 @@ export default function SellGold(props) {
     const convertPriceToWeight =  (value) => {
         const newValue = parseInt(value)
         let weight = newValue / lastPrice;
+        weight = weight.toFixed(3)
         setValueWeight(weight.toString())
     }
 
@@ -260,8 +261,8 @@ export default function SellGold(props) {
         const res = await api.post("request/checkWallet",{
             weight:valueWeight
         })
-        if(!res){
-            toast.error("طلای درخواستی شما بیشتر از موجودی کیف پول شما است", {
+        if(!res.check){
+            toast.error(res.reason, {
                 position: "bottom-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -282,7 +283,7 @@ export default function SellGold(props) {
             const valid = await validation()
             if (valid !== undefined) {
                 const isValidPrice = await checkWallet()
-                if(isValidPrice){
+                if(isValidPrice.check){
                     setPriceErrors([])
                     setWeightErrors([])
                     let newSkipped = skipped;

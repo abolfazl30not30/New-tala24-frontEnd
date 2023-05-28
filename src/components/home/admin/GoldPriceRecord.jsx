@@ -10,6 +10,7 @@ import './../../../style/admin.css'
 import api from "../../../api/api";
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
 import {SeparateNumber} from "../../../helper/SeparateNumber";
+import {BsTrashFill} from "react-icons/bs";
 
 // Create RTL MUI
 const theme = createTheme({
@@ -48,6 +49,9 @@ export default function GoldPriceRecord(props) {
     let [isOpenConfirm, setIsOpenConfirm] = useState(false)
     let [newGoldPrice, setNewGoldPrice] = useState(null)
     let [goldPriceHistory, setGoldPriceHistory] = useState([])
+    const [isOpenDeletePrice, setIsOpenDeletePrice] = useState(false)
+    const [targetPriceByDelete, setTargetPriceByDelete] = useState("")
+
     useEffect(() => {
         const getData = async () => {
             const getGoldPriceReq = await api.get("goldPrice")
@@ -78,25 +82,35 @@ export default function GoldPriceRecord(props) {
         setIsOpenConfirm(true)
     }
 
-    const getPrice = e => setNewGoldPrice(e.target.value)
+    function closeModalDeletePrice() {
+        setTargetPriceByDelete('');
+        setIsOpenDeletePrice(false)
+    }
 
-    async function recordNewPrice() {
-        await api.post("goldPrice",
-            {
-                price: newGoldPrice,
-                adminName: localStorage.getItem("username")
-            }
-        )
-        setIsOpenConfirm(false)
-        setNewGoldPrice(null)
+    async function openModalDeletePrice(id) {
+        setTargetPriceByDelete(id);
+        setIsOpenDeletePrice(true)
+    }
 
+    const deletePrice = async () => {
+        await api.delete(`goldPrice/${targetPriceByDelete}`)
         const getGoldPriceReq = await api.get("goldPrice")
         if (getGoldPriceReq) {
             setGoldPriceHistory(getGoldPriceReq)
         }
-
+        setIsOpenDeletePrice(false)
     }
 
+    const getPrice = e => setNewGoldPrice(e.target.value)
+
+    async function recordNewPrice() {
+        await api.post("goldPrice", {price: newGoldPrice})
+        setIsOpenConfirm(false)
+        setNewGoldPrice(null)
+
+        const getGoldPriceReq = await api.get("goldPrice")
+        if (getGoldPriceReq) {setGoldPriceHistory(getGoldPriceReq)}
+    }
     return (
         <div className="w-full bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
             <div className="flex flex-col space-y-4 md:flex-row items-center justify-between">
@@ -112,6 +126,7 @@ export default function GoldPriceRecord(props) {
                     </svg>
                     ثبت قیمت جدید
                 </button>
+
                 <Transition appear show={isOpen} as={Fragment}>
                     <Dialog as="div" className="relative z-10" onClose={closeModal} dir="rtl">
                         <Transition.Child
@@ -273,7 +288,9 @@ export default function GoldPriceRecord(props) {
                     </th>
                     <th className={'p-4'}>تاريخ و ساعت</th>
                     <th className={'p-4'}>ثبت کننده</th>
-                    <th className={'p-4'}>قیمت</th>
+                    <th className={'p-4'}>قيمت بر حسب گرم </th>
+                    <th className={'p-4'}>قيمت بر حسب مثقال </th>
+                    <th className={'p-4'}>عملیات </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -283,12 +300,74 @@ export default function GoldPriceRecord(props) {
                             <td className={'p-3'}>{index + 1}</td>
                             <td className={'p-3'}>{EnglishToPersian(item.date)}</td>
                             <td className={'p-3'}>{item.adminUserName}</td>
-                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item.price.toString()))}</td>
+                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item.pricePerGram.toString()))} ریال </td>
+                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item.pricePerShekel.toString()))} ریال </td>
+                            <td className={'p-3'}>
+                                <button
+                                    className='bg-transparent p-3 hover:bg-bgGray hover:bg-opacity-20 rounded-xl'
+                                    onClick={() => openModalDeletePrice(item.id)}>
+                                    <BsTrashFill className="text-red-600" fontSize="1.5rem"/>
+                                </button>
+                            </td>
                         </tr>
                     ))
                 }
                 </tbody>
             </table>
+
+            <Transition appear show={isOpenDeletePrice} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModalDeletePrice}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25"/>
+                    </Transition.Child>
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95">
+                                <Dialog.Panel
+                                    className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#303030] p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-center text-lg font-medium leading-6 text-white">
+                                        حذف حساب
+                                    </Dialog.Title>
+                                    <div className="mt-6 text-center text-white">
+                                        آیا از حذف حساب مطئن هستید؟
+                                    </div>
+                                    <div className="mt-4 flex flex-row justify-center">
+                                        <button
+                                            type="button"
+                                            className="inline-flex justify-center rounded-md border border-transparent ml-4 bg-red-600 text-white px-4 py-2 text-sm font-medium"
+                                            onClick={deletePrice}>
+                                            حذف
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="inline-flex justify-center rounded-md border border-transparent bg-dark text-white px-4 py-2 text-sm font-medium"
+                                            onClick={closeModalDeletePrice}>
+                                            بستن
+                                        </button>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
         </div>
     )
 }

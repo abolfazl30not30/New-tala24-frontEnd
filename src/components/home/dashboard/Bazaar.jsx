@@ -47,7 +47,7 @@ const Bazaar = () => {
     });
 
     const [lastGoldPrice,setLastGoldPrice] = useState({
-        price:""
+        pricePerGram:""
     })
     const handleClose = () => setOpen(false);
 
@@ -65,7 +65,7 @@ const Bazaar = () => {
             let priceData = []
             for (let i = 9; i >= 0; i--) {
                 labelData.push(priceDataRes[i]?.date)
-                priceData.push(priceDataRes[i]?.price)
+                priceData.push(priceDataRes[i]?.pricePerGram)
             }
             setUserData({
                 labels: labelData, // years;
@@ -173,7 +173,7 @@ const Bazaar = () => {
                         </span>
                         <p className={'text-mainGold text-[2rem]'}>
                             {
-                                EnglishToPersian(SeparateNumber(lastGoldPrice.price.toString()))
+                                EnglishToPersian(SeparateNumber(lastGoldPrice.pricePerGram.toString()))
                             }
                         </p>
                     </div>

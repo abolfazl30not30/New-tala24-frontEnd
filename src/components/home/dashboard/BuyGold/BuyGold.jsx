@@ -144,7 +144,7 @@ export default function BuyGold(props) {
         const getData = async () => {
             const getDataRes = await api.get("goldPrice/latestPrice")
             if (getDataRes) {
-                setLastPrice(getDataRes.price)
+                setLastPrice(getDataRes.pricePerGram)
             }
         }
         getData()
@@ -192,7 +192,7 @@ export default function BuyGold(props) {
     }
 
     const handleTotalInventory = () =>{
-        const valueOfWallet = context.accountInfo.wallet.inventory
+        const valueOfWallet = context.accountInfo.wallet.inventory-WAGE
         setValuePrice(valueOfWallet)
         convertPriceToWeight(valueOfWallet)
     }
@@ -231,6 +231,7 @@ export default function BuyGold(props) {
     const convertPriceToWeight =  (value) => {
         const newValue = parseInt(value)
         let weight = newValue / lastPrice;
+        weight = weight.toFixed(3)
         setValueWeight(weight.toString())
     }
 
@@ -241,7 +242,6 @@ export default function BuyGold(props) {
         console.log(price)
         setValuePrice(price.toString())
     }
-
     const isStepOptional = (step) => {
         return step === 1;
     };
@@ -260,8 +260,8 @@ export default function BuyGold(props) {
         const res = await api.post("request/checkWallet",{
             price:valuePrice
         })
-        if(!res){
-            toast.error("طلای درخواستی شما بیشتر از موجودی کیف پول شما است", {
+        if(!res.check){
+            toast.info(res.reason, {
                 position: "bottom-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -282,7 +282,7 @@ export default function BuyGold(props) {
             const valid = await validation()
             if (valid !== undefined) {
                 const isValidPrice = await checkWallet()
-                if(isValidPrice){
+                if(isValidPrice.check){
                     setPriceErrors([])
                     setWeightErrors([])
                     let newSkipped = skipped;

@@ -24,7 +24,6 @@ const LoginApi = () => {
             localStorage.setItem("role", json.role)
             return response
         }).catch((error) => {
-
             return error.response;
         })
     )

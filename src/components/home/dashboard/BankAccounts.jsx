@@ -121,7 +121,7 @@ export default function BankAccounts() {
                                  stroke="currentColor" className="w-4 h-4 ml-2">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                             </svg>
-                            افزودن آدرس
+                            افزودن حساب جدید
                         </button>
                         <Transition appear show={isOpenNewAccounts} as={Fragment}>
                             <Dialog as="div" className="relative z-10" onClose={closeModalNewAccounts}>

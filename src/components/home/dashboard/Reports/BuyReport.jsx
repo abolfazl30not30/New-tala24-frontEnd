@@ -13,15 +13,18 @@ const BuyReport = () => {
         buyGold: 'خرید طلا',
         sellGold: 'فروش طلا'
     }
+
     const reportStatus = {
         pend: 'منتظر',
         reject: 'رد شد',
         accept: 'تایید شد'
     }
+
     const reportDeliverType = {
         storage: 'نگهداری',
         shipment: 'ارسال'
     }
+
     useEffect(() => {
         const getData = async () => {
             const getDataRes = await api.get("request/gold")
@@ -79,8 +82,8 @@ const BuyReport = () => {
                                         <th className={'p-4 text-center'}>مبلغ</th>
                                         <th className={'p-4 text-center'}>وزن</th>
                                         <th className={'p-4 text-center'}>تاریخ و ساعت </th>
+                                        <th className={'p-4 text-center'}>شماره پیگیری</th>
                                         <th className={'p-4 text-center'}>وضعیت</th>
-
                                     </tr>
                                     {
                                         goldReports?.map((report, index) => (
@@ -91,6 +94,7 @@ const BuyReport = () => {
                                                 <td className={'p-3 text-center'}>{EnglishToPersian(SeparateNumber(report.price))}ریال</td>
                                                 <td className={'p-3 text-center'}>{EnglishToPersian(SeparateNumber(report.weight))}گرم</td>
                                                 <td className={'p-3 text-center'}>{EnglishToPersian(report.createAt)}</td>
+                                                <td className={'p-3 text-center'}>{EnglishToPersian(report.issueTracking)}</td>
                                                 <td className={'p-3 text-center flex justify-center'}>
                                                     {
                                                         report.status === "pend"
