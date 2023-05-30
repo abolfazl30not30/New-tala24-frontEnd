@@ -81,7 +81,7 @@ const SignupOrLogin = () => {
                             value={EnglishToPersian(number)}
                             sx={{ input: { color: '#fff !important' } }}
                             type={"text"}
-                            className={'field bg-[#212121] w-full rounded h-[45px] p-4 text-white'}
+                            className={'field bg-[#212121] w-full rounded p-4 text-white'}
                             onChange={(value) => handleInput(value)}
                         />
                         {

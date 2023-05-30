@@ -101,7 +101,7 @@ const CreatePassword= () => {
                             error={errors.length !== 0}
                             value={password}
                             type={"password"}
-                            className={'field bg-[#212121] w-full rounded h-[45px] p-4 text-white'}
+                            className={'field bg-[#212121] w-full rounded p-4 text-white'}
                             onChange={(value) => handleInputPassword(value)}
                         />
                         <PasswordStrengthIndicator password={password}/>
@@ -117,7 +117,7 @@ const CreatePassword= () => {
                             error={errors.length !== 0}
                             value={passwordRepeat}
                             type={"password"}
-                            className={'field bg-[#212121] w-full rounded h-[45px] p-4 text-white'}
+                            className={'field bg-[#212121] w-full rounded p-4 text-white'}
                             onChange={(value) => handleInputPasswordRepeat(value)}
                         />
                         {
