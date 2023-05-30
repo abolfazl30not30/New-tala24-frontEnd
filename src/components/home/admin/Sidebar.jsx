@@ -62,7 +62,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink to="/admin/quote" className='w-100' activeClassName="active">
+                    {/*<NavLink to="/admin/quote" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -74,7 +74,7 @@ function Sidebar() {
                                 ثبت مظنه خريد و فروش
                             </div>
                         </div>
-                    </NavLink>
+                    </NavLink>*/}
                     <NavLink to="/admin/confirm-buy" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

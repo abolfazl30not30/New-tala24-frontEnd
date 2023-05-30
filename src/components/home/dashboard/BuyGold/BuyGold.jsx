@@ -144,7 +144,7 @@ export default function BuyGold(props) {
         const getData = async () => {
             const getDataRes = await api.get("goldPrice/latestPrice")
             if (getDataRes) {
-                setLastPrice(getDataRes.pricePerGram)
+                setLastPrice(getDataRes.sellPricePerGram)
             }
         }
         getData()

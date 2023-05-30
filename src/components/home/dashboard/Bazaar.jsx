@@ -42,12 +42,12 @@ const Bazaar = () => {
 
     const [open, setOpen] = useState(false);
     const [lastQuote, setLastQuote] = useState({
-        sell: "",
-        purchase: ""
+        sellPricePerShekel: "",
+        purchasePricePerShekel: ""
     });
 
     const [lastGoldPrice,setLastGoldPrice] = useState({
-        pricePerGram:""
+        purchasePricePerGram:""
     })
     const handleClose = () => setOpen(false);
 
@@ -63,10 +63,11 @@ const Bazaar = () => {
             const priceDataRes = await api.get("goldPrice/chart")
             let labelData = []
             let priceData = []
-            for (let i = 9; i >= 0; i--) {
+            /*TODO: fix me*/
+            /*for (let i = 9; i >= 0; i--) {
                 labelData.push(priceDataRes[i]?.date)
-                priceData.push(priceDataRes[i]?.pricePerGram)
-            }
+                priceData.push(priceDataRes[i]?.purchasePricePerGram)
+            }*/
             setUserData({
                 labels: labelData, // years;
                 datasets: [
@@ -87,15 +88,15 @@ const Bazaar = () => {
         }
 
         const getQouteData = async () => {
-            const getLatestQuoteReq = await api.get("quote/latestQuote")
+            /*const getLatestQuoteReq = await api.get("quote/latestQuote")
             if (getLatestQuoteReq) {
                 setLastQuote(getLatestQuoteReq)
-            }
+            }*/
             const getGoldPriceReq = await api.get("goldPrice/latestPrice")
             if (getGoldPriceReq) {
                 setLastGoldPrice(getGoldPriceReq)
+                setLastQuote(getGoldPriceReq)
             }
-
         }
 
         getPriceData()
@@ -130,7 +131,7 @@ const Bazaar = () => {
                             <h2 className="text-[0.9rem]">مظنه خرید</h2>
                         </div>
                         <div className={'text-white'}>
-                            <span>{EnglishToPersian(SeparateNumber(lastQuote.purchase))}</span>
+                            <span>{EnglishToPersian(SeparateNumber(lastQuote.purchasePricePerShekel.toString()))}</span>
                             <span className="mr-2">ریال</span>
                         </div>
                     </div>
@@ -140,7 +141,7 @@ const Bazaar = () => {
                             <h2 className="text-[0.9rem]" >مظنه فروش</h2>
                         </div>
                         <div className={'text-white'}>
-                            <span>{EnglishToPersian(SeparateNumber(lastQuote.sell))}</span>
+                            <span>{EnglishToPersian(SeparateNumber(lastQuote?.sellPricePerShekel))}</span>
                             <span className="mr-2">ریال</span>
                         </div>
                     </div>
@@ -173,7 +174,7 @@ const Bazaar = () => {
                         </span>
                         <p className={'text-mainGold text-[2rem]'}>
                             {
-                                EnglishToPersian(SeparateNumber(lastGoldPrice.pricePerGram.toString()))
+                                EnglishToPersian(SeparateNumber(lastGoldPrice?.purchasePricePerGram.toString()))
                             }
                         </p>
                     </div>

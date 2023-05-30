@@ -7,7 +7,7 @@ import ConfirmBuyGold from "./ConfirmBuyGold";
 import ConfirmSellGold from "./ConfirmSellGold";
 import AdminTicket from "./Ticket/UserTicket";
 import AdminChat from "./Ticket/UserChat";
-import Quote from "./Quote";
+/*import Quote from "./Quote";*/
 import NewBlog from "./NewBlog"
 import EditBlog from './EditBlog';
 import Blogs from "./Blogs"
@@ -20,7 +20,7 @@ const MainSection = () => {
                 <Route path="/gold-price" element={<ProtectedRoute><GoldPriceRecord /></ProtectedRoute>} />
                 <Route path="/confirm-buy" element={<ProtectedRoute><ConfirmBuyGold /></ProtectedRoute>} />
                 <Route path="/confirm-sell" element={<ProtectedRoute><ConfirmSellGold /></ProtectedRoute>} />
-                <Route path="/quote" element={<ProtectedRoute><Quote /></ProtectedRoute>} />
+                {/*<Route path="/quote" element={<ProtectedRoute><Quote /></ProtectedRoute>} />*/}
                 <Route path="/new-blog" element={<ProtectedRoute><NewBlog /></ProtectedRoute>} />
                 <Route path="/edit-blog" element={<ProtectedRoute><EditBlog /></ProtectedRoute>} />
                 <Route path="/blogs" element={<ProtectedRoute><Blogs /></ProtectedRoute>} />
