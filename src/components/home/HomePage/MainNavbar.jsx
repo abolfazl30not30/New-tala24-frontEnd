@@ -87,6 +87,10 @@ const MainNavbar = () => {
                                         با ما</Link>
                                 </li>
                                 <li>
+                                    <Link to="/blog" activeClassName="active"
+                                          className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">بلاگ</Link>
+                                </li>
+                                <li>
                                     {
                                         localStorage.getItem("username") && localStorage.getItem("password") && localStorage.getItem("role") && localStorage.getItem("Authorization") ?
                                             <Link onClick={async () => {

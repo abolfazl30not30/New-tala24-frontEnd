@@ -16,19 +16,18 @@ import ConfirmSellGold from './components/home/admin/ConfirmSellGold'
 import GoldPriceRecord from "./components/home/admin/GoldPriceRecord";
 import AdminTicket from "./components/home/admin/Ticket/UserTicket";
 import AdminChat from "./components/home/admin/Ticket/UserChat";
-import AddAdmin from './components/home/manager/AddAdmin'
 import ProtectedRoute from "./components/protectedRoute";
 import ProtectedLogin from "./components/ProtectedLogin";
 import ContactUs from "./components/home/HomePage/ContactUs/ContactUs";
 import AboutUs from "./components/home/HomePage/AboutUs/AboutUs";
 import Services from "./components/home/HomePage/Services/Services";
-import { hot } from "react-hot-loader";
 import MainHomePage from "./components/home/HomePage/MainHomePage";
 import WebServer from "./components/WebServer";
 import NotFound from "./components/Other/NotFound";
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from "react-toastify";
 import ManagerDashboard from "./components/home/Manager1/Dashboard";
+import Blog from './components/home/HomePage/Blog/Blog'
 
 const App = () => {
 
@@ -105,6 +104,7 @@ const App = () => {
                         <Route path="/contact-us" element={(<ContactUs/>)}/>
                         <Route path="/about-us" element={(<AboutUs/>)}/>
                         <Route path="/services" element={(<Services/>)}/>
+                        <Route path="/blog" element={(<Blog/>)}/>
                         <Route path="/create-password" element={(<CreatePassword/>)}/>
                         <Route path="/dashboard/*" element={(<ProtectedRoute><Dashboard/></ProtectedRoute>)}/>
                         <Route path="/manager/*" element={(<ProtectedRoute><ManagerDashboard/></ProtectedRoute>)}/>
