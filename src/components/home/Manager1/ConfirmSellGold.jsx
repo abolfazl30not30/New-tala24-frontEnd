@@ -51,7 +51,7 @@ export default function ConfirmSellGold(props) {
 
     useEffect(() => {
         const getData = async () => {
-            const getPaymentsRes = await api.get(`request/manager/sellGold`)
+            const getPaymentsRes = await api.get(`request/admin/sellGold`)
             if (getPaymentsRes) {
                 setGoldBuyRequests(getPaymentsRes)
             }
@@ -74,7 +74,7 @@ export default function ConfirmSellGold(props) {
     }
 
     async function openModalProfile(id) {
-        const getInfo = await api.get(`info/manager/show/profile/${id}`)
+        const getInfo = await api.get(`info/admin/show/profile/${id}`)
         if (getInfo) {
             setProfileData(getInfo)
         }
@@ -109,7 +109,7 @@ export default function ConfirmSellGold(props) {
             setFailedDescriptionContent("")
         }
 
-        const getPaymentsRes = await api.get(`request/manager/buyGold`)
+        const getPaymentsRes = await api.get(`request/admin/buyGold`)
         if (getPaymentsRes) {
             setGoldBuyRequests(getPaymentsRes)
         }

@@ -233,7 +233,7 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        axios.post("https://api.tala24.co/login",
+        axios.post("http://localhost:8090/login",
             {username: localStorage.getItem("username"), password: localStorage.getItem("password")}, {
                 withCredentials: true,
                 headers: {

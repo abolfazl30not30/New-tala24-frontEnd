@@ -69,7 +69,7 @@ export default function Blogs(props) {
                 <div className="flex flex-col md:flex-row md:justify-between space-y-4 md:space-y-0">
                     <div className="text-gold text-lg font-medium">بلاگ ها</div>
                     <button
-                        onClick={() => navigate("/manager/new-blog")}
+                        onClick={() => navigate("/admin/new-blog")}
                         type="button"
                         className="rounded-md flex flex-row items-center bg-gold text-black px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                     >

@@ -139,6 +139,7 @@ export default function BuyCoin(props) {
     const [skipped, setSkipped] = React.useState(new Set());
     const [coins, setCoins] = useState([])
     const [totalWeight , setTotalWeight] = useState(0)
+    const [totalWage , setTotalWage] = useState(0)
 
     const isStepOptional = (step) => {
         return step === 1;
@@ -208,7 +209,7 @@ export default function BuyCoin(props) {
                                 className={'max-w-[1000px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
                                 {(() => {
                                     if (activeStep === 0) {
-                                        return <StepAddCoin coins={coins} setCoins={setCoins} totalWeight={totalWeight} setTotalWeight={setTotalWeight}/>;
+                                        return <StepAddCoin coins={coins} setCoins={setCoins} totalWeight={totalWeight} setTotalWeight={setTotalWeight} />;
                                     } else if (activeStep === 1) {
                                         return <StepPayment totalWeight={totalWeight}/>;
                                     }

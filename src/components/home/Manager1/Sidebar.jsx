@@ -53,6 +53,14 @@ function Sidebar() {
                 </div>
 
                 <div className="sidebar-list mt-4">
+                    <NavLink to="/manager/add-admin" className='w-100' activeClassName="active">
+                        <div className="d-flex flex-row align-items-center sidebar-list-item">
+                            <AiOutlineStock size={'25'} color="#fff" className={'cursor-pointer'}/>
+                            <div className="sidebar-list-item-title">
+                                افزودن ادمین
+                            </div>
+                        </div>
+                    </NavLink>
                     <NavLink to="/manager/gold-price" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <AiOutlineStock size={'25'} color="#fff" className={'cursor-pointer'}/>

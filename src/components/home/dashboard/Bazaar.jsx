@@ -181,63 +181,6 @@ const Bazaar = () => {
                     <Line className={'md1:p-0 mb-12'} options={options} data={userData} type={'line'}/>
                 </div>
             </div>
-
-            {/*<div className={'details-container w-full md:w-3/4 md2:flex pb-[50px] md2:p-0 mt-5 rounded-2xl '}>*/}
-            {/*    <div className={'md2:w-2/5 md2:justify-start md1:w-5/12 w-100 whitespace-nowrap flex justify-center'}>*/}
-            {/*        <div className={'mr-5 mt-[40px] mb-[40px]'}>*/}
-            {/*            <h2 className={'md2:text-right font-bold text-center md2:mb-[60px] mb-[20px] text-white text-[1.5rem]'}>*/}
-            {/*                نمای بازار*/}
-            {/*            </h2>*/}
-            {/*            <div>*/}
-            {/*                <div className={'flex float-right'}>*/}
-            {/*                    <div className={''}>*/}
-            {/*                        <div className={'details text-[0.8rem] p-2 pl-[50px] leading-5 text-white'}>*/}
-            {/*                            <p>مظنه خرید</p>*/}
-            {/*                            <p className={'text-mainGold'}> {EnglishToPersian(SeparateNumber(lastQuote.purchase))}<span*/}
-            {/*                                className="mr-2">ریال</span></p>*/}
-            {/*                        </div>*/}
-
-            {/*                        <button*/}
-            {/*                            onClick={handleBuy}*/}
-            {/*                            className={'flex justify-center items-center rounded-[10px] text-white py-2 w-[135px]'}*/}
-            {/*                            style={{border: '1px solid green'}}>*/}
-            {/*                            خرید*/}
-            {/*                        </button>*/}
-            {/*                    </div>*/}
-
-            {/*                    <div className={''}>*/}
-            {/*                        <div className={'details text-[0.8rem] p-2 pl-[50px] leading-5 text-white'}>*/}
-            {/*                            <p>مظنه فروش</p>*/}
-            {/*                            <p className={'text-mainGold'}>{EnglishToPersian(SeparateNumber(lastQuote.sell))}<span*/}
-            {/*                                className="mr-2">ریال</span></p>*/}
-            {/*                        </div>*/}
-
-            {/*                        <button*/}
-            {/*                            onClick={handleSell}*/}
-            {/*                            className={'flex justify-center items-center rounded-[10px] text-white py-2 w-[135px]'}*/}
-            {/*                            style={{border: '1px solid red'}}>*/}
-            {/*                            فروش*/}
-            {/*                        </button>*/}
-            {/*                    </div>*/}
-
-            {/*                </div>*/}
-
-            {/*            </div>*/}
-
-            {/*        </div>*/}
-
-            {/*    </div>*/}
-
-            {/*    <div*/}
-            {/*        className={'xsm:pr-0 sm:pr-[20px] md2:w-3/5 md2:m-0 md2:p-0 md1:block md1:w-7/12 mr-[50px] mb-[50px] '}>*/}
-            {/*        <div className={'main-chart md2:mt-[30px] ml-[30px]'}>*/}
-
-
-            {/*            <Line className={'md1:p-0 mb-12'} options={options} data={userData} type={'line'}/>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -249,8 +192,7 @@ const Bazaar = () => {
                     backdrop: {
                         timeout: 500,
                     },
-                }}
-            >
+                }}>
                 <Fade in={open}>
                     <Box sx={style}>
                         <BiErrorCircle fontSize={'9rem'} color="#c0392b"/>

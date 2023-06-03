@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useState} from 'react'
+import React, {Fragment, useContext, useEffect, useState} from 'react'
 import "../../../../style/buycoin.css"
 import {InputAdornment, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import PropTypes from 'prop-types';
@@ -51,6 +51,19 @@ NumericFormatCustom.propTypes = {
 
 
 function StepAddCoin(props) {
+    const getCoinsWeight = async () =>{
+        const respond = await api.get("coin/activeCoin");
+        let listOfWeight = [];
+        for (const element of respond) {
+            listOfWeight.push(element.weight);
+        }
+        setCoinsWight(listOfWeight)
+    }
+
+    useEffect(()=>{
+        getCoinsWeight()
+    },[]);
+
     const cacheRtl = createCache({
         key: 'muirtl',
         stylisPlugins: [prefixer, rtlPlugin],
@@ -68,11 +81,20 @@ function StepAddCoin(props) {
         setIsOpenCoin(true);
     }
 
+    const calculateTotalWage = () =>{
+
+    }
+
+    const calculateTotalWeight = () =>{
+        let newTotalWeight = props.totalWeight;
+        newTotalWeight += (countOfCoin * selectedCoin)
+        props.setTotalWeight(newTotalWeight)
+    }
+
     const handleCountOfCoin = (event) =>{
         console.log(typeof (event.target.value))
         setCountOfCoin(event.target.value)
     }
-
     const handleAddNewCoin = async () => {
         const valid = await validation()
         console.log(valid)
@@ -86,9 +108,7 @@ function StepAddCoin(props) {
                 weight:selectedCoin
             }
 
-            let newTotalWeight = props.totalWeight;
-            newTotalWeight += (countOfCoin * selectedCoin)
-            props.setTotalWeight(newTotalWeight)
+            calculateTotalWeight();
 
             updatedCoins.push(newCoin)
             props.setCoins(updatedCoins)
@@ -191,7 +211,7 @@ function StepAddCoin(props) {
                                 </div>
                                 <div className="text-[0.9rem]">
                                     <span className="text-gold">کارمزد کل :</span>
-                                    <span className="mr-2">{EnglishToPersian("150,000")} ریال </span>
+                                    <span className="mr-2">{EnglishToPersian()} ریال </span>
                                 </div>
                             </div>
                         )

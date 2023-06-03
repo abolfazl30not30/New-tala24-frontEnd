@@ -42,26 +42,29 @@ export default function AddAdmin(props) {
         setConstructorHasRun(true);
     };
     constructor()
+
     const [accounts, setAccounts] = useState([]);
     const [admins, setAdmins] = useState([]);
     const getAdmins = async ()=> {
+
         const getAdminsResponse = await api.get("user/search?role=ADMIN")
-        let accountsIDs = []
-        for (let i = 0; i < getAdminsResponse.length; i++) {
-            await api.get(`account/user/${getAdminsResponse[i].username}`)
-                .then((data) => {
-                    accountsIDs.push(data.id);
-                })
-        }
-        let infosList = []
-        for (let i = 0; i < accountsIDs.length; i++) {
-            await api.get(`info/profile/${accountsIDs[i]}`)
-                .then((data) => {
-                    infosList.push(data);
-                })
-        }
-        setAccounts(infosList)
-        setAdmins(getAdminsResponse)
+        console.log(getAdminsResponse)
+        // let accountsIDs = []
+        // for (let i = 0; i < getAdminsResponse.length; i++) {
+        //     await api.get(`account/user/${getAdminsResponse[i].username}`)
+        //         .then((data) => {
+        //             accountsIDs.push(data.id);
+        //         })
+        // }
+        // let infosList = []
+        // for (let i = 0; i < accountsIDs.length; i++) {
+        //     await api.get(`info/profile/${accountsIDs[i]}`)
+        //         .then((data) => {
+        //             infosList.push(data);
+        //         })
+        // }
+        // setAccounts(infosList)
+        // setAdmins(getAdminsResponse)
     }
     useEffect(() => {
         getAdmins()
