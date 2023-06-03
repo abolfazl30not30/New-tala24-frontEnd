@@ -63,11 +63,10 @@ const Bazaar = () => {
             const priceDataRes = await api.get("goldPrice/chart")
             let labelData = []
             let priceData = []
-            /*TODO: fix me*/
-            /*for (let i = 9; i >= 0; i--) {
+            for (let i = 9; i >= 0; i--) {
                 labelData.push(priceDataRes[i]?.date)
                 priceData.push(priceDataRes[i]?.purchasePricePerGram)
-            }*/
+            }
             setUserData({
                 labels: labelData, // years;
                 datasets: [

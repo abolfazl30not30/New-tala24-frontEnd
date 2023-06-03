@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from "react";
+import React, {useState,useEffect, Fragment} from "react";
 import {Dialog, Transition} from "@headlessui/react";
 import {CacheProvider} from "@emotion/react";
 import {TextField} from "@mui/material";
@@ -7,10 +7,9 @@ import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis';
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
 import {MdArrowBackIosNew} from "react-icons/md";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 import {BsTrashFill} from "react-icons/bs";
 import {TbEdit} from "react-icons/tb";
+import api from "../../../api/api";
 
 const cacheRtl = createCache({
     key: 'muirtl',
@@ -19,29 +18,7 @@ const cacheRtl = createCache({
 
 export default function BankAccounts() {
 
-    const [bankAccounts, setBankAccounts] = useState([
-        {
-            accountNumber: '183664122',
-            cardNumber: '5859831034699396',
-            shabaNumber: '12336660000002233355000',
-            bankName: 'بانک ملت',
-            id: 1
-        },
-        {
-            accountNumber: '183664122',
-            cardNumber: '5859831034699396',
-            shabaNumber: '12336660000002233355000',
-            bankName: 'بانک تجارت',
-            id: 1
-        },
-        {
-            accountNumber: '183664122',
-            cardNumber: '5859831034699396',
-            shabaNumber: '12336660000002233355000',
-            bankName: 'بانک ملی',
-            id: 1
-        }
-    ])
+    const [bankAccounts, setBankAccounts] = useState([])
     const [targetBankAccounts, setTargetBankAccounts] = useState([
         {
             accountNumber: '',
@@ -62,6 +39,15 @@ export default function BankAccounts() {
     const [isOpenDeleteAccount, setIsOpenDeleteAccount] = useState(false)
     const [targetAccountByDelete, setTargetAccountByDelete] = React.useState('');
 
+    const getBankAccounts = async () => {
+        const getBankAccounts = await api.get(`info/show/accountNumber`)
+        console.log(getBankAccounts)
+        setBankAccounts(getBankAccounts)
+    }
+    useEffect(() => {
+        getBankAccounts()
+    }, []);
+
     function closeModalNewAccounts() {
         setIsOpenNewAccounts(false)
     }
@@ -74,24 +60,25 @@ export default function BankAccounts() {
         setIsOpenEditAccount(false)
     }
 
-    async function openModalEditAccount(id) {
+    /*async function openModalEditAccount(id) {
         const targetAccount = bankAccounts.find(Account => Account.id === id)
         setTargetBankAccounts(targetAccount);
         setIsOpenEditAccount(true)
-    }
+    }*/
 
     function closeModalDeleteAccount() {
         setTargetAccountByDelete('');
         setIsOpenDeleteAccount(false)
     }
 
-    async function openModalDeleteAccount(id) {
+    /*async function openModalDeleteAccount(id) {
         setTargetAccountByDelete(id);
         setIsOpenDeleteAccount(true)
-    }
+    }*/
 
-    const addNewAccounts = () => {
-        console.log(newAccount);
+    const addNewAccounts = async () => {
+        await api.post("info/accountNumber", newAccount)
+        getBankAccounts();
         setIsOpenNewAccounts(false)
     }
 
@@ -107,7 +94,7 @@ export default function BankAccounts() {
 
     return (
         <>
-            <div className="bg-[#252525] px-11 py-7 mx-2 md:mx-8 my-6 rounded text-white">
+            <div className="w-full bg-[#252525] px-11 py-7 mx-2 md:mx-8 my-6 rounded text-white">
                 <div className="flex flex-col space-y-4">
                     <div className="flex flex-col md:flex-row justify-between mb-10">
                         <h3 className='font-bold text-white text-xl mb-4 md:mb-0'>
@@ -255,7 +242,7 @@ export default function BankAccounts() {
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
-                        {bankAccounts.map((account, index) => (
+                        {bankAccounts?.map((account, index) => (
                             <div className="rounded-2xl p-2 bg-mainGray text-white p-7">
                                 <div>
                                     <div className="text-center mt-2 mb-5 text-gold ">
@@ -282,7 +269,7 @@ export default function BankAccounts() {
                                         <div className="request-item-title text-gold ml-4 ">نام بانک:</div>
                                         <div>{EnglishToPersian(account.bankName?.toString())}</div>
                                     </div>
-                                    <div className="mt-6 flex flex-row justify-center space-x-2 space-x-reverse">
+                                    {/*<div className="mt-6 flex flex-row justify-center space-x-2 space-x-reverse">
                                         <button className='bg-transparent p-3 hover:bg-bgGray hover:bg-opacity-20 rounded-2xl'
                                                 onClick={() => openModalEditAccount(account.id)}>
                                             <TbEdit className="text-gold" fontSize="1.5rem"/>
@@ -292,7 +279,7 @@ export default function BankAccounts() {
                                             onClick={() => openModalDeleteAccount(account.id)}>
                                             <BsTrashFill className="text-red-600" fontSize="1.5rem"/>
                                         </button>
-                                    </div>
+                                    </div>*/}
                                 </div>
                             </div>
 

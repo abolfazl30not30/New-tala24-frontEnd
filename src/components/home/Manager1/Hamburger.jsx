@@ -38,7 +38,7 @@ const Hamburger = () => {
                     sx={{width: '100%', maxWidth: 360, bgcolor: '#252525', color: "#fff"}}
                     component="nav"
                     aria-labelledby="nested-list-subheader">
-                    <NavLink exact to="/admin/gold-price" activeClassName="active-navbar">
+                    <NavLink exact to="/manager/gold-price" activeClassName="active-navbar">
                         <ListItemButton>
                             <ListItemIcon>
                                 <AiOutlineStock size={'25'} color="#fff" className={'cursor-pointer'}/>
@@ -47,7 +47,7 @@ const Hamburger = () => {
                             <ListItemText primary="قیمت طلا"/>
                         </ListItemButton>
                     </NavLink>
-                    <NavLink exact to="/admin/add-coin" activeClassName="active-navbar">
+                    <NavLink exact to="/manager/add-coin" activeClassName="active-navbar">
                         <ListItemButton>
                             <ListItemIcon>
                                 <AiOutlineStock size={'25'} color="#fff" className={'cursor-pointer'}/>
@@ -55,7 +55,7 @@ const Hamburger = () => {
                             <ListItemText primary="افزودن سکه"/>
                         </ListItemButton>
                     </NavLink>
-                    <NavLink exact to="/admin/confirm-buy" activeClassName="active-navbar">
+                    <NavLink exact to="/manager/confirm-buy" activeClassName="active-navbar">
                         <ListItemButton>
                             <ListItemIcon>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -70,7 +70,7 @@ const Hamburger = () => {
 
                         </ListItemButton>
                     </NavLink>
-                    <NavLink exact to="/admin/confirm-sell" activeClassName="active-navbar">
+                    <NavLink exact to="/manager/confirm-sell" activeClassName="active-navbar">
                         <ListItemButton>
                             <ListItemIcon>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -85,7 +85,7 @@ const Hamburger = () => {
 
                         </ListItemButton>
                     </NavLink>
-                    <NavLink exact to="/admin/ticket" activeClassName="active-navbar">
+                    <NavLink exact to="/manager/ticket" activeClassName="active-navbar">
                         <ListItemButton>
                             <ListItemIcon>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

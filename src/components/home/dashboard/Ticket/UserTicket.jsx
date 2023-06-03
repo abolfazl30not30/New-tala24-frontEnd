@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useState,useContext} from "react"
 import {Link} from "react-router-dom";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -9,6 +9,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import api from "../../../../api/api";
 import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
+import signup from "../../../../contexts/signup";
 
 function UserTicket(props) {
     useEffect(() => {
@@ -18,6 +19,7 @@ function UserTicket(props) {
         }
     }, [props.history]);
 
+    const context = useContext(signup);
     const [constructorHasRun, setConstructorHasRun] = useState(false);
     const constructor = () => {
         if (constructorHasRun) return;
@@ -51,13 +53,13 @@ function UserTicket(props) {
     };
 
     const handleSubmitTicket = async () => {
-        const accountResponse = await api.get(`account/user/${localStorage.getItem("username")}`)
-        await api.post("ticket", {
-            accountId: accountResponse.id,
-            userId: localStorage.getItem("username"),
+        console.log(context.accountInfo.id)
+        /*TODO: fix me*/
+        /*await api.post("ticket", {
+            accountId: context.accountInfo.id,
             title: title,
             status: "pending"
-        })
+        })*/
         getTickets()
         handleClose()
 

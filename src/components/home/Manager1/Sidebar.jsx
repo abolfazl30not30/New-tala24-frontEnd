@@ -53,7 +53,7 @@ function Sidebar() {
                 </div>
 
                 <div className="sidebar-list mt-4">
-                    <NavLink to="/admin/gold-price" className='w-100' activeClassName="active">
+                    <NavLink to="/manager/gold-price" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <AiOutlineStock size={'25'} color="#fff" className={'cursor-pointer'}/>
                             <div className="sidebar-list-item-title">
@@ -61,7 +61,7 @@ function Sidebar() {
                             </div>
                         </div>
                     </NavLink>
-                    <NavLink to="/admin/add-coin" className='w-100' activeClassName="active">
+                    <NavLink to="/manager/add-coin" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -74,7 +74,7 @@ function Sidebar() {
                             </div>
                         </div>
                     </NavLink>
-                    <NavLink to="/admin/confirm-buy" className='w-100' activeClassName="active">
+                    <NavLink to="/manager/confirm-buy" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -87,7 +87,7 @@ function Sidebar() {
                             </div>
                         </div>
                     </NavLink>
-                    <NavLink to="/admin/confirm-sell" className='w-100' activeClassName="active">
+                    <NavLink to="/manager/confirm-sell" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -100,7 +100,7 @@ function Sidebar() {
                             </div>
                         </div>
                     </NavLink>
-                    <NavLink to="/admin/blogs" className='w-100' activeClassName="active">
+                    <NavLink to="/manager/blogs" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -113,7 +113,7 @@ function Sidebar() {
                             </div>
                         </div>
                     </NavLink>
-                    <NavLink to="/admin/ticket" className='w-100' activeClassName="active">
+                    <NavLink to="/manager/ticket" className='w-100' activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}

@@ -11,12 +11,14 @@ import NewBlog from "./NewBlog"
 import EditBlog from './EditBlog';
 import Blogs from "./Blogs"
 import AddCoin from "./AddCoin"
+import AddAdmin from './AddAdmin'
 
 const MainSection = () => {
     const context = useContext(dashboard)
     return (
         <>
             <Routes>
+                <Route path="/add-admin" element={<ProtectedRoute><AddAdmin /></ProtectedRoute>} />
                 <Route path="/gold-price" element={<ProtectedRoute><GoldPriceRecord /></ProtectedRoute>} />
                 <Route path="/confirm-buy" element={<ProtectedRoute><ConfirmBuyGold /></ProtectedRoute>} />
                 <Route path="/confirm-sell" element={<ProtectedRoute><ConfirmSellGold /></ProtectedRoute>} />
