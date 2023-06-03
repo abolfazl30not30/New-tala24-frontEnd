@@ -1,3 +1,4 @@
+/*
 import React, {useContext, useEffect, useState} from "react";
 import {IoCalendarOutline} from "react-icons/io5";
 import {RxHamburgerMenu} from "react-icons/rx";
@@ -45,7 +46,7 @@ const Dashboard = (props) => {
         setAnchorEl(null);
     };
 
-    /*useEffect( () => {
+    /!*useEffect( () => {
         axios.post("https://a24.co/login",
             {username: localStorage.getItem("username"), password: localStorage.getItem("password")}, {
                 withCredentials: true,
@@ -71,7 +72,7 @@ const Dashboard = (props) => {
 
 
 
-    }, [])*/
+    }, [])*!/
 
     return (
         <>
@@ -98,12 +99,12 @@ const Dashboard = (props) => {
                         </div>
 
                         <div className={'flex justify-end w-full items-center ml-[25px]'}>
-                           {/* <p className={'text-white text-[0.8rem]'}>
+                           {/!* <p className={'text-white text-[0.8rem]'}>
                                 خزانه: 938,000 تومان
-                            </p>*/}
-                            {/*<div className={'mx-3'}>
+                            </p>*!/}
+                            {/!*<div className={'mx-3'}>
                                 <FcPlus size={'25'}/>
-                            </div>*/}
+                            </div>*!/}
                             <div className={'md1:block hidden pr-5 mr-5'} >
                                 <IoCalendarOutline size={'25'}/>
                             </div>
@@ -184,6 +185,79 @@ const Dashboard = (props) => {
 
             </div>
 
+        </>
+    )
+}
+
+export default Dashboard;*/
+
+import React, {useContext, useEffect, useState} from "react";
+import {IoCalendarOutline} from "react-icons/io5";
+import {RxHamburgerMenu} from "react-icons/rx";
+import Hamburger from "./Hamburger";
+import {Link, Route, useNavigate} from "react-router-dom";
+import "../../../style/dashboard.css";
+import '../../../style/hamburger.css';
+import signup from "../../../contexts/signup";
+import axios from "axios";
+import api from "../../../api/api";
+import dashboard from "../../../contexts/dashboard"
+import * as PropTypes from "prop-types";
+import MainSection from "./MainSection";
+import Sidebar from "./Sidebar";
+import Navbar from "./Navbar";
+
+
+function Routes(props) {
+    return null;
+}
+
+Routes.propTypes = {children: PropTypes.node};
+const Dashboard = () => {
+
+    const info = useContext(signup)
+
+    const [selected, setSelected] = useState('bazaar');
+
+    const navigate = useNavigate()
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const [completeRegistrationStatus, setCompleteRegistrationStatus] = useState(true);
+
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    useEffect(() => {
+        axios.post("http://localhost:8090/login",
+            {username: localStorage.getItem("username"), password: localStorage.getItem("password")}, {
+                withCredentials: true,
+                headers: {
+                    'Access-Control-Allow-Headers': ['Set-Cookie', 'Content-Type', "x-xsrf-token"],
+                }
+            }
+        ).then((response) => {
+            localStorage.setItem("Authorization", response.headers["authorization"])
+        }).catch((error) => {
+            navigate("/")
+        })
+    }, [])
+
+    return (
+        <>
+            <dashboard.Provider value={{completeRegistrationStatus:completeRegistrationStatus, setCompleteRegistrationStatus:setCompleteRegistrationStatus}}>
+                <div className="d-flex flex-column" dir="rtl">
+                    <Sidebar />
+                    <Navbar />
+                    <div className="main">
+                        <MainSection/>
+                    </div>
+                </div>
+            </dashboard.Provider>
         </>
     )
 }

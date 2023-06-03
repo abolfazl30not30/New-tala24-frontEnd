@@ -7,7 +7,6 @@ import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import {TextField} from "@mui/material";
 import api from "../../../api/api";
-import Header from "./Header"
 import {RxHamburgerMenu} from "react-icons/rx";
 import {IoCalendarOutline} from "react-icons/io5";
 import {Outlet} from "react-router-dom";
@@ -43,26 +42,29 @@ export default function AddAdmin(props) {
         setConstructorHasRun(true);
     };
     constructor()
+
     const [accounts, setAccounts] = useState([]);
     const [admins, setAdmins] = useState([]);
     const getAdmins = async ()=> {
+
         const getAdminsResponse = await api.get("user/search?role=ADMIN")
-        let accountsIDs = []
-        for (let i = 0; i < getAdminsResponse.length; i++) {
-            await api.get(`account/user/${getAdminsResponse[i].username}`)
-                .then((data) => {
-                    accountsIDs.push(data.id);
-                })
-        }
-        let infosList = []
-        for (let i = 0; i < accountsIDs.length; i++) {
-            await api.get(`info/profile/${accountsIDs[i]}`)
-                .then((data) => {
-                    infosList.push(data);
-                })
-        }
-        setAccounts(infosList)
-        setAdmins(getAdminsResponse)
+        console.log(getAdminsResponse)
+        // let accountsIDs = []
+        // for (let i = 0; i < getAdminsResponse.length; i++) {
+        //     await api.get(`account/user/${getAdminsResponse[i].username}`)
+        //         .then((data) => {
+        //             accountsIDs.push(data.id);
+        //         })
+        // }
+        // let infosList = []
+        // for (let i = 0; i < accountsIDs.length; i++) {
+        //     await api.get(`info/profile/${accountsIDs[i]}`)
+        //         .then((data) => {
+        //             infosList.push(data);
+        //         })
+        // }
+        // setAccounts(infosList)
+        // setAdmins(getAdminsResponse)
     }
     useEffect(() => {
         getAdmins()
@@ -106,8 +108,7 @@ export default function AddAdmin(props) {
 
     return (
         <>
-            <div className="bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
-                <Header/>
+            <div className="w-full bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
                 <div className="flex flex-col space-y-4 md:flex-row items-center justify-between">
                     <div className="text-white text-lg font-medium">ادمین ها</div>
                     <button

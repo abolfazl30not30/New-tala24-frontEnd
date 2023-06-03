@@ -14,7 +14,8 @@ module.exports =
                     'mainGold': '#DFAF3D',
                     'dark': 'rgb(23, 26, 30)',
                     'cardDark': '#252525',
-                    'footerColor': '#212121'
+                    'footerColor': '#212121',
+                    'labelGreen':'#21BA55'
                 },
                 height: {
                     '-100%': '-100%',

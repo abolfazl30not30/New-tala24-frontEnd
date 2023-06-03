@@ -16,25 +16,40 @@ import ConfirmSellGold from './components/home/admin/ConfirmSellGold'
 import GoldPriceRecord from "./components/home/admin/GoldPriceRecord";
 import AdminTicket from "./components/home/admin/Ticket/UserTicket";
 import AdminChat from "./components/home/admin/Ticket/UserChat";
-import AddAdmin from './components/home/manager/AddAdmin'
 import ProtectedRoute from "./components/protectedRoute";
 import ProtectedLogin from "./components/ProtectedLogin";
 import ContactUs from "./components/home/HomePage/ContactUs/ContactUs";
 import AboutUs from "./components/home/HomePage/AboutUs/AboutUs";
 import Services from "./components/home/HomePage/Services/Services";
-import { hot } from "react-hot-loader";
 import MainHomePage from "./components/home/HomePage/MainHomePage";
 import WebServer from "./components/WebServer";
 import NotFound from "./components/Other/NotFound";
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from "react-toastify";
+import ManagerDashboard from "./components/home/Manager1/Dashboard";
+import Blog from './components/home/HomePage/Blog/Blog'
 
 const App = () => {
+
     const [OTPAllowed, setOTPAllowed] = useState(false)
     const [passwordAllowed, setPasswordAllowed] = useState(false)
     const [dashboardAllowed, setDashboardAllowed] = useState(false)
     const [createPassAllowed, setCreatePassAllowed] = useState(false)
     const [successAllowed, setSuccessAllowed] = useState(false)
     const [accountCompleteRegistrationAllowed, setAccountCompleteRegistrationAllowed] = useState(true)
-    const [information, setInformation] = useState([])
+    const [accountInfo, setAccountInfo] = useState({id: "",
+        phoneNumber: "",
+        registerDate: "",
+        infos: [],
+        zarinpalRequests: [],
+        tickets: [],
+        requests: [],
+        wallet: {
+            id: "",
+            inventory: 0,
+            weight: 0
+        },
+        verified: false})
     const [verified, setVerified] = useState(false)
     const [selected, setSelected] = useState("bazaar")
     const [newUserPhoneNumber, setNewUserPhoneNumber] = useState("")
@@ -61,8 +76,8 @@ const App = () => {
                 verified: verified,
                 setVerified: setVerified,
 
-                information: information,
-                setInformation: setInformation,
+                accountInfo: accountInfo,
+                setAccountInfo: setAccountInfo,
 
                 selected: selected,
                 setSelected: setSelected,
@@ -89,8 +104,11 @@ const App = () => {
                         <Route path="/contact-us" element={(<ContactUs/>)}/>
                         <Route path="/about-us" element={(<AboutUs/>)}/>
                         <Route path="/services" element={(<Services/>)}/>
+                        <Route path="/blog" element={(<Blog/>)}/>
                         <Route path="/create-password" element={(<CreatePassword/>)}/>
                         <Route path="/dashboard/*" element={(<ProtectedRoute><Dashboard/></ProtectedRoute>)}/>
+                        <Route path="/manager/*" element={(<ProtectedRoute><ManagerDashboard/></ProtectedRoute>)}/>
+                        <Route path="/admin/*" element={(<ProtectedRoute><AdminDashboard/></ProtectedRoute>)}/>
                         <Route path="/admin" element={(<ProtectedRoute><AdminDashboard/></ProtectedRoute>)}>
                             {/*<Route path="price-record" element={<GoldPriceRecord />} />*/}
                             <Route path="gold-price" element={<ProtectedRoute><GoldPriceRecord /></ProtectedRoute>} />
@@ -99,12 +117,23 @@ const App = () => {
                             <Route path="ticket" element={<ProtectedRoute><AdminTicket /></ProtectedRoute>} />
                             <Route path="ticket/:id" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />
                         </Route>
-                        <Route path="/manager/add-admin" element={(<ProtectedRoute><AddAdmin/></ProtectedRoute>)}/>
+                        {/*<Route path="/manager/add-admin" element={(<ProtectedRoute><AddAdmin/></ProtectedRoute>)}/>*/}
                         <Route path="/forgot-password" element={(<ForgotPassword/>)}/>
                         {/*<Route path="/accountCompleteRegistration" element={(<CompleteRegistration/>)}/>*/}
                     </Routes>
                 </BrowserRouter>
             </signup.Provider>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"/>
         </>
     )
 }

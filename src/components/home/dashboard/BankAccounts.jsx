@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from "react";
+import React, {useState,useEffect, Fragment} from "react";
 import {Dialog, Transition} from "@headlessui/react";
 import {CacheProvider} from "@emotion/react";
 import {TextField} from "@mui/material";
@@ -7,9 +7,9 @@ import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis';
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
 import {MdArrowBackIosNew} from "react-icons/md";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-
+import {BsTrashFill} from "react-icons/bs";
+import {TbEdit} from "react-icons/tb";
+import api from "../../../api/api";
 
 const cacheRtl = createCache({
     key: 'muirtl',
@@ -18,29 +18,7 @@ const cacheRtl = createCache({
 
 export default function BankAccounts() {
 
-    const [bankAccounts, setBankAccounts] = useState([
-        {
-            accountNumber: '11111111111',
-            cardNumber: '22222222222',
-            shabaNumber: '333333333',
-            bankName: 'A',
-            id: 1
-        },
-        {
-            accountNumber: '4444444',
-            cardNumber: '55555555555',
-            shabaNumber: '666666666666666',
-            bankName: 'B',
-            id: 2
-        },
-        {
-            accountNumber: '77777777777',
-            cardNumber: '8888888888888',
-            shabaNumber: '9999999999',
-            bankName: 'B',
-            id: 3
-        }
-    ])
+    const [bankAccounts, setBankAccounts] = useState([])
     const [targetBankAccounts, setTargetBankAccounts] = useState([
         {
             accountNumber: '',
@@ -61,6 +39,15 @@ export default function BankAccounts() {
     const [isOpenDeleteAccount, setIsOpenDeleteAccount] = useState(false)
     const [targetAccountByDelete, setTargetAccountByDelete] = React.useState('');
 
+    const getBankAccounts = async () => {
+        const getBankAccounts = await api.get(`info/show/accountNumber`)
+        console.log(getBankAccounts)
+        setBankAccounts(getBankAccounts)
+    }
+    useEffect(() => {
+        getBankAccounts()
+    }, []);
+
     function closeModalNewAccounts() {
         setIsOpenNewAccounts(false)
     }
@@ -73,24 +60,25 @@ export default function BankAccounts() {
         setIsOpenEditAccount(false)
     }
 
-    async function openModalEditAccount(id) {
+    /*async function openModalEditAccount(id) {
         const targetAccount = bankAccounts.find(Account => Account.id === id)
         setTargetBankAccounts(targetAccount);
         setIsOpenEditAccount(true)
-    }
+    }*/
 
     function closeModalDeleteAccount() {
         setTargetAccountByDelete('');
         setIsOpenDeleteAccount(false)
     }
 
-    async function openModalDeleteAccount(id) {
+    /*async function openModalDeleteAccount(id) {
         setTargetAccountByDelete(id);
         setIsOpenDeleteAccount(true)
-    }
+    }*/
 
-    const addNewAccounts = () => {
-        console.log(newAccount);
+    const addNewAccounts = async () => {
+        await api.post("info/accountNumber", newAccount)
+        getBankAccounts();
         setIsOpenNewAccounts(false)
     }
 
@@ -106,21 +94,21 @@ export default function BankAccounts() {
 
     return (
         <>
-            <div className="bg-[#252525] p-4 mx-8 my-6 rounded text-white">
+            <div className="w-full bg-[#252525] px-11 py-7 mx-2 md:mx-8 my-6 rounded text-white">
                 <div className="flex flex-col space-y-4">
-                    <div className="flex flex-col md:flex-row justify-between">
-                        <h3 className='font-bold text-gold text-xl mb-4 md:mb-0'>
+                    <div className="flex flex-col md:flex-row justify-between mb-10">
+                        <h3 className='font-bold text-white text-xl mb-4 md:mb-0'>
                             حساب های من
                         </h3>
                         <button
-                            className="bg-gold text-black p-2 rounded-md w-fit flex flex-row items-center"
+                            className="bg-gold text-black px-5 py-2 rounded-md w-fit flex flex-row items-center hover:opacity-90"
                             onClick={openModalNewAccounts}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                                  stroke="currentColor" className="w-4 h-4 ml-2">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                             </svg>
-                            افزودن آدرس
+                            افزودن حساب جدید
                         </button>
                         <Transition appear show={isOpenNewAccounts} as={Fragment}>
                             <Dialog as="div" className="relative z-10" onClose={closeModalNewAccounts}>
@@ -252,8 +240,9 @@ export default function BankAccounts() {
                             </Dialog>
                         </Transition>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {bankAccounts.map((account, index) => (
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
+                        {bankAccounts?.map((account, index) => (
                             <div className="rounded-2xl p-2 bg-mainGray text-white p-7">
                                 <div>
                                     <div className="text-center mt-2 mb-5 text-gold ">
@@ -280,17 +269,17 @@ export default function BankAccounts() {
                                         <div className="request-item-title text-gold ml-4 ">نام بانک:</div>
                                         <div>{EnglishToPersian(account.bankName?.toString())}</div>
                                     </div>
-                                    <div className="mt-6 flex flex-row justify-center space-x-2 space-x-reverse">
-                                        <button className='flex flex-row bg-amber-400 text-black p-1 rounded'
+                                    {/*<div className="mt-6 flex flex-row justify-center space-x-2 space-x-reverse">
+                                        <button className='bg-transparent p-3 hover:bg-bgGray hover:bg-opacity-20 rounded-2xl'
                                                 onClick={() => openModalEditAccount(account.id)}>
-                                            ویرایش حساب
+                                            <TbEdit className="text-gold" fontSize="1.5rem"/>
                                         </button>
                                         <button
-                                            className='flex flex-row bg-red-600 text-white p-1 rounded'
+                                            className='bg-transparent p-3 hover:bg-bgGray hover:bg-opacity-20 rounded-xl'
                                             onClick={() => openModalDeleteAccount(account.id)}>
-                                            حذف حساب
+                                            <BsTrashFill className="text-red-600" fontSize="1.5rem"/>
                                         </button>
-                                    </div>
+                                    </div>*/}
                                 </div>
                             </div>
 

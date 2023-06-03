@@ -9,12 +9,13 @@ import {prefixer} from 'stylis'
 import api from "../../../api/api";
 import FormControl from "@mui/material/FormControl";
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
+import {SeparateNumber} from "../../../helper/SeparateNumber";
 
 
 const status = [
-    {name: 'نامشخص', value: 'pending'},
-    {name: 'تایید', value: 'successful'},
-    {name: 'رد', value: 'failed'},
+    {name: 'نامشخص', value: 'pend'},
+    {name: 'تایید', value: 'accept'},
+    {name: 'رد', value: 'reject'},
 ]
 
 const theme = createTheme({
@@ -47,62 +48,48 @@ export default function ConfirmSellGold(props) {
         setConstructorHasRun(true);
     };
     constructor()
+
     useEffect(() => {
         const getData = async () => {
-            const getSellRes = await api.get(`sellRequest`)
-            if (getSellRes) {
-                setGoldBuyRequests(getSellRes)
+            const getPaymentsRes = await api.get(`request/admin/sellGold`)
+            if (getPaymentsRes) {
+                setGoldBuyRequests(getPaymentsRes)
             }
         }
         getData()
 
     }, []);
 
+
     let [goldBuyRequests, setGoldBuyRequests] = useState([])
-    let [requestsTarget, setRequestsTarget] = useState(['', ''])
     let [isOpen, setIsOpen] = useState(false)
     let [isOpenProfile, setIsOpenProfile] = useState(false)
     let [profileData, setProfileData] = useState({})
-
-    let [adminConfirm, setAdminConfirm] = useState("pending")
-    let [isReject, setIsReject] = useState(false)
-    let [failedDescription, setFailedDescription] = useState(false)
+    let [adminConfirm, setAdminConfirm] = useState("accept")
     let [failedDescriptionContent, setFailedDescriptionContent] = useState()
     let [requestId, setRequestId] = useState()
-    let [getWeight, setGetWeight] = useState("")
 
     function closeModalProfile() {
         setIsOpenProfile(false)
     }
 
     async function openModalProfile(id) {
-        const getInfo = await api.get(`info/profile/${id}`)
+        const getInfo = await api.get(`info/admin/show/profile/${id}`)
         if (getInfo) {
             setProfileData(getInfo)
-            console.log(profileData)
         }
         setIsOpenProfile(true)
     }
 
     function closeModal() {
         setIsOpen(false)
-        setRequestsTarget('')
     }
 
-    async function openModal(status,id,weight) {
+    async function openModal(id) {
         setRequestId(id)
-        setGetWeight(weight)
-        setAdminConfirm(status);
-        if(status === "failed"){
-            const getFailureReason = await api.get(`failureReason/search?sellReqId=${id}`)
-            setFailedDescriptionContent(getFailureReason[0].reason)
-        }
+        setFailedDescriptionContent("")
         setIsOpen(true)
     }
-
-    const changeStatus = (e, id) => {
-
-    };
 
     const handleChange = (event) => {
         setAdminConfirm(event.target.value);
@@ -110,98 +97,90 @@ export default function ConfirmSellGold(props) {
 
     async function handleAdminConfirm() {
 
-        if(adminConfirm === "failed"){
+        await api.put(`request/${requestId}`, {
+            status:adminConfirm
+        })
 
-            await api.put(`sellRequest/${requestId}`, {
-                status: adminConfirm,
-                isChecked: true,
-            })
-
+        if(adminConfirm === "reject"){
             await api.post(`failureReason`,{
                 reason:failedDescriptionContent,
-                sellReqId:requestId
+                requestId:requestId
             })
-
             setFailedDescriptionContent("")
-
-        }if(adminConfirm === "successful") {
-
-            await api.put(`sellRequest/${requestId}`, {
-                status: adminConfirm,
-                isChecked: true,
-                weight: getWeight
-            })
-
-            setGetWeight("")
-        }else {
-            await api.put(`sellRequest/${requestId}`, {
-                status: adminConfirm,
-                isChecked: true,
-            })
         }
 
-        const getSellRes = await api.get(`sellRequest`)
-        if (getSellRes) {
-            setGoldBuyRequests(getSellRes)
+        const getPaymentsRes = await api.get(`request/admin/buyGold`)
+        if (getPaymentsRes) {
+            setGoldBuyRequests(getPaymentsRes)
         }
-        setAdminConfirm("pending")
+
+        setAdminConfirm("pend")
         setIsOpen(false)
     }
 
     return (
-        <div className="bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
-            <div className="text-gold text-lg font-medium">درخواست فروش طلا</div>
+        <div className="w-full bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
+            <div className="text-white text-2xl font-medium">درخواست خرید طلا</div>
             <table className='mt-8 text-white break-normal'>
                 <thead>
                 <tr>
-                    <th className={'p-4'}>
+                    <th className={'p-4 text-gold text-center'}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round"
                                   d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"/>
                         </svg>
                     </th>
-                    <th className={'p-4'}>وزن</th>
-                    <th className={'p-4'}>قیمت</th>
-                    <th className={'p-4'}>تاریخ</th>
-                    <th className={'p-4'}>وضعيت پرداخت</th>
-                    <th className={'p-4'}>تعیین وضعیت پرداخت</th>
-                    <th className={'p-4'}>پروفایل درخواست دهنده</th>
+                    <th className={'p-4 text-gold text-center'}>وزن</th>
+                    <th className={'p-4 text-gold text-center'}>قیمت</th>
+                    <th className={'p-4 text-gold text-center'}>تاریخ و ساعت</th>
+                    <th className={'p-4 text-gold text-center'}>وضعيت تاييد ادمين</th>
+                    <th className={'p-4 text-gold text-center'}>تایید ادمین</th>
+                    <th className={'p-4 text-gold text-center'}>پروفایل درخواست دهنده</th>
                 </tr>
                 </thead>
                 <tbody>
                 {
                     goldBuyRequests.map((requests, index) => (
                         <tr>
-                            <td className={'p-3'}>{index + 1}</td>
-                            <td className={'p-3'}>{requests.weight}</td>
-                            <td className={'p-3'}>{requests.price}</td>
-                            <td className={'p-3'}>{requests.date}</td>
-                            <td className={'p-3'}>
+                            <td className={'p-3 text-center'}>{index + 1}</td>
+                            <td className={'p-3 text-center'}>{EnglishToPersian(requests.weight.toString())}</td>
+                            <td className={'p-3 text-center'}>{EnglishToPersian(SeparateNumber(requests.price.toString()))}</td>
+                            <td className={'p-3 text-center'}>{EnglishToPersian(requests.createAt)}</td>
+                            <td className={'p-3 flex justify-center'}>
                                 {
-                                    requests.status === "pending" ?
-                                        (<span className={'text-center bg-neutral-500 p-2 rounded-xl'}>
-                                            در حال انتظار
+                                    requests.status === "pend" ?
+                                        (<span className={'text-center bg-neutral-500 w-2/3 p-2 rounded-xl'}>
+                                            نامشخص
                                         </span>) :
-                                        requests.status === "failed" ?
-                                            (<span className={'text-center bg-red-500 p-2 rounded-xl'}>
-                                                پرداخت نشده
+                                        requests.status === "reject" ?
+                                            (<span className={'text-center bg-red-500 w-2/3 p-2 rounded-xl'}>
+                                                رد شده
                                             </span>) :
-                                            requests.status === "successful" ?
-                                                (<span className={'text-center bg-green-700 p-2 rounded-xl'}>
-                                                    پرداخت شده
+                                            requests.status === "accept" ?
+                                                (<span className={'text-center bg-green-700 w-2/3 p-2 rounded-xl'}>
+                                                    قبول شده
                                                 </span>) : null
                                 }
                             </td>
-                            <td className={'p-3 flex'}>
-                                <button
-                                    type="button"
-                                    onClick={() => openModal(requests.status,requests.id,requests.weight)}
-                                    className="relative cursor-default rounded flex border-[1px] border-neutral-700 border-solid bg-transparent text-white py-2 px-3 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
-                                >
-                                    تعيين وضعيت
-                                </button>
-
+                            <td className={'p-3 '}>
+                                {
+                                    requests.status !== "pend" ? (
+                                        <button
+                                            type="button"
+                                            onClick={() => openModal(requests.id)}
+                                            className="w-full cursor-default rounded disabled:bg-neutral-700 disabled:cursor-not-allowed disabled:text-neutral-500  bg-labelGreen text-black hover:opacity-80 py-2 px-5 sm:text-sm" disabled>
+                                            تعيين وضعيت
+                                        </button>
+                                    ) : (
+                                        <button
+                                            type="button"
+                                            onClick={() => openModal(requests.id)}
+                                            className="w-full cursor-default rounded disabled:bg-neutral-700 disabled:cursor-not-allowed disabled:text-neutral-500  bg-labelGreen text-black hover:opacity-80 py-2 px-5 sm:text-sm">
+                                            تعيين وضعيت
+                                        </button>
+                                    )
+                                }
                                 <Transition appear show={isOpen} as={Fragment}>
                                     <Dialog as="div" className="relative z-10" onClose={closeModal} dir="rtl">
                                         <Transition.Child
@@ -211,7 +190,8 @@ export default function ConfirmSellGold(props) {
                                             enterTo="opacity-100"
                                             leave="ease-in duration-200"
                                             leaveFrom="opacity-100"
-                                            leaveTo="opacity-0">
+                                            leaveTo="opacity-0"
+                                        >
                                             <div className="fixed inset-0 bg-black bg-opacity-25"/>
                                         </Transition.Child>
 
@@ -225,14 +205,15 @@ export default function ConfirmSellGold(props) {
                                                     enterTo="opacity-100 scale-100"
                                                     leave="ease-in duration-200"
                                                     leaveFrom="opacity-100 scale-100"
-                                                    leaveTo="opacity-0 scale-95"
-                                                >
+                                                    leaveTo="opacity-0 scale-95">
+
                                                     <Dialog.Panel
                                                         className="w-full max-w-md transform rounded-2xl bg-mainGray p-6 align-middle shadow-xl transition-all">
                                                         <Dialog.Title
                                                             as="h3"
-                                                            className="text-lg font-medium leading-6 text-gold">
-                                                            تعيين وضعیت پرداخت
+                                                            className="text-lg font-medium leading-6 text-gold"
+                                                        >
+                                                            تعيين وضعیت خرید طلا
                                                         </Dialog.Title>
                                                         <div className="flex flex-col mt-6">
                                                             <CacheProvider value={cacheRtl}>
@@ -245,18 +226,13 @@ export default function ConfirmSellGold(props) {
                                                                         value={adminConfirm}
                                                                         label="وضعيت"
                                                                         onChange={handleChange}>
-
-                                                                        <MenuItem value={"pending"}>در حال
-                                                                            انتظار</MenuItem>
-                                                                        <MenuItem value={"successful"}>پرداخت
-                                                                            شده</MenuItem>
-                                                                        <MenuItem value={"failed"}>پرداخت
-                                                                            نشده</MenuItem>
+                                                                        <MenuItem value={"accept"}>تاييد</MenuItem>
+                                                                        <MenuItem value={"reject"}>رد</MenuItem>
                                                                     </Select>
                                                                 </FormControl>
                                                             </CacheProvider>
                                                             {
-                                                                adminConfirm === "failed"
+                                                                adminConfirm === "reject"
                                                                 && (
                                                                     <CacheProvider value={cacheRtl}>
                                                                         <ThemeProvider theme={theme}>
@@ -279,7 +255,7 @@ export default function ConfirmSellGold(props) {
                                                                 <button
                                                                     type="button"
                                                                     className="inline-flex justify-center rounded-md border border-transparent bg-lime-400 px-4 py-2 text-sm font-medium text-gary-700 hover:bg-lime-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                                                    onClick={() => {handleAdminConfirm()}}>
+                                                                    onClick={()=>{handleAdminConfirm(requests.id)}}>
                                                                     ثبت
                                                                 </button>
                                                                 <button
@@ -289,6 +265,7 @@ export default function ConfirmSellGold(props) {
                                                                     بستن
                                                                 </button>
                                                             </div>
+
                                                         </div>
                                                     </Dialog.Panel>
                                                 </Transition.Child>
@@ -297,11 +274,11 @@ export default function ConfirmSellGold(props) {
                                     </Dialog>
                                 </Transition>
                             </td>
-                            <td className={'p-3'}>
+                            <td className={'p-3 flex justify-center'}>
                                 <button
                                     type="button"
-                                    onClick={() => openModalProfile(requests.account_id)}
-                                    className="rounded-md flex flex-row items-center bg-[#DFAF3D] text-black text-xs px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                                    onClick={() => openModalProfile(requests.id)}
+                                    className="rounded-md flex flex-row items-center bg-mainGold text-black text-xs px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          stroke-width="1.5" stroke="currentColor" className="w-4 h-4 ml-1">
@@ -341,45 +318,33 @@ export default function ConfirmSellGold(props) {
                                                         className="text-white w-full max-w-md transform overflow-hidden rounded-2xl bg-mainGray p-6 align-middle shadow-xl transition-all">
                                                         <Dialog.Title
                                                             as="h3"
-                                                            className="text-lg  font-medium leading-6 text-gold"
-                                                        >
+                                                            className="text-lg  font-medium leading-6 text-gold">
                                                             پروفایل
                                                         </Dialog.Title>
                                                         <div className="mt-6">
                                                             <div className="flex flex-col space-y-4">
-                                                                <div className='flex flex-row'>
-                                                                    {/*<div className='ml-1 text-gray-500'>نام:</div>*/}
-                                                                    <div
-                                                                        className='text-lg font-bold'>{profileData.firstName} {profileData.lastName}</div>
+                                                                <div className='flex flex-row items-center'>
+                                                                    <div className='ml-1 text-gold font-bold'>
+                                                                        نام و نام خانوادگی:
+                                                                    </div>
+                                                                    <div>{profileData.fullName}</div>
                                                                 </div>
                                                                 <div className='flex flex-row items-center'>
                                                                     <div className='ml-1 text-gold font-bold'>
-                                                                        كد ملي :
+                                                                        شماره موبايل :
                                                                     </div>
-                                                                    <div>{profileData.nationalCode}</div>
+                                                                    <div>{EnglishToPersian(profileData.phoneNumber)}</div>
                                                                 </div>
                                                                 <div className='flex flex-row items-center'>
                                                                     <div className='ml-1 text-gold font-bold'>
-                                                                       شماره موبايل :
+                                                                        موجودی ریالی :
                                                                     </div>
-                                                                    <div>{profileData.phoneNumber}</div>
+                                                                    <div>{EnglishToPersian(profileData.inventory)} ریال </div>
                                                                 </div>
                                                                 <div className='flex flex-row items-center'>
-                                                                    <div className='ml-1 text-gold font-bold'>وزن:
+                                                                    <div className='ml-1 text-gold font-bold'>موجودی طلایی:
                                                                     </div>
-                                                                    <div>{profileData.totalWeight}</div>
-                                                                </div>
-                                                                <div className='flex flex-row items-center'>
-                                                                    <div className='ml-1 text-gold font-bold'>
-                                                                        شماره شبا:
-                                                                    </div>
-                                                                    <div>{profileData.accountNumber}</div>
-                                                                </div>
-                                                                <div className='flex flex-row items-center'>
-                                                                    <div className='ml-1 text-gold font-bold'>
-                                                                        ايميل :
-                                                                    </div>
-                                                                    <div>{profileData.email}</div>
+                                                                    <div>{EnglishToPersian(profileData.weight)} گرم </div>
                                                                 </div>
                                                             </div>
                                                         </div>

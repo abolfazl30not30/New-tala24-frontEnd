@@ -9,6 +9,11 @@ import {InputAdornment, TextField} from "@mui/material";
 import './../../../style/admin.css'
 import api from "../../../api/api";
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import {SeparateNumber} from "../../../helper/SeparateNumber";
 
 // Create RTL MUI
 const theme = createTheme({
@@ -24,7 +29,7 @@ function RTL(props) {
     return <CacheProvider value={cacheRtl}>{props.children}</CacheProvider>;
 }
 
-export default function GoldPriceRecord(props) {
+export default function Quote(props) {
     useEffect(() => {
         if (localStorage.getItem('role') !== "ADMIN") {
             localStorage.clear()
@@ -44,9 +49,9 @@ export default function GoldPriceRecord(props) {
     constructor()
     let [isOpen, setIsOpen] = useState(false)
     let [isOpenConfirm, setIsOpenConfirm] = useState(false)
-    let [newGoldPrice, setNewGoldPrice] = useState(null)
+    let [quoteBuyPrice, setQuoteBuyPrice] = useState(null)
+    let [quoteSellPrice, setQuoteSellPrice] = useState(null)
     let [goldPriceHistory, setGoldPriceHistory] = useState([])
-
 
     useEffect(() => {
         const getData = async () => {
@@ -56,12 +61,10 @@ export default function GoldPriceRecord(props) {
             }
         }
         getData()
-        console.log(goldPriceHistory)
     }, []);
 
     function closeModal() {
         setIsOpen(false)
-        setNewGoldPrice(0)
     }
 
     function openModal() {
@@ -78,29 +81,25 @@ export default function GoldPriceRecord(props) {
         setIsOpenConfirm(true)
     }
 
-    const getPrice = e => setNewGoldPrice(e.target.value)
-
     async function recordNewPrice() {
+        setIsOpenConfirm(false)
         await api.post("goldPrice",
             {
-                price: newGoldPrice,
-                adminName: localStorage.getItem("username")
+                purchasePrice : quoteBuyPrice,
+                sellPrice : quoteSellPrice
             }
         )
-        setIsOpenConfirm(false)
-        setNewGoldPrice(null)
 
         const getGoldPriceReq = await api.get("goldPrice")
         if (getGoldPriceReq) {
             setGoldPriceHistory(getGoldPriceReq)
         }
-
     }
 
     return (
-        <div className="bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
+        <div className="w-full bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
             <div className="flex flex-col space-y-4 md:flex-row items-center justify-between">
-                <div className="text-white text-lg font-medium">قیمت طلا</div>
+                <div className="text-white text-lg font-medium">قیمت</div>
                 <button
                     type="button"
                     onClick={openModal}
@@ -153,9 +152,9 @@ export default function GoldPriceRecord(props) {
                                                             <TextField
                                                                 id="outlined-end-adornment"
                                                                 name="price"
-                                                                label="قیمت"
-                                                                value={newGoldPrice}
-                                                                onChange={getPrice}
+                                                                label="قیمت خرید"
+                                                                value={quoteBuyPrice}
+                                                                onChange={(e) => setQuoteBuyPrice(e.target.value)}
                                                                 InputProps={{
                                                                     endAdornment: <InputAdornment position="end"><span
                                                                         style={{color: "#fff"}}>ریال</span></InputAdornment>,
@@ -164,6 +163,30 @@ export default function GoldPriceRecord(props) {
                                                                     style: {
                                                                         fontSize: "0.9rem"
                                                                     }
+                                                                }}
+                                                                sx={{
+                                                                    label: {color: '#fff !important'},
+                                                                    input: {color: '#fff !important'}
+                                                                }}
+                                                            />
+                                                            <TextField
+                                                                id="outlined-end-adornment"
+                                                                name="price"
+                                                                label="قیمت فروش"
+                                                                value={quoteSellPrice}
+                                                                onChange={(e) => setQuoteSellPrice(e.target.value)}
+                                                                InputProps={{
+                                                                    endAdornment: <InputAdornment position="end"><span
+                                                                        style={{color: "#fff"}}>ریال</span></InputAdornment>,
+                                                                }}
+                                                                InputLabelProps={{
+                                                                    style: {
+                                                                        fontSize: "0.9rem"
+                                                                    }
+                                                                }}
+                                                                sx={{
+                                                                    label: {color: '#fff !important'},
+                                                                    input: {color: '#fff !important'}
                                                                 }}
                                                             />
                                                         </div>
@@ -269,9 +292,12 @@ export default function GoldPriceRecord(props) {
                                   d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"/>
                         </svg>
                     </th>
-                    <th className={'p-4'}>تاريخ و ساعت</th>
                     <th className={'p-4'}>ثبت کننده</th>
-                    <th className={'p-4'}>قیمت</th>
+                    <th className={'p-4'}>تاریخ</th>
+                    <th className={'p-4'}>قیمت فروش بر حسب گرم</th>
+                    <th className={'p-4'}>قیمت فروش بر حسب مثقال</th>
+                    <th className={'p-4'}>قیمت خرید بر حسب گرم</th>
+                    <th className={'p-4'}>قیمت خرید بر حسب مثقال</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -279,9 +305,12 @@ export default function GoldPriceRecord(props) {
                     goldPriceHistory.map((item, index) => (
                         <tr>
                             <td className={'p-3'}>{index + 1}</td>
-                            <td className={'p-3'}>{EnglishToPersian(item.date)}</td>
-                            <td className={'p-3'}>{item.adminUserName}</td>
-                            <td className={'p-3'}>{item.price}</td>
+                            <td className={'p-3'}>{item?.adminUserName}</td>
+                            <td className={'p-3'}>{item?.date}</td>
+                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.sellPricePerGram.toString()))}</td>
+                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.sellPricePerShekel.toString()))}</td>
+                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.purchasePricePerGram.toString()))}</td>
+                            <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.purchasePricePerShekel.toString()))}</td>
                         </tr>
                     ))
                 }

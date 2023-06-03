@@ -57,7 +57,7 @@ function AdminChat(props) {
 
 
     return (
-        <div className="mt-5 text-white rounded-[8px] font-bold">
+        <div className="w-full mt-5 text-white rounded-[8px] font-bold">
             <div className="chat-box">
                 <div className="chat-box-body">
                     <div className="flex justify-center">

@@ -13,7 +13,6 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
 function Sidebar() {
-
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
@@ -44,27 +43,27 @@ function Sidebar() {
 
     return (
         <>
-            <div className='sidebar-dashboard close' id='sidebar'>
+            <div className='sidebar-dashboard' id='sidebar'>
                 <div id='close_sidebar_mobile' onClick={closeSidebar}>
                     بستن
                 </div>
 
                 <div className="logo">
-                    <img src={"https://cloud.tala24.co/images/logo192.png"} alt={'logo'}/>
+                    <img src={"https://cloud.tala24.co/images/logo192.png"} className="w-[40%] sm:w-[30%]  md:w-1/2" alt={'logo'}/>
                 </div>
 
                 <div className="sidebar-list mt-4">
-                    <Link to="/dashboard/home" className='w-100'>
-                        <div className="d-flex flex-row align-items-center sidebar-list-item">
+                    <NavLink to="/dashboard/home" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                        <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <AiOutlineStock size={'25'} color="#fff" className={'cursor-pointer'}/>
                             <div className="sidebar-list-item-title">
                                 بازار
                             </div>
                         </div>
-                    </Link>
+                    </NavLink>
 
-                    <Link to="/dashboard/inventory-increase" className='w-100'>
-                        <div className="d-flex flex-row align-items-center sidebar-list-item">
+                    <NavLink to="/dashboard/inventory-increase" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                        <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white">
                                 <path strokeLinecap="round" strokeLinejoin="round"
@@ -74,11 +73,24 @@ function Sidebar() {
                                 افزایش موجودی
                             </div>
                         </div>
-                    </Link>
+                    </NavLink>
+
+                    <NavLink to="/dashboard/with-draw-money" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                        <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
+                            </svg>
+                            <div className="sidebar-list-item-title">
+                                تسویه ریالی
+                            </div>
+                        </div>
+                    </NavLink>
                     {
                         context.completeRegistrationStatus ? (
-                            <Link to="/dashboard/buy-gold" className='w-100'>
-                                <div className="d-flex flex-row align-items-center sidebar-list-item">
+                            <NavLink to="/dashboard/buy-gold" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                                <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5}
                                          stroke="currentColor" className="text-white w-6 h-6">
@@ -89,10 +101,10 @@ function Sidebar() {
                                         خرید طلا
                                     </div>
                                 </div>
-                            </Link>
+                            </NavLink>
                         ):(
-                            <div className='w-100' onClick={handleOpen}>
-                                <div className="d-flex flex-row align-items-center sidebar-list-item">
+                            <div className='w-100' onClick={handleOpen} onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                                <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5}
                                          stroke="currentColor" className="text-white w-6 h-6">
@@ -108,8 +120,8 @@ function Sidebar() {
                     }
                     {
                         context.completeRegistrationStatus ? (
-                            <Link to="/dashboard/sell-gold" className='w-100'>
-                                <div className="d-flex flex-row align-items-center sidebar-list-item">
+                            <NavLink to="/dashboard/sell-gold" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                                <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5}
                                          stroke="currentColor" className="text-white w-6 h-6">
@@ -120,10 +132,10 @@ function Sidebar() {
                                         فروش طلا
                                     </div>
                                 </div>
-                            </Link>
+                            </NavLink>
                         ):(
-                            <div onClick={handleOpen} className='w-100'>
-                                <div className="d-flex flex-row align-items-center sidebar-list-item">
+                            <div onClick={handleOpen} className='w-100' onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                                <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5}
                                          stroke="currentColor" className="text-white w-6 h-6">
@@ -138,26 +150,26 @@ function Sidebar() {
                         )
                     }
 
-                    <NavLink exact to="/dashboard/buy-report" className='w-100' activeClassName="active-navbar">
-                        <div className="d-flex flex-row align-items-center sidebar-list-item">
+                    <NavLink exact to="/dashboard/buy-report" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                        <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <TbReportAnalytics size={'25'} color="#fff"/>
                             <div className="sidebar-list-item-title">
-                                گزارش خرید
+                                گزارش طلایی
                             </div>
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/sell-report" className='w-100' activeClassName="active-navbar">
-                        <div className="d-flex flex-row align-items-center sidebar-list-item">
+                    <NavLink exact to="/dashboard/sell-report" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                        <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <TbReportAnalytics size={'25'} color="#fff"/>
                             <div className="sidebar-list-item-title">
-                                گزارش فروش
+                                گزارش ریالی
                             </div>
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/buy-coin" className='w-100' activeClassName="active-navbar">
-                        <div className="d-flex flex-row align-items-center sidebar-list-item">
+                    <NavLink exact to="/dashboard/buy-coin" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                        <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <TbReportAnalytics size={'25'} color="#fff"/>
                             <div className="sidebar-list-item-title">
                                 دریافت فیزیکی طلا
@@ -165,8 +177,8 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/user-profile" className='w-100' activeClassName="active-navbar">
-                        <div className="d-flex flex-row align-items-center sidebar-list-item">
+                    <NavLink exact to="/dashboard/bank-accounts" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                        <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white">
                                 <path strokeLinecap="round" strokeLinejoin="round"
@@ -178,8 +190,8 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/user-profile" className='w-100' activeClassName="active-navbar">
-                        <div className="d-flex flex-row align-items-center sidebar-list-item">
+                    <NavLink exact to="/dashboard/user-profile" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                        <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5} stroke="currentColor" className="text-white w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round"
@@ -191,8 +203,8 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <NavLink exact to="/dashboard/ticket" className='w-100' activeClassName="active-navbar">
-                        <div className="d-flex flex-row align-items-center sidebar-list-item">
+                    <NavLink exact to="/dashboard/ticket" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                        <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
                                  stroke="currentColor" className="text-white w-6 h-6">
@@ -206,7 +218,7 @@ function Sidebar() {
                     </NavLink>
 
                     <Link onClick={() => localStorage.clear()} to="/" className={"w-100"}>
-                        <div className="d-flex flex-row align-items-center sidebar-list-item">
+                        <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
                                  stroke="currentColor" className="text-white w-6 h-6">
@@ -219,7 +231,6 @@ function Sidebar() {
                     </Link>
                 </div>
             </div>
-
 
             <Modal
                 aria-labelledby="transition-modal-title"

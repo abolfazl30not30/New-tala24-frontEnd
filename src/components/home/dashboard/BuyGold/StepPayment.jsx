@@ -5,59 +5,51 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import {FormLabel, TextField} from "@mui/material";
 import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
+import {SeparateNumber} from "../../../../helper/SeparateNumber";
 
 function StepPayment(props) {
-    // const [value, setValue] = React.useState('cash');
-    // const handleChange = (event) => {
-    //     setValue(event.target.value);
-    // };
+
     return (
         <>
-            <h2 className="text-gold text-xl font-medium mb-6">
-                پرداخت
+            <h2 className="text-white text-2xl font-medium mb-6">
+                ثبت درخواست
             </h2>
-            <div className="mb-6 px-4 flex md:flex-row flex-col justify-between md:space-x-6 space-x-reverse">
-                <div className="mx-2 border border-gold rounded-md border-solid p-3 md:w-1/2">
-                    <FormControl>
-                        <FormLabel className='mb-3' id="demo-radio-buttons-group-label">انتخاب روش پرداخت:</FormLabel>
-                        <RadioGroup
-                            // aria-labelledby="demo-controlled-radio-buttons-group"
-                            name="controlled-radio-buttons-group"
-                            value={props.value}
-                            onChange={props.handleChange}
-                            className='mr-3'
-                        >
-                            <FormControlLabel value="cash" control={<Radio/>} label="پرداخت اینترنتی"/>
-                            {/*<FormControlLabel value="delivery" control={<Radio/>} label="پرداخت در محل(با کارت بانکی)"/>*/}
-                        </RadioGroup>
-                    </FormControl>
-                </div>
-                <div className="mx-2 flex flex-col space-y-3 border border-gold rounded-md border-solid p-3 md:w-1/2 text-sm mt-4 md:mt-0">
-                    <div className='mb-2 text-md text-white'>اطلاعات تکمیلی:</div>
-                    <div className="flex flex-row justify-between">
-                        <div>قیمت طلا</div>
-                        <div>{props.valuePrice.numberformat} ریال</div>
+            <div className="flex justify-center">
+                <div className="factor-background  mx-2 w-full md:w-2/3 flex flex-col  justify-between space-y-3 border border-[#7C7C80] rounded-md border-solid p-3 text-sm mt-4 md:mt-0 mb-4">
+                    <div className="flex justify-center">
+                        <img src="https://cloud.tala24.co/images/cartLogo.svg" alt="coin"/>
                     </div>
-                    {
-                        props.shipmentType === "cash" ? null :
-                        <div className="flex flex-row justify-between">
-                            <div>هزینه ارسال</div>
-                            <div>500000 ریال</div>
+                    <div className="flex justify-center py-4 border-dotted border-b-2 border-neutral-700 ">
+                        <h4 className="text-[1rem] font-bold">سبد خرید شما</h4>
+                    </div>
+                    <div className="flex justify-center flex-col flex-wrap">
+                        <div className="w-full flex justify-between flex-wrap py-3 border-dotted border-b-2 border-neutral-700">
+                            <span>
+                                وزن طلا:
+                            </span>
+                            <span><span>{EnglishToPersian(props.valueWeight)}</span> گرم </span>
                         </div>
-                    }
-                    <div className="flex flex-row justify-between">
-                        <div>کارمزد تراکنش</div>
-                        <div>50000 ریال</div>
-                    </div>
-
-                    <div className="border border-gold border-solid my-2"></div>
-                    <div className="flex flex-row justify-between">
-                        <div>قابل پرداخت</div>
-                        <div>{(parseInt(props.valuePrice.numberformat) + 50000 + (props.shipmentType === "delivery" ? 500000 : 0))} ریال</div>
+                        <div className="w-full flex justify-between py-3 border-dotted border-b-2 border-neutral-700">
+                            <span>
+                                مبلغ:
+                            </span>
+                            <span><span>{EnglishToPersian(SeparateNumber(props.valuePrice))}</span> ریال </span>
+                        </div>
+                        <div className="w-full flex justify-between py-3 border-dotted border-b-2 border-neutral-700">
+                            <span>
+                                کارمزد:
+                            </span>
+                            <span><span>{EnglishToPersian("50,000")}</span> ریال </span>
+                        </div>
+                        <div className="mt-5 w-full flex justify-between py-3 px-2  border-solid border-2 border-neutral-700 bg-[#2F3135]">
+                            <span>
+                                مبلغ قابل پرداخت:
+                            </span>
+                            <span><span>{EnglishToPersian(SeparateNumber(props.finalPrice))}</span> ریال </span>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </>
     )
 }

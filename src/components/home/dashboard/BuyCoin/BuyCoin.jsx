@@ -1,28 +1,21 @@
-
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
-import {styled} from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
+import {createTheme, styled, ThemeProvider} from '@mui/material/styles';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepConnector, {stepConnectorClasses} from '@mui/material/StepConnector';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import rtlPlugin from 'stylis-plugin-rtl';
 import {prefixer} from 'stylis';
 import {CacheProvider} from '@emotion/react';
 import createCache from '@emotion/cache';
 import StepPayment from "./StepPayment";
 import "./../../../../style/BuyGold.css"
-import {useContext, useEffect, useState} from "react";
-import signup from "../../../../contexts/signup";
 import api from "../../../../api/api";
-import * as yup from "yup";
 import StepAddCoin from "./StepAddCoin";
+import {toast} from "react-toastify";
+import signup from "../../../../contexts/signup";
 
 const ColorlibConnector = styled(StepConnector)(({theme}) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -142,25 +135,11 @@ export default function BuyCoin(props) {
     };
     constructor()
 
-    const info = useContext(signup)
-
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
-    const [type, setType] = useState("price");
-    const [shipmentType, setShipmentType] = useState("cash");
-    const [value, setValue] = React.useState('cash');
-
-    const handleChange = async (event) => {
-        await setValue(event.target.value);
-    };
-
-    useEffect(() => {
-        const getPrice = async () => {
-            const getPriceRes = await api.get("goldPrice/latestPrice")
-            setRialToWeightCoefficient(getPriceRes.price)
-        }
-        getPrice()
-    }, [activeStep]);
+    const [coins, setCoins] = useState([])
+    const [totalWeight , setTotalWeight] = useState(0)
+    const [totalWage , setTotalWage] = useState(0)
 
     const isStepOptional = (step) => {
         return step === 1;
@@ -171,23 +150,15 @@ export default function BuyCoin(props) {
     };
 
     const handleSubmit = async () => {
-        await api.post("payment", {
-            status: "pending",
-            isConverted: false,
-            isStored: shipmentType === "cash" ? "true" : "false",
-            accountId: localStorage.getItem("id")
-        })
+
     }
 
     const handleNext = async () => {
         if (activeStep === steps.length - 1) {
             handleSubmit()
         }
-        if (activeStep === 1) {
-            const valid = await validation()
-            if (valid !== undefined) {
-                setPriceErrors([])
-                setWeightErrors([])
+        if (activeStep === 0) {
+            if (!(typeof coins !== 'undefined' && coins.length === 0)) {
                 let newSkipped = skipped;
                 if (isStepSkipped(activeStep)) {
                     newSkipped = new Set(newSkipped.values());
@@ -196,35 +167,23 @@ export default function BuyCoin(props) {
                 setActiveStep((prevActiveStep) => prevActiveStep + 1);
                 setSkipped(newSkipped);
 
+            }else {
+                toast.error("لطفا سکه مورد نظر خود را اضافه کنید", {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
-        } else {
-            let newSkipped = skipped;
-            if (isStepSkipped(activeStep)) {
-                newSkipped = new Set(newSkipped.values());
-                newSkipped.delete(activeStep);
-            }
-
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            setSkipped(newSkipped);
         }
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const handleSkip = () => {
-        if (!isStepOptional(activeStep)) {
-
-            throw new Error("You can't skip a step that isn't optional.");
-        }
-
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped((prevSkipped) => {
-            const newSkipped = new Set(prevSkipped.values());
-            newSkipped.add(activeStep);
-            return newSkipped;
-        });
     };
 
     const handleReset = () => {
@@ -234,9 +193,9 @@ export default function BuyCoin(props) {
     return (
         <CacheProvider value={cacheRtl}>
             <ThemeProvider theme={theme}>
-                <div dir="rtl">
-                    <div className="mx-9 mt-5">
-                        <Box sx={{width: '100%'}}>
+                <div dir="rtl" className="mx-9 mt-4 w-full">
+                    <Box sx={{width: '100%'}}>
+                        <div className="md:w-3/4 w-full mx-auto">
                             <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
                                 {steps.map((label) => (
                                     <Step key={label}>
@@ -244,50 +203,33 @@ export default function BuyCoin(props) {
                                     </Step>
                                 ))}
                             </Stepper>
-                            {activeStep === steps.length ? (
-                                <React.Fragment>
-                                    <div
-                                        className   ="text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold text-center">
-                                        <div className="text-sky-50">
-                                            <h6 className={"mb-3 text-mainGold"}>درخواست خرید شما با موفقیت ارسال
-                                                شد.</h6>
-                                            <p className={"font-light text-[0.8rem]"}>پس از تایید توسط کارشناس سامانه
-                                                امکان خرید برای شما ایجاد شده و با مراجعه به صفحه درخواست ها می توانید
-                                                فرایند خرید را انجام دهید</p>
-                                        </div>
-                                    </div>
-                                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                        <Box sx={{flex: '1 1 auto'}}/>
-                                        <Button onClick={handleReset}>خرید مجدد</Button>
-                                    </Box>
-                                </React.Fragment>
-                            ) : (
-                                <React.Fragment>
-                                    <div className={'text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
-                                        {(() => {
-                                            if (activeStep === 0) {
-                                                return <StepAddCoin />;
-                                            } else if (activeStep === 1) {
-                                                return <StepPayment/>;
-                                            }
-                                        })()}
-                                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                            <button
-                                                className={"bg-red-600 hover:bg-red-800 text-white py-2 w-[7.5rem] rounded disabled:bg-red-400 disabled:text-red-300 disabled:cursor-not-allowed"}
-                                                disabled={activeStep === 0}
-                                                onClick={handleBack}>
-                                                بازگشت
-                                            </button>
-                                            <Box sx={{flex: '1 1 auto'}}/>
-                                            <button onClick={handleNext} className="bg-[#21BA55] hover:bg-green-700 text-white py-2 w-[7.5rem] rounded">
-                                                {activeStep === steps.length - 1 ? 'ثبت درخواست' : 'بعدی'}
-                                            </button>
-                                        </Box>
-                                    </div>
-                                </React.Fragment>
-                            )}
-                        </Box>
-                    </div>
+                        </div>
+                        <React.Fragment>
+                            <div
+                                className={'max-w-[1000px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
+                                {(() => {
+                                    if (activeStep === 0) {
+                                        return <StepAddCoin coins={coins} setCoins={setCoins} totalWeight={totalWeight} setTotalWeight={setTotalWeight} />;
+                                    } else if (activeStep === 1) {
+                                        return <StepPayment totalWeight={totalWeight}/>;
+                                    }
+                                })()}
+                                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                    <button
+                                        className={"bg-red-600 hover:bg-red-800 text-white py-2 w-[7.5rem] rounded disabled:bg-red-400 disabled:text-red-300 disabled:cursor-not-allowed"}
+                                        disabled={activeStep === 0}
+                                        onClick={handleBack}>
+                                        بازگشت
+                                    </button>
+                                    <Box sx={{flex: '1 1 auto'}}/>
+                                    <button onClick={handleNext}
+                                            className="bg-[#21BA55] hover:bg-green-700 text-white py-2 w-[7.5rem] rounded">
+                                        {activeStep === steps.length - 1 ? 'پرداخت' : 'بعدی'}
+                                    </button>
+                                </Box>
+                            </div>
+                        </React.Fragment>
+                    </Box>
                 </div>
             </ThemeProvider>
         </CacheProvider>

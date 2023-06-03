@@ -50,3 +50,19 @@
     }
 }
 
+.MuiMenu-root ul{
+    background-color: #252525;
+
+}
+.MuiMenu-root ul li {
+    color: white !important;
+}
+.MuiMenu-root ul li a{
+    color: white !important;
+}
+.MuiMenu-root ul li div{
+    color: white !important;
+}
+.MuiMenu-root ul li:hover{
+    background-color: #3A3A3A;
+}

@@ -12,6 +12,7 @@ import ResgisterApi from "../../../api/RegisterApi";
 import LoginApi from "../../../api/LoginApi";
 
 const CreatePassword= () => {
+
     const info = useContext(signup)
 
     const [errors, setErrors] = useState([])
@@ -73,22 +74,10 @@ const CreatePassword= () => {
 
             await LoginApi();
 
-            const res1 = await api.get(`account/user/${info.newUserPhoneNumber}`)
+            const res1 = await api.get(`account/currentUser`)
             localStorage.setItem("id", res1.id)
 
-            await api.post("info", { // bug not fixed
-                accountId: res1.id,
-                value: localStorage.getItem("username"),
-                infoType: "phoneNumber"
-            })
-
             info.setAccountCompleteRegistrationAllowed(true)
-
-            // console.log(res1)
-            // api.post("info", {
-            //     accountId:
-            // })
-
             navigate("/welcome")
         }
     }
@@ -112,7 +101,7 @@ const CreatePassword= () => {
                             error={errors.length !== 0}
                             value={password}
                             type={"password"}
-                            className={'field bg-[#212121] w-full rounded h-[45px] p-4 text-white'}
+                            className={'field bg-[#212121] w-full rounded p-4 text-white'}
                             onChange={(value) => handleInputPassword(value)}
                         />
                         <PasswordStrengthIndicator password={password}/>
@@ -128,7 +117,7 @@ const CreatePassword= () => {
                             error={errors.length !== 0}
                             value={passwordRepeat}
                             type={"password"}
-                            className={'field bg-[#212121] w-full rounded h-[45px] p-4 text-white'}
+                            className={'field bg-[#212121] w-full rounded p-4 text-white'}
                             onChange={(value) => handleInputPasswordRepeat(value)}
                         />
                         {

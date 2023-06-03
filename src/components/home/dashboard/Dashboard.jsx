@@ -18,7 +18,7 @@ import * as PropTypes from "prop-types";
 import MainSection from "./MainSection";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-
+import { ToastContainer, toast } from 'react-toastify';
 
 function Routes(props) {
     return null;
@@ -27,33 +27,14 @@ function Routes(props) {
 Routes.propTypes = {children: PropTypes.node};
 const Dashboard = () => {
 
-    const info = useContext(signup)
-
-    const [selected, setSelected] = useState('bazaar');
+    const context = useContext(signup)
 
     const navigate = useNavigate()
-    const [anchorEl, setAnchorEl] = React.useState(null);
 
     const [completeRegistrationStatus, setCompleteRegistrationStatus] = useState(true);
 
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-     function getProfile () {
-         api.get(`info/profile/${localStorage.getItem("id")}`).then((response) => {
-            if (response.firstName !== null && response.lastName !== null && response.nationalCode !== null) {
-                setCompleteRegistrationStatus(true)
-            }
-        })
-    }
-
     useEffect(() => {
-        axios.post("https://api.tala24.co/login",
+        axios.post("http://localhost:8090/login",
             {username: localStorage.getItem("username"), password: localStorage.getItem("password")}, {
                 withCredentials: true,
                 headers: {
@@ -66,17 +47,14 @@ const Dashboard = () => {
             navigate("/")
         })
 
-        async function test() {
-            const res = await api.get(`account/user/${localStorage.getItem("username")}`)
-            localStorage.setItem("id", res.id)
-            info.setInformation(res.infos)
+        async function GetAccountInfo() {
+            const res = await api.get(`account/currentUser`)
+            context.setAccountInfo(res)
         }
-        test()
-        getProfile()
+        GetAccountInfo()
     }, [])
-    useEffect(()=>{
 
-    },[])
+
     return (
         <>
         <dashboard.Provider value={{completeRegistrationStatus:completeRegistrationStatus, setCompleteRegistrationStatus:setCompleteRegistrationStatus}}>
