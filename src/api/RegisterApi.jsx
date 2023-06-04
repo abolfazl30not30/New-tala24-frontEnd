@@ -2,7 +2,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 
 const axiosParams = {
-    baseURL: 'http://localhost:8090/api/v1/register'
+    baseURL: 'https://api.tala24.co/api/v1/register'
 }
 
 const axiosInstance = axios.create(axiosParams);
