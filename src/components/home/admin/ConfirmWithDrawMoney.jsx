@@ -42,7 +42,7 @@ function RTL(props) {
     return <CacheProvider value={cacheRtl}>{props.children}</CacheProvider>;
 }
 
-export default function ConfirmBuyGold(props) {
+export default function ConfirmWithDrawMoney(props) {
     useEffect(() => {
         if (localStorage.getItem('role') !== "ADMIN") {
             localStorage.clear()
@@ -60,37 +60,37 @@ export default function ConfirmBuyGold(props) {
         setConstructorHasRun(true);
     };
     constructor()
-    const getTotalInfoPendRequests = async () =>{
-        const respond = await api.get(`request/admin/buyGold/pendRequest`)
-        setTotalInfo(respond)
-    }
+
     useEffect(() => {
         const getData = async () => {
-            const getPaymentsRes = await api.get(`request/admin/buyGold`)
+            const getPaymentsRes = await api.get(`request/admin/withdrawMoney`)
             if (getPaymentsRes) {
                 setGoldBuyRequests(getPaymentsRes)
             }
         }
         getData()
-        getTotalInfoPendRequests()
+
     }, []);
 
 
     let [goldBuyRequests, setGoldBuyRequests] = useState([])
     let [isOpen, setIsOpen] = useState(false)
     let [isOpenProfile, setIsOpenProfile] = useState(false)
-    let [profileData, setProfileData] = useState({})
+    let [profileData, setProfileData] = useState({
+        accountNumberDetail : {
+            accountNumber:""
+        }
+    })
     let [adminConfirm, setAdminConfirm] = useState("accept")
     let [failedDescriptionContent, setFailedDescriptionContent] = useState()
     let [requestId, setRequestId] = useState()
-    let [totalInfo,setTotalInfo] = useState({});
 
     function closeModalProfile() {
         setIsOpenProfile(false)
     }
 
     async function openModalProfile(id) {
-        const getInfo = await api.get(`account/admin/showUserProfile/${id}`)
+        const getInfo = await api.get(`info/admin/show/profile/${id}`)
         if (getInfo) {
             setProfileData(getInfo)
         }
@@ -125,7 +125,7 @@ export default function ConfirmBuyGold(props) {
             setFailedDescriptionContent("")
         }
 
-        const getPaymentsRes = await api.get(`request/admin/buyGold`)
+        const getPaymentsRes = await api.get(`request/admin/withdrawMoney`)
         if (getPaymentsRes) {
             setGoldBuyRequests(getPaymentsRes)
         }
@@ -136,17 +136,7 @@ export default function ConfirmBuyGold(props) {
 
     return (
         <div className="w-full bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
-            <div className="flex justify-between">
-                <div className="text-white text-2xl font-medium">درخواست خرید طلا</div>
-                    <div>
-                        <span className="text-gold mx-2"> کل مبلغ درخواست های در حال بررسی:</span>
-                        <span className="text-white">{EnglishToPersian(totalInfo.price)} ریال </span>
-                    </div>
-                    <div>
-                        <span className="text-gold mx-2"> کل وزن درخواست های در حال بررسی:</span>
-                        <span className="text-white">{EnglishToPersian(totalInfo.weight)} گرم </span>
-                    </div>
-            </div>
+            <div className="text-white text-2xl font-medium">درخواست تسویه ریالی</div>
             <table className='mt-8 text-white break-normal'>
                 <thead>
                 <tr>
@@ -157,13 +147,11 @@ export default function ConfirmBuyGold(props) {
                                   d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"/>
                         </svg>
                     </th>
-                    <th className={'p-4 text-gold text-center'}>وزن</th>
                     <th className={'p-4 text-gold text-center'}>قیمت</th>
                     <th className={'p-4 text-gold text-center'}>تاریخ و ساعت</th>
-                    <th className={'p-4 text-gold text-center'}>شماره پیگیری</th>
-                    <th className={'p-4 text-gold text-center'}>وضعيت تاييد ادمين</th>
-                    <th className={'p-4 text-gold text-center'}>تایید ادمین</th>
-                    <th className={'p-4 text-gold text-center'}>پروفایل درخواست دهنده</th>
+                    <th className={'p-4 text-gold text-center'}>وضعیت واریز</th>
+                    <th className={'p-4 text-gold text-center'}>تعیین وضعیت واریز</th>
+                    <th className={'p-4 text-gold text-center'}>اطلاعات درخواست دهنده</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -171,10 +159,8 @@ export default function ConfirmBuyGold(props) {
                     goldBuyRequests.map((requests, index) => (
                         <tr>
                             <td className={'p-3 text-center'}>{index + 1}</td>
-                            <td className={'p-3 text-center'}>{EnglishToPersian(requests.weight.toString())}</td>
                             <td className={'p-3 text-center'}>{EnglishToPersian(SeparateNumber(requests.price.toString()))}</td>
                             <td className={'p-3 text-center'}>{EnglishToPersian(requests.createAt)}</td>
-                            <td className={'p-3 text-center'}>{EnglishToPersian(requests.issueTracking)}</td>
                             <td className={'p-3 flex justify-center'}>
                                 {
                                     requests.status === "pend" ?
@@ -184,12 +170,12 @@ export default function ConfirmBuyGold(props) {
                                         requests.status === "reject" ?
                                             (<RedTooltip  title={`دلیل:  ${requests.failureReason.reason}`} arrow>
                                                 <span className={'text-center bg-red-500 w-2/3 p-2 rounded-xl'}>
-                                                رد شده
+                                                واریز نشد
                                              </span>
                                             </RedTooltip >) :
                                             requests.status === "accept" ?
                                                 (<span className={'text-center bg-green-700 w-2/3 p-2 rounded-xl'}>
-                                                    قبول شده
+                                                    واریز شد
                                                 </span>) : null
                                 }
                             </td>
@@ -256,8 +242,8 @@ export default function ConfirmBuyGold(props) {
                                                                         value={adminConfirm}
                                                                         label="وضعيت"
                                                                         onChange={handleChange}>
-                                                                        <MenuItem value={"accept"}>تاييد</MenuItem>
-                                                                        <MenuItem value={"reject"}>رد</MenuItem>
+                                                                        <MenuItem value={"accept"}>واریز شد</MenuItem>
+                                                                        <MenuItem value={"reject"}>واریز نشد</MenuItem>
                                                                     </Select>
                                                                 </FormControl>
                                                             </CacheProvider>
@@ -307,7 +293,7 @@ export default function ConfirmBuyGold(props) {
                             <td className={'p-3 flex justify-center'}>
                                 <button
                                     type="button"
-                                    onClick={() => openModalProfile(requests.accountId)}
+                                    onClick={() => openModalProfile(requests.id)}
                                     className="rounded-md flex flex-row items-center bg-mainGold text-black text-xs px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -315,7 +301,7 @@ export default function ConfirmBuyGold(props) {
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                               d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
                                     </svg>
-                                    پروفایل
+                                    اطلاعات
                                 </button>
                                 <Transition appear show={isOpenProfile} as={Fragment}>
                                     <Dialog as="div" className="relative z-10" onClose={closeModalProfile}
@@ -376,6 +362,31 @@ export default function ConfirmBuyGold(props) {
                                                                     </div>
                                                                     <div>{EnglishToPersian(profileData.weight)} گرم </div>
                                                                 </div>
+
+                                                                <div className='flex flex-row items-center'>
+                                                                    <div className='ml-1 text-gold font-bold'>
+                                                                        شماره حساب :
+                                                                    </div>
+                                                                    <div>{EnglishToPersian(profileData.accountNumberDetail.accountNumber)}  </div>
+                                                                </div>
+                                                                <div className='flex flex-row items-center'>
+                                                                    <div className='ml-1 text-gold font-bold'>
+                                                                        شماره کارت :
+                                                                    </div>
+                                                                    <div>{EnglishToPersian(profileData.accountNumberDetail.cardNumber)}  </div>
+                                                                </div>
+                                                                <div className='flex flex-row items-center'>
+                                                                    <div className='ml-1 text-gold font-bold'>
+                                                                        شماره شبا :
+                                                                    </div>
+                                                                    <div>{EnglishToPersian(profileData.accountNumberDetail.shabaNumber)} </div>
+                                                                </div>
+                                                                <div className='flex flex-row items-center'>
+                                                                    <div className='ml-1 text-gold font-bold'>
+                                                                        نام بانک :
+                                                                    </div>
+                                                                    <div>{profileData.accountNumberDetail.bankName}</div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="mt-4">
@@ -383,8 +394,7 @@ export default function ConfirmBuyGold(props) {
                                                                 <button
                                                                     type="button"
                                                                     className="text-mainGray inline-flex w-full justify-center rounded-md border border-transparent bg-gray-300 px-4 py-2 text-sm font-medium text-gary-700 hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                                                    onClick={closeModalProfile}
-                                                                >
+                                                                    onClick={closeModalProfile}>
                                                                     بستن
                                                                 </button>
                                                             </div>

@@ -1,13 +1,16 @@
-import React, {useEffect, useState} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import {Link, useParams} from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import {deepOrange, deepPurple} from '@mui/material/colors';
 import "./../../../../style/ticket.css"
 import api from "../../../../api/api";
+import signup from "../../../../contexts/signup";
 
 
 function UserChat(props) {
+    const context = useContext(signup);
+
     useEffect(() => {
         if (localStorage.getItem('role') !== "USER") {
             localStorage.clear()
@@ -43,13 +46,12 @@ function UserChat(props) {
 
 
     const handleSendMessage = async () => {
-        const accountData = await api.get(`account/user/${localStorage.getItem("username")}`)
-        const accountInfo = await api.get(`info/profile/${accountData.id}`)
+        const accountData = await api.get(`info/show/personalInformation`)
         await api.put(`ticket/${id}`, {
             status: "pending",
             chatList: [
                 {
-                    sender: accountInfo.firstName + " " + accountInfo.lastName,
+                    sender: accountData.firstName + " " + accountData.lastName,
                     message: typedMessage
                 }
             ]

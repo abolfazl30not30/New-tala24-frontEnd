@@ -11,6 +11,7 @@ import NewBlog from "./NewBlog"
 import EditBlog from './EditBlog';
 import Blogs from "./Blogs"
 import AddCoin from "./AddCoin"
+import ConfirmWithDrawMoney from "./ConfirmWithDrawMoney";
 
 const MainSection = () => {
     const context = useContext(dashboard)
@@ -20,6 +21,7 @@ const MainSection = () => {
                 <Route path="/gold-price" element={<ProtectedRoute><GoldPriceRecord /></ProtectedRoute>} />
                 <Route path="/confirm-buy" element={<ProtectedRoute><ConfirmBuyGold /></ProtectedRoute>} />
                 <Route path="/confirm-sell" element={<ProtectedRoute><ConfirmSellGold /></ProtectedRoute>} />
+                <Route path="/confirm-with-draw" element={<ProtectedRoute><ConfirmWithDrawMoney /></ProtectedRoute>} />
                 <Route path="/add-coin" element={<ProtectedRoute><AddCoin /></ProtectedRoute>} />
                 <Route path="/new-blog" element={<ProtectedRoute><NewBlog /></ProtectedRoute>} />
                 <Route path="/edit-blog" element={<ProtectedRoute><EditBlog /></ProtectedRoute>} />

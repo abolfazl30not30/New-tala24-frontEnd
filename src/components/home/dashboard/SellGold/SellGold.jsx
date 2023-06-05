@@ -164,7 +164,6 @@ export default function SellGold(props) {
     const [isOpenSuccessful, setIsOpenSuccessful] = useState(false)
     const [isOpenFailed, setIsOpenFailed] = useState(false)
     const [lastPrice, setLastPrice] = useState(0)
-    const [selectedAccountNumber, setSelectedAccountNumber] = useState("")
 
     const validation = async () => {
         const priceSchema = yup.object().shape({
@@ -279,20 +278,7 @@ export default function SellGold(props) {
 
     const handleNext = async () => {
         if (activeStep === steps.length - 1) {
-            if(selectedAccountNumber === ""){
-                toast.info("لطفا شماره حساب خود را انتخاب کنید", {
-                    position: "bottom-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-            }else {
-                handleSubmit()
-            }
+            handleSubmit()
         } else if (activeStep === 0) {
             const valid = await validation()
             if (valid !== undefined) {
@@ -345,7 +331,6 @@ export default function SellGold(props) {
         await api.post("request/sellGold", {
             weight: valueWeight,
             price: finalPrice,
-            accountNumber:selectedAccountNumber,
         }).then((res)=>{
             if(res){
                 setIsOpenSuccessful(true)
@@ -390,7 +375,7 @@ export default function SellGold(props) {
                                         } else if (activeStep === 1) {
                                             return <StepPayment valuePrice={valuePrice} valueWeight={valueWeight}
                                                                 finalPrice={finalPrice}
-                                                                handleFinalPrice={handleFinalPrice} selectedAccountNumber={selectedAccountNumber} setSelectedAccountNumber={setSelectedAccountNumber}/>;
+                                                                handleFinalPrice={handleFinalPrice} />;
                                         }
                                     })()}
                                     <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>

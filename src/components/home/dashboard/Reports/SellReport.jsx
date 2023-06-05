@@ -77,7 +77,6 @@ const SellReport = () => {
                                         <th className={'p-4 text-center'}>شماره</th>
                                         <th className={'p-4 text-center'}>نوع</th>
                                         <th className={'p-4 text-center'}>مبلغ</th>
-                                        <th className={'p-4 text-center'}>وزن</th>
                                         <th className={'p-4 text-center'}>تاریخ و ساعت </th>
                                         <th className={'p-4 text-center'}>شماره پیگیری</th>
                                         <th className={'p-4 text-center'}>وضعیت</th>
@@ -86,10 +85,9 @@ const SellReport = () => {
                                         goldReports?.map((report, index) => (
                                             <tr key={index}>
                                                 <td className={'p-3 text-center'}>{index + 1}</td>
-                                                <td className={'p-3 text-center flex justify-center'}>{report.type === "buyGold" ? <p className="authorizedSuccessful">خرید طلا</p> :
-                                                    <p className="authorizedFailed">فروش طلا</p>}</td>
-                                                <td className={'p-3 text-center'}>{EnglishToPersian(SeparateNumber(report.price))}ریال</td>
-                                                <td className={'p-3 text-center'}>{EnglishToPersian(SeparateNumber(report.weight))}گرم</td>
+                                                <td className={'p-3 text-center flex justify-center'}>{report.type === "deposit" ? <p className="authorizedSuccessful">واریز به کیف پول</p> :
+                                                    <p className="authorizedFailed">برداشت از کیف پول</p>}</td>
+                                                <td className={'p-3 text-center'}>{EnglishToPersian(SeparateNumber(report.price.toString()))}ریال</td>
                                                 <td className={'p-3 text-center'}>{EnglishToPersian(report.createAt)}</td>
                                                 <td className={'p-3 text-center'}>{EnglishToPersian(report.issueTracking)}</td>
                                                 <td className={'p-3 text-center flex justify-center'}>

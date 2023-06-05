@@ -10,6 +10,7 @@ import api from "../../../api/api";
 import {RxHamburgerMenu} from "react-icons/rx";
 import {IoCalendarOutline} from "react-icons/io5";
 import {Outlet} from "react-router-dom";
+import {EnglishToPersian} from "../../../helper/EnglishToPersian";
 
 // Create RTL MUI
 const theme = createTheme({
@@ -45,27 +46,12 @@ export default function AddAdmin(props) {
 
     const [accounts, setAccounts] = useState([]);
     const [admins, setAdmins] = useState([]);
-    const getAdmins = async ()=> {
 
-        const getAdminsResponse = await api.get("user/search?role=ADMIN")
-        console.log(getAdminsResponse)
-        // let accountsIDs = []
-        // for (let i = 0; i < getAdminsResponse.length; i++) {
-        //     await api.get(`account/user/${getAdminsResponse[i].username}`)
-        //         .then((data) => {
-        //             accountsIDs.push(data.id);
-        //         })
-        // }
-        // let infosList = []
-        // for (let i = 0; i < accountsIDs.length; i++) {
-        //     await api.get(`info/profile/${accountsIDs[i]}`)
-        //         .then((data) => {
-        //             infosList.push(data);
-        //         })
-        // }
-        // setAccounts(infosList)
-        // setAdmins(getAdminsResponse)
+    const getAdmins = async ()=> {
+        const adminsList = await api.get("user/show/admin")
+        setAdmins(adminsList)
     }
+
     useEffect(() => {
         getAdmins()
     }, []);
@@ -94,17 +80,16 @@ export default function AddAdmin(props) {
         })
     }
 
-    async function handleAddAdmin() {
+    const  handleAddAdmin = async () => {
         await api.post("user/admin", addAdmin)
         getAdmins()
         setIsOpen(false);
     }
 
-    const handleDeleteAdmin = async e => {
+    const handleDeleteAdmin = async (e) => {
         await api.delete(`user/${e.target.id}`)
         getAdmins()
     }
-
 
     return (
         <>
@@ -114,8 +99,7 @@ export default function AddAdmin(props) {
                     <button
                         type="button"
                         onClick={openModal}
-                        className="rounded-md flex flex-row items-center bg-[#DFAF3D] text-black px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                    >
+                        className="rounded-md flex flex-row items-center bg-[#DFAF3D] text-black px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                         ادمین جدید
                     </button>
 
@@ -175,6 +159,7 @@ export default function AddAdmin(props) {
                                                                     onChange={onChangeInput}
                                                                 />
                                                                 <TextField
+                                                                    type="password"
                                                                     name="password"
                                                                     label="رمز عبور"
                                                                     value={addAdmin.password}
@@ -229,18 +214,17 @@ export default function AddAdmin(props) {
                     </thead>
                     <tbody>
                     {
-                        admins.map((u, i) => (
+                        admins.map((admin, i) => (
                             <tr>
                                 <td className={'p-4'}>{i + 1}</td>
-                                <td className={'p-4'}>{accounts[i]?.firstName}</td>
-                                <td className={'p-4'}>{accounts[i]?.lastName}</td>
-                                <td className={'p-4'}>{u.username}</td>
+                                <td className={'p-4'}>{admin.firstName}</td>
+                                <td className={'p-4'}>{admin.lastName}</td>
+                                <td className={'p-4'}>{EnglishToPersian(admin.phoneNumber)}</td>
                                 <td className={'p-4'}>
                                     <button
                                         className='px-2 py-1 text-sm rounded border-[1px] border-gray-300 border-solid hover:border-red-600 hover:bg-red-600 transition'
-                                        id={u.id}
-                                        onClick={handleDeleteAdmin}
-                                    >
+                                        id={admin.id}
+                                        onClick={handleDeleteAdmin}>
                                         حذف
                                     </button>
                                 </td>

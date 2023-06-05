@@ -53,13 +53,11 @@ function UserTicket(props) {
     };
 
     const handleSubmitTicket = async () => {
-        console.log(context.accountInfo.id)
-        /*TODO: fix me*/
-        /*await api.post("ticket", {
+        await api.post("ticket", {
             accountId: context.accountInfo.id,
             title: title,
             status: "pending"
-        })*/
+        })
         getTickets()
         handleClose()
 

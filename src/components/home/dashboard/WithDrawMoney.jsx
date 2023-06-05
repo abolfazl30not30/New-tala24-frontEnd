@@ -12,6 +12,7 @@ import {EnglishToPersian} from "../../../helper/EnglishToPersian";
 import {PersianToEnglish} from "../../../helper/PersianToEnglish";
 import FormControl from "@mui/material/FormControl";
 import api from "../../../api/api";
+import {toast} from "react-toastify";
 
 const theme = createTheme({
     direction: 'rtl', // Both here and <body dir="rtl">
@@ -26,7 +27,6 @@ const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
     ref,
 ) {
     const {onChange, ...other} = props;
-
     return (
         <NumericFormat
             {...other}
@@ -62,7 +62,7 @@ function WithDrawMoney() {
         bankName: ""
     }])
 
-    const [selectedAccountNumber, setSelectedAccountNumber] = useState(accountNumber[0])
+    const [selectedAccountNumber, setSelectedAccountNumber] = useState("")
 
     const getAccountNumbers = async () =>{
         const newAccountNumbers = await api.get("info/show/accountNumber")
@@ -87,6 +87,67 @@ function WithDrawMoney() {
         return Num2persian(toman)
     }
 
+    const handleSubmit = async () =>{
+
+        const respond = await api.post('request/checkWallet/withdraw',{
+            price: PersianToEnglish(amountEntered)
+        });
+
+        if(selectedAccountNumber === ""){
+            toast.info("لطفا شماره حساب خود را انتخاب کنید", {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }else if(amountEntered === "") {
+            toast.info("لطفا مبلغ مورد نظر خود را وارد کنید", {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }else if(!respond.check){
+            toast.info(respond.reason, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        else {
+            await api.post("request/withdrawMoney", {
+                price: PersianToEnglish(amountEntered),
+                accountNumber:selectedAccountNumber,
+            }).then((res)=>{
+                if(res){
+                    toast.success("درخواست شما با موفقیت ثبت شد", {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+                }
+            })
+        }
+    }
+
     return (
         <>
             <div className="mt-5 text-white bg-[#252525] rounded-2xl p-10 w-full md:w-3/4 flex items-center  flex-col">
@@ -95,6 +156,7 @@ function WithDrawMoney() {
                         تسویه ریالی
                     </h3>
                 </div>
+
                 <div className={"w-3/4 mx-auto mt-10"}>
                     <CacheProvider value={cacheRtl}>
                         <ThemeProvider theme={theme}>
@@ -167,7 +229,7 @@ function WithDrawMoney() {
                     </button>
                 </div>
                 <div className="mt-12 flex justify-center">
-                    <button className='bg-labelGreen text-black px-24 py-4 font-bold rounded-md text-sm hover:opacity-90'>
+                    <button className='bg-labelGreen text-black px-24 py-4 font-bold rounded-md text-sm hover:opacity-90' onClick={handleSubmit}>
                         ارسال درخواست
                     </button>
                 </div>
