@@ -81,8 +81,11 @@ function StepAddCoin(props) {
         setIsOpenCoin(true);
     }
 
-    const calculateTotalWage = () =>{
-
+    const calculateTotalWage = async () =>{
+        const wage = await api.get(`coin/wage/${selectedCoin}`);
+        let newTotalWage = props.totalWage;
+        newTotalWage += (countOfCoin * wage);
+        props.setTotalWage(newTotalWage);
     }
 
     const calculateTotalWeight = () =>{
@@ -95,6 +98,8 @@ function StepAddCoin(props) {
         console.log(typeof (event.target.value))
         setCountOfCoin(event.target.value)
     }
+
+
     const handleAddNewCoin = async () => {
         const valid = await validation()
         console.log(valid)
@@ -109,6 +114,7 @@ function StepAddCoin(props) {
             }
 
             calculateTotalWeight();
+            calculateTotalWage();
 
             updatedCoins.push(newCoin)
             props.setCoins(updatedCoins)
@@ -122,14 +128,22 @@ function StepAddCoin(props) {
     };
 
     const handleDeleteCoin = (coin) =>{
+
         let newTotalWeight = props.totalWeight;
         newTotalWeight -= (coin.weight * coin.count)
         props.setTotalWeight(newTotalWeight)
 
+        let updateCoinsWeight = [...coinsWight];
+        updateCoinsWeight.push(coin.weight);
+        updateCoinsWeight.sort();
+        setCoinsWight(updateCoinsWeight)
+
         let updatedCoin = [...props.coins]
         updatedCoin = updatedCoin.filter(c => c !== coin)
         props.setCoins(updatedCoin)
+
     }
+
 
     const handleChangeCoin = (event) => {
         setSelectedCoin(event.target.value);
@@ -211,7 +225,7 @@ function StepAddCoin(props) {
                                 </div>
                                 <div className="text-[0.9rem]">
                                     <span className="text-gold">کارمزد کل :</span>
-                                    <span className="mr-2">{EnglishToPersian()} ریال </span>
+                                    <span className="mr-2">{EnglishToPersian(props.totalWage.toString())} ریال </span>
                                 </div>
                             </div>
                         )

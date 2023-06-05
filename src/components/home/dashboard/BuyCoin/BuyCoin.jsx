@@ -140,10 +140,17 @@ export default function BuyCoin(props) {
     const [coins, setCoins] = useState([])
     const [totalWeight , setTotalWeight] = useState(0)
     const [totalWage , setTotalWage] = useState(0)
+    const [shippingCost,setShippingCost] = useState(10000);
+    const [totalCost,setTotalCost] = useState(0);
 
     const isStepOptional = (step) => {
         return step === 1;
     };
+
+    const calculateTotalCost = () =>{
+        let newTotalCost = totalWage + shippingCost;
+        setTotalCost(newTotalCost)
+    }
 
     const isStepSkipped = (step) => {
         return skipped.has(step);
@@ -159,6 +166,7 @@ export default function BuyCoin(props) {
         }
         if (activeStep === 0) {
             if (!(typeof coins !== 'undefined' && coins.length === 0)) {
+                calculateTotalCost();
                 let newSkipped = skipped;
                 if (isStepSkipped(activeStep)) {
                     newSkipped = new Set(newSkipped.values());
@@ -209,9 +217,11 @@ export default function BuyCoin(props) {
                                 className={'max-w-[1000px] mx-auto text-white bg-[#252525] mt-10 rounded-[8px] p-5'}>
                                 {(() => {
                                     if (activeStep === 0) {
-                                        return <StepAddCoin coins={coins} setCoins={setCoins} totalWeight={totalWeight} setTotalWeight={setTotalWeight} />;
+                                        return <StepAddCoin coins={coins} setCoins={setCoins} totalWeight={totalWeight} setTotalWeight={setTotalWeight} totalWage={totalWage} setTotalWage={setTotalWage}/>;
+
                                     } else if (activeStep === 1) {
-                                        return <StepPayment totalWeight={totalWeight}/>;
+
+                                        return <StepPayment totalWeight={totalWeight} totalWage={totalWage} shippingCost={shippingCost} totalCost={totalCost} />;
                                     }
                                 })()}
                                 <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>

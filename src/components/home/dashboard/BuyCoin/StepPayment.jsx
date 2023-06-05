@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {CacheProvider} from "@emotion/react";
 import FormControl from "@mui/material/FormControl";
 import {InputLabel, MenuItem, Select} from "@mui/material";
@@ -12,11 +12,22 @@ import Radio from "@mui/material/Radio";
 import {Link} from "react-router-dom";
 import {RiAddFill} from "react-icons/ri";
 import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
+import {SeparateNumber} from "../../../../helper/SeparateNumber";
+import api from "../../../../api/api";
 
 function StepPayment(props) {
     const [address, setAddress] = useState(["کاشان-شهرک انقلاب-کوی لاله-کوی نسیم"])
     const [selectedAddress, setSelectedAddress] = useState("text")
     const [typeOfPayment, setTypeOfPayment] = useState("online")
+
+    const getAddresses = async ()=>{
+        const listAddsresses = await api.get("info/show/fullAddress");
+        setAddress(listAddsresses)
+
+    }
+    useEffect(()=>{
+        getAddresses()
+    },[])
     const handleChangeAddress = (event) => {
         setSelectedAddress(event.target.value);
     };
@@ -101,19 +112,19 @@ function StepPayment(props) {
                             <span>
                                 هزینه ارسال:
                             </span>
-                            <span><span>{EnglishToPersian("100,000")}</span> ریال </span>
+                            <span><span>{EnglishToPersian(SeparateNumber(props.shippingCost.toString()))}</span> ریال </span>
                         </div>
                         <div className="w-full flex justify-between py-3 border-dotted border-b-2 border-neutral-700">
                             <span>
                                 کارمزد:
                             </span>
-                            <span><span>{EnglishToPersian("50,000")}</span> ریال </span>
+                            <span><span>{EnglishToPersian(SeparateNumber(props.totalWage.toString()))}</span> ریال </span>
                         </div>
                         <div className="mt-5 w-full flex justify-between py-3 px-2  border-solid border-2 border-neutral-700 bg-[#2F3135]">
                             <span>
                                 مبلغ قابل پرداخت:
                             </span>
-                            <span><span>{EnglishToPersian("150,000")}</span> ریال </span>
+                            <span><span>{EnglishToPersian(SeparateNumber(props.totalCost.toString()))}</span> ریال </span>
                         </div>
                     </div>
                 </div>
