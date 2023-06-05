@@ -20,6 +20,19 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import {MdArrowBackIosNew} from "react-icons/md";
 import Tooltip from "react-bootstrap/Tooltip";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import {styled} from "@mui/material/styles";
+import {tooltipClasses} from "@mui/material/Tooltip";
+
+const RedTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: 'rgb(229, 76, 76)',
+        color: 'rgba(250, 250, 250)',
+        boxShadow: theme.shadows[1],
+        fontSize: 15,
+    },
+}));
 
 const BuyRequest = () => {
     const [showErrorModal, setShowErrorModal] = useState(false)
@@ -470,9 +483,12 @@ const BuyRequest = () => {
                                                                     در حال بررسی
                                                                 </p>
                                                                 : data.status === "failed"
-                                                                    ? <p className={'authorizedFailed'}>
-                                                                        تایید نشده
-                                                                    </p>
+                                                                    ? (
+                                                                        <RedTooltip  title={`دلیل:  ${data.failureReason.reason}`} arrow>
+                                                                            <span className={'statusFailed'}>
+                                                                                رد شده
+                                                                            </span>
+                                                                        </RedTooltip >)
                                                                     : data.status === "successful"
                                                                         ? <p className={'authorizedSuccessful'}>
                                                                             تایید شده

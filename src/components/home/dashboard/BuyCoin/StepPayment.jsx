@@ -25,9 +25,11 @@ function StepPayment(props) {
         setAddress(listAddsresses)
 
     }
+
     useEffect(()=>{
         getAddresses()
     },[])
+
     const handleChangeAddress = (event) => {
         setSelectedAddress(event.target.value);
     };

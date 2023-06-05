@@ -4,7 +4,19 @@ import api from '../../../../api/api'
 import {useNavigate} from "react-router-dom";
 import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 import {SeparateNumber} from "../../../../helper/SeparateNumber";
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
+const RedTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: 'rgb(239 68 68)',
+        color: 'rgba(250, 250, 250)',
+        boxShadow: theme.shadows[1],
+        fontSize: 13,
+    },
+}));
 
 const SellReport = () => {
     const [goldReports, setGoldReports] = useState([])
@@ -87,9 +99,13 @@ const SellReport = () => {
                                                                 در حال بررسی
                                                             </p>
                                                             : report.status === "reject"
-                                                                ? <p className={'authorizedFailed'}>
-                                                                    رد شده
-                                                                </p>
+                                                                ? (
+                                                                    <RedTooltip  title={`دلیل:  ${report.failureReason.reason}`} arrow>
+                                                                    <span className={'statusFailed'}>
+                                                                     رد شده
+                                                                    </span>
+                                                                    </RedTooltip >
+                                                                )
                                                                 : report.status === "accept"
                                                                     ? <p className={'authorizedSuccessful'}>
                                                                         موفق

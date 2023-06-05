@@ -10,7 +10,19 @@ import api from "../../../api/api";
 import FormControl from "@mui/material/FormControl";
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
 import {SeparateNumber} from "../../../helper/SeparateNumber";
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
+const RedTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: 'rgb(239 68 68)',
+        color: 'rgba(250, 250, 250)',
+        boxShadow: theme.shadows[1],
+        fontSize: 15,
+    },
+}));
 
 const status = [
     {name: 'نامشخص', value: 'pend'},
@@ -154,9 +166,11 @@ export default function ConfirmSellGold(props) {
                                             نامشخص
                                         </span>) :
                                         requests.status === "reject" ?
-                                            (<span className={'text-center bg-red-500 w-2/3 p-2 rounded-xl'}>
+                                            (<RedTooltip  title={`دلیل:  ${requests.failureReason.reason}`} arrow>
+                                                <span className={'text-center bg-red-500 w-2/3 p-2 rounded-xl'}>
                                                 رد شده
-                                            </span>) :
+                                             </span>
+                                            </RedTooltip >) :
                                             requests.status === "accept" ?
                                                 (<span className={'text-center bg-green-700 w-2/3 p-2 rounded-xl'}>
                                                     قبول شده
