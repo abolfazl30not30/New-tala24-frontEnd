@@ -7,33 +7,31 @@ import '../../../style/footer.css'
 const Footer = () => {
 
     return (
-        <div className={'bg-footerColor xsm:mt-5'}>
-
-            <div className={'xsm:block footer-style items-start md:flex text-white text-right md:p-10'}>
-
-                <div className={'md:flex md:items-center text-right md:mx-5 xsm:mx-3 xsm:mb-2 py-6 md:py-0'}>
+        <div className={'bg-footerColor xsm:mt-5 pt-16'}>
+            <div className={'footer-style flex justify-around flex-col md:flex-row items-start md:flex justify-center text-white text-right'}>
+                <div className={'w-full md:w-1/3'}>
                     <div>
                         <h2 className={'footer-title text-sm mb-3'}>
                             درباره ما
                         </h2>
                         <p className={'text-xs leading-5'}>
-                            این یک پیام تستی است
-                            این یک پیام تستی استاین یک پیام تستی استاین یک
-                            پیام تستی استاین یک پیام تستی استاین یک پیام تستی
-                            استاین یک پیام تستی استاین یک پیام تستی استاین
-                            یک پیام تستی استاین یک پیام تستی استاین یک پیام
-                            تستی استاین یک پیام تستی استاین یک پیام تستی است
+                            شرکت بنیان طلای بیست و چهار معاملات طلا فعالیت خود را در پارک علم وار به عنوان اولین استارت
+                            فناوری دانشگاه شهیدبهشتی آغاز نموده است و با راه‌اندازی سامانه آنلاین خرید و فروش طلا ،
+                            فعالیت‌های خود را به دنیای کسب‌وکارهای آنلاین و مبتنی بر اینترنت نیز گسترش داده و افراد با پس
+                            اندازکردن طلا، در بازار طلا و جواهر کشور سرمایه گذاری می کنند و در بلند مدت باعث رشد اقتصادی
+                            فردی و اجتماعی شخصیت های حقیقی و حقوقی ، اشتغال زایی و حمایت از تولید ملی می شوند؛ همچنین طلا24
+                            در نظر دارد که بازار طلای پناور کشور ایران را با استراتژی تعیین شده به هم متصل و معاملات کاذب که
+                            باعث اختلاف در قیمت های عرضه شده میشود را حذف نماید.
                         </p>
                     </div>
                     <div className={'f1 mt-4'}></div>
                 </div>
-
-                <div className={'whitespace-nowrap xsm:mb-3 md:flex md:items-center md:mx-5 xsm:mx-3'}>
+                <div className={''}>
                     <div>
                         <h2 className={'footer-title text-sm md:mb-3 xsm:mb-5'}>
                             ارتباط با ما
                         </h2>
-                        <div className={'text-xs md:leading-8'}>
+                        <div className={'text-xs md:leading-8 flex flex-col'}>
                             <div className={'flex md:float-right'}>
                                 <BsTelephone color={'#DFAF3D'} className={'md:ml-2 md:mt-2 xsm:-mt-1 xsm:mb-3 xsm:ml-2'} size={"16px"}/>
                                 <p>
@@ -48,16 +46,19 @@ const Footer = () => {
                             </div>
                             <div className={'flex md:float-right'}>
                                 <HiOutlineMail color={'#DFAF3D'} className={'md:ml-2 md:mt-2 xsm:mb-3 xsm:ml-2'} size={"18px"}/>
-                                <p>
-                                    milad1380@gmail.com :پست الکترونیک
-                                </p>
+                                <span >
+                                    پست اکترونیک:
+                                </span>
+                                <span>
+                                    info@gmail.com
+                                </span>
                             </div>
                         </div>
                     </div>
                     <div className={'f1 mt-4'}></div>
                 </div>
 
-                <div className={'whitespace-nowrap  md:flex md:items-center xsm:mx-3'}>
+                <div className={''}>
                     <div>
                         <h2 className={'footer-title text-sm mb-3'}>
                             لینک های مفید
@@ -98,21 +99,21 @@ const Footer = () => {
                     <div className={'f1 mt-4'}></div>
                 </div>
 
-                <div className={'flex xsm:p-3 justify-center md:items-center'}>
-                    <div>
+                {/*<div className={'flex xsm:p-3 justify-center md:items-center'}>*/}
+                {/*    <div>*/}
 
-                        <img  src={"https://cloud.tala24.co/images/etemad1.png"}
-                              className={'xsm:w-[8rem] sm:w-[10rem] md:w-[17rem] lg:w-[17rem]'}
-                              alt={'etemad1'}
-                        />
-                    </div>
-                    <div>
-                        <img src={"https://cloud.tala24.co/images/etemad2.png"}
-                             className={'xsm:w-[8rem] sm:w-[10rem] md:w-[17rem] lg:w-[15rem]'}
-                             alt={'etemad2'}
-                        />
-                    </div>
-                </div>
+                {/*        <img  src={"https://cloud.tala24.co/images/etemad1.png"}*/}
+                {/*              className={'xsm:w-[8rem] sm:w-[10rem] md:w-[17rem] lg:w-[17rem]'}*/}
+                {/*              alt={'etemad1'}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*    <div>*/}
+                {/*        <img src={"https://cloud.tala24.co/images/etemad2.png"}*/}
+                {/*             className={'xsm:w-[8rem] sm:w-[10rem] md:w-[17rem] lg:w-[15rem]'}*/}
+                {/*             alt={'etemad2'}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*</div>*/}
 
             </div>
 

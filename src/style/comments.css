@@ -59,7 +59,7 @@
     content: "";
     position: absolute;
     top: 50%;
-    right: -53%;
+    right: -90%;
     width: 60px;
     height: 1px;
     background: linear-gradient(to right, #ffd700 0, #ffd700 35%, #ffd700 65%, transparent 100%);
@@ -68,7 +68,7 @@
     content: "";
     position: absolute;
     top: 50%;
-    left: -49%;
+    left: -93%;
     width: 60px;
     height: 1px;
     background: linear-gradient(to left, #ffd700 0, #ffd700 35%, #ffd700 65%, transparent 100%);

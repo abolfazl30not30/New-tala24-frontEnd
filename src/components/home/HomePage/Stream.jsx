@@ -13,7 +13,7 @@ const Stream = () => {
                 <div className={'flex items-center lg:mt-0 sm:mx-[50px] xsm:ml-5 justify-center xsm:text-center md1:text-right xsm:mr-[0.8rem]'}>
                     <div>
                         <h2 className={'heading-title font-bold xsm:text-center xsm:text-[1.200rem] xsm:mt-3 md:text-[1.600rem] mb-4 whitespace-nowrap md:mr-10'}>
-                            طلای خودتون رو آنلاین ببینید
+                                آموزش خرید از سامانه طلا 24
                         </h2>
                         <p className={'text-[0.8rem] leading-7 font-thin'}>
                             اینجا یک متن درباره توضیحات وبسایت قرار میگیرد اینجا
