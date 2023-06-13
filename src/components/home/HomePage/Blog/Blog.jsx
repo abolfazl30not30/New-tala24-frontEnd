@@ -24,8 +24,8 @@ export default function Blog() {
         <>
             <MainNavbar/>
             <div className="">
-                <div className="flex mx-4 xl:flex-row gap-2 flex-col">
-                    <div className="md:grid md:grid-cols-3 gap-2">
+                <div className="flex mx-4 md:flex-row gap-1 flex-col">
+                    <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-1">
                         <div className="bg-cardDark box-border border-solid border border-[#6F6F6F] shadow-[0_1rem_1rem_1rem]_rgba(0,0,0,0.09) rounded-3xl flex flex-col w-full   md:my-0 my-2">
                         <img src={blog_1} className='mx-4 my-4' alt="" />
                             
@@ -35,18 +35,18 @@ export default function Blog() {
                             <div>
                                 <p className="text-[#CECECE] my-4 mx-4 sm:text-sm text-xs ">در ۲ روز پایانی هفته قبل یک جزر و مد قیمتی را تجربه کرد. بامداد پنجشنبه در واکنش  توسط فدرال رزرو جهش خیره کننده ای را در کارنامه خود ثبت کرد</p>
                             </div>
-                            <div className="flex justify-between my-4 lg:mx-4 md:mx-2 mx-4">
-                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-4 px-2 md:py-2 py-1'>
-                                    <div className='lg:px-2 md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
-                                    <p className='text-[#DFAF3D] lg:text-base md:text-sm text-sm md:mx-0 mx-1 my-auto '>مطالعه مطلب </p>
+                            <div className="flex justify-between my-4  mx-2 ">
+                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
+                                    <div className='md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
+                                    <p className='text-[#DFAF3D] lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
                                 </button>
-                                <button className="flex bg-[#373737] rounded-xl  lg:px-4  px-2">
+                                <button className="flex bg-[#373737] rounded-xl  lg:px-2  px-2">
                                     <p className=" md:text-base text-sm  text-[rgb(206,206,206)] my-auto">21.3K</p>
                                     <div className=" text-[#FC545E] opacity-90 my-auto md:text-2xl text-xl"><AiFillHeart/></div>
                                 </button>
                             </div>
                         </div>
-                        <div className="bg-cardDark box-border border-solid border border-[#6F6F6F] shadow-[0_1rem_1rem_1rem]_rgba(0,0,0,0.09) rounded-3xl flex flex-col w-full md:my-0 my-2">
+                        <div className="bg-cardDark box-border border-solid border border-[#6F6F6F] shadow-[0_1rem_1rem_1rem]_rgba(0,0,0,0.09) rounded-3xl flex flex-col w-full   md:my-0 my-2">
                         <img src={blog_1} className='mx-4 my-4' alt="" />
                             
                             <div>
@@ -55,18 +55,18 @@ export default function Blog() {
                             <div>
                                 <p className="text-[#CECECE] my-4 mx-4 sm:text-sm text-xs ">در ۲ روز پایانی هفته قبل یک جزر و مد قیمتی را تجربه کرد. بامداد پنجشنبه در واکنش  توسط فدرال رزرو جهش خیره کننده ای را در کارنامه خود ثبت کرد</p>
                             </div>
-                            <div className="flex justify-between my-4 lg:mx-4 md:mx-2 mx-4">
-                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-4 px-2 md:py-2 py-1'>
-                                    <div className='lg:px-2 md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
-                                    <p className='text-[#DFAF3D] lg:text-base md:text-sm text-sm md:mx-0 mx-1 my-auto'>مطالعه مطلب </p>
+                            <div className="flex justify-between my-4  mx-2 ">
+                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
+                                    <div className='md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
+                                    <p className='text-[#DFAF3D] lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
                                 </button>
-                                <button className="flex bg-[#373737] rounded-xl  lg:px-4  px-2">
+                                <button className="flex bg-[#373737] rounded-xl  lg:px-2  px-2">
                                     <p className=" md:text-base text-sm  text-[rgb(206,206,206)] my-auto">21.3K</p>
                                     <div className=" text-[#FC545E] opacity-90 my-auto md:text-2xl text-xl"><AiFillHeart/></div>
                                 </button>
                             </div>
                         </div>
-                        <div className="bg-cardDark box-border border-solid border border-[#6F6F6F] shadow-[0_1rem_1rem_1rem]_rgba(0,0,0,0.09) rounded-3xl flex flex-col w-full  md:my-0 my-2">
+                        <div className="bg-cardDark box-border border-solid border border-[#6F6F6F] shadow-[0_1rem_1rem_1rem]_rgba(0,0,0,0.09) rounded-3xl flex flex-col w-full   md:my-0 my-2">
                         <img src={blog_1} className='mx-4 my-4' alt="" />
                             
                             <div>
@@ -75,18 +75,18 @@ export default function Blog() {
                             <div>
                                 <p className="text-[#CECECE] my-4 mx-4 sm:text-sm text-xs ">در ۲ روز پایانی هفته قبل یک جزر و مد قیمتی را تجربه کرد. بامداد پنجشنبه در واکنش  توسط فدرال رزرو جهش خیره کننده ای را در کارنامه خود ثبت کرد</p>
                             </div>
-                            <div className="flex justify-between my-4 lg:mx-4 md:mx-2 mx-4">
-                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-4 px-2 md:py-2 py-1'>
-                                    <div className='lg:px-2 md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
-                                    <p className='text-[#DFAF3D] lg:text-base md:text-sm text-sm md:mx-0 mx-1 my-auto  '>مطالعه مطلب </p>
+                            <div className="flex justify-between my-4  mx-2 ">
+                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
+                                    <div className='md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
+                                    <p className='text-[#DFAF3D] lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
                                 </button>
-                                <button className="flex bg-[#373737] rounded-xl  lg:px-4  px-2">
+                                <button className="flex bg-[#373737] rounded-xl  lg:px-2  px-2">
                                     <p className=" md:text-base text-sm  text-[rgb(206,206,206)] my-auto">21.3K</p>
-                                    <div className=" text-[#FC545E] opacity-90  my-auto md:text-2xl text-xl"><AiFillHeart/></div>
+                                    <div className=" text-[#FC545E] opacity-90 my-auto md:text-2xl text-xl"><AiFillHeart/></div>
                                 </button>
                             </div>
                         </div>
-                        <div className="bg-cardDark box-border border-solid border border-[#6F6F6F] shadow-[0_1rem_1rem_1rem]_rgba(0,0,0,0.09) rounded-3xl flex flex-col w-full  md:my-0 my-2">
+                        <div className="bg-cardDark box-border border-solid border border-[#6F6F6F] shadow-[0_1rem_1rem_1rem]_rgba(0,0,0,0.09) rounded-3xl flex flex-col w-full   md:my-0 my-2">
                         <img src={blog_1} className='mx-4 my-4' alt="" />
                             
                             <div>
@@ -95,33 +95,33 @@ export default function Blog() {
                             <div>
                                 <p className="text-[#CECECE] my-4 mx-4 sm:text-sm text-xs ">در ۲ روز پایانی هفته قبل یک جزر و مد قیمتی را تجربه کرد. بامداد پنجشنبه در واکنش  توسط فدرال رزرو جهش خیره کننده ای را در کارنامه خود ثبت کرد</p>
                             </div>
-                            <div className="flex justify-between my-4 lg:mx-4 md:mx-2 mx-4">
-                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-4 px-2 md:py-2 py-1'>
-                                    <div className='lg:px-2 md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
-                                    <p className='text-[#DFAF3D] lg:text-base md:text-sm text-sm md:mx-0 mx-1 my-auto '>مطالعه مطلب </p>
+                            <div className="flex justify-between my-4  mx-2 ">
+                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
+                                    <div className='md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
+                                    <p className='text-[#DFAF3D] lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
                                 </button>
-                                <button className="flex bg-[#373737] rounded-xl  lg:px-4  px-2">
+                                <button className="flex bg-[#373737] rounded-xl  lg:px-2  px-2">
                                     <p className=" md:text-base text-sm  text-[rgb(206,206,206)] my-auto">21.3K</p>
-                                    <div className=" text-[#FC545E] opacity-90  md:text-2xl text-xl my-auto"><AiFillHeart/></div>
+                                    <div className=" text-[#FC545E] opacity-90 my-auto md:text-2xl text-xl"><AiFillHeart/></div>
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                    <div className=" bg-cardDark rounded-2xl flex flex-col  md:w-2/5 w-full mx-auto xl:w-auto">
+                    <div className=" bg-cardDark rounded-2xl flex flex-col w-full mx-auto md:w-auto">
                         <div className="flex my-2">
                             <div className="text-[#DFAF3D] text-3xl px-2 my-auto"><MdOutlineWatchLater/></div>
-                            <h3 className=" text-white sm:text-base text-sm px-4 my-auto">آخرین مطالب</h3>
-                            <div className="h-0 border-2 border-[#DFAF3D] border-solid opacity-10 px-2  mx-auto w-1/3 my-auto"></div>
+                            <h3 className=" text-white sm:text-base text-sm px-2 md:px-4 my-auto">آخرین مطالب</h3>
+                            <div className="h-0 border-2 border-[#DFAF3D] border-solid opacity-10 px-2  mx-auto w-2/5 md:w-1/5 xl:w-1/3 my-auto"></div>
                             
                         </div>
-                        <div className="flex xl:justify-around mx-2  my-2">
+                        <div className="flex xl:justify-around mx-1  my-2">
                             <div className="rounded-2xl">
                                 <a href="#"><img className=" rounded-2xl " src={blog_1} alt=""/></a>
                             </div>
-                            <div className="flex flex-col mx-2">
-                                <div className="2xl:text-sm xl:text-[0.7rem] text-white lg:text-sm text-xs">
+                            <div className="flex flex-col mx-[0.08rem]">
+                                <div className=" text-white lg:text-sm md:text-xs sm:text-sm text-xs">
                                     <a href="#">
                                     <p>
                                         ثبت رکورد تاریخی طلا و اوج‌گیری بیت کوین  ثبت رکورد
@@ -131,17 +131,17 @@ export default function Blog() {
                                 </div>
                                 <div>
                                     <a href="#">
-                                    <p className="2xl:text-xs xl:text-[0.55rem] lg:text-xs text-[0.55rem] text-[#B12323]">غزاله فراهانی  <span className=" text-[#DFAF3D] rounded-full text-2xl ">.</span> ۱۶ اردیبهشت ۱۴۰۲</p>
+                                    <p className="xl:text-xs lg:text-[0.59rem] md:text-[0.5rem] sm:text-sm  text-xs text-[#B12323]">غزاله فراهانی  <span className=" text-[#DFAF3D] rounded-full text-2xl">.</span> ۱۶ اردیبهشت ۱۴۰۲</p>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex xl:justify-around mx-2  my-2">
+                        <div className="flex xl:justify-around mx-1  my-2">
                             <div className="rounded-2xl">
                                 <a href="#"><img className=" rounded-2xl " src={blog_1} alt=""/></a>
                             </div>
-                            <div className="flex flex-col mx-2">
-                                <div className="2xl:text-sm xl:text-[0.7rem] text-white lg:text-sm text-xs">
+                            <div className="flex flex-col mx-[0.08rem]">
+                                <div className=" text-white lg:text-sm md:text-xs sm:text-sm text-xs">
                                     <a href="#">
                                     <p>
                                         ثبت رکورد تاریخی طلا و اوج‌گیری بیت کوین  ثبت رکورد
@@ -151,17 +151,17 @@ export default function Blog() {
                                 </div>
                                 <div>
                                     <a href="#">
-                                    <p className="2xl:text-xs xl:text-[0.55rem] lg:text-xs text-[0.55rem] text-[#B12323]">غزاله فراهانی  <span className=" text-[#DFAF3D] rounded-full text-2xl ">.</span> ۱۶ اردیبهشت ۱۴۰۲</p>
+                                    <p className="xl:text-xs lg:text-[0.59rem] md:text-[0.5rem] sm:text-sm  text-xs text-[#B12323]">غزاله فراهانی  <span className=" text-[#DFAF3D] rounded-full text-2xl">.</span> ۱۶ اردیبهشت ۱۴۰۲</p>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex xl:justify-around mx-2  my-2">
+                        <div className="flex xl:justify-around mx-1  my-2">
                             <div className="rounded-2xl">
                                 <a href="#"><img className=" rounded-2xl " src={blog_1} alt=""/></a>
                             </div>
-                            <div className="flex flex-col mx-2">
-                                <div className="2xl:text-sm xl:text-[0.7rem] text-white lg:text-sm text-xs">
+                            <div className="flex flex-col mx-[0.08rem]">
+                                <div className=" text-white lg:text-sm md:text-xs sm:text-sm text-xs">
                                     <a href="#">
                                     <p>
                                         ثبت رکورد تاریخی طلا و اوج‌گیری بیت کوین  ثبت رکورد
@@ -171,14 +171,14 @@ export default function Blog() {
                                 </div>
                                 <div>
                                     <a href="#">
-                                    <p className="2xl:text-xs xl:text-[0.55rem] lg:text-xs text-[0.55rem] text-[#B12323]">غزاله فراهانی  <span className=" text-[#DFAF3D] rounded-full text-2xl ">.</span> ۱۶ اردیبهشت ۱۴۰۲</p>
+                                    <p className="xl:text-xs lg:text-[0.59rem] md:text-[0.5rem] sm:text-sm  text-xs text-[#B12323]">غزاله فراهانی  <span className=" text-[#DFAF3D] rounded-full text-2xl">.</span> ۱۶ اردیبهشت ۱۴۰۲</p>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl mx-auto p-2  my-2'>
+                        <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl mx-auto p-2 my-2'>
                             <div className='  text-[#6F6F6F]  text-2xl mx-2'>< FiArrowRightCircle/></div>
-                            <div className='text-[#DFAF3D] lg:text-base md:text-sm'>مطالب بیشتر</div>
+                            <div className='text-[#DFAF3D] xl:text-base md:text-sm my-auto'>مطالب بیشتر</div>
                         </button>
                     </div>
                     </div>
