@@ -35,13 +35,13 @@ const Footer = () => {
                             <div className={'flex md:float-right'}>
                                 <BsTelephone color={'#DFAF3D'} className={'md:ml-2 md:mt-2 xsm:-mt-1 xsm:mb-3 xsm:ml-2'} size={"16px"}/>
                                 <p>
-                                    شماره تماس :021212121
+                                    شماره تلفن : ۲۹۹۰۲۹۳۰-۰۲۱
                                 </p>
                             </div>
                             <div className={'flex md:float-right'}>
                                 <IoLocationOutline color={'#DFAF3D'} className={'md:ml-2 md:mt-2 xsm:mb-3 xsm:ml-2'} size={"18px"}/>
                                 <p>
-                                    آدرس: تهران، پل پارک وی، خیابان ولیعصر
+                                    آدرس: تهران-دانشگاه شهید بهشتی-پارک علم و فناوری
                                 </p>
                             </div>
                             <div className={'flex md:float-right'}>
@@ -50,7 +50,7 @@ const Footer = () => {
                                     پست اکترونیک:
                                 </span>
                                 <span>
-                                    info@gmail.com
+                                    park@sbu.ac.ir
                                 </span>
                             </div>
                         </div>
@@ -65,34 +65,16 @@ const Footer = () => {
                         </h2>
                         <div className={'text-xs md:leading-8 xsm:leading-8'}>
                             <div className={'flex'}>
-                                <p>
-                                    خدمات
-                                </p>
-                                {/*<BsTelephone color={'#d0a94d'} className={'ml-2 mt-2'} size={"16px"}/>*/}
+                                <a className="hover:text-gold" href="https://www.sbu.ac.ir" target="_blank">دانشگاه شهید بهشتی</a>
                             </div>
                             <div className={'flex'}>
-                                <p>
-                                    خدمات
-                                </p>
-                                {/*<IoLocationOutline color={'#d0a94d'} className={'ml-2 mt-2'} size={"18px"}/>*/}
+                                <a className="hover:text-gold" href="https://park.sbu.ac.ir/" target="_blank">پارک علم و فناوری شهید بهشتی</a>
                             </div>
                             <div className={'flex'}>
-                                <p>
-                                    خدمات
-                                </p>
-                                {/*<HiOutlineMail color={'#d0a94d'} className={'ml-2 mt-2'} size={"18px"}/>*/}
+                                <a className="hover:text-gold" href="https://www.estjt.ir/" target="_blank">اتحادیه طلا و جواهر استان تهران</a>
                             </div>
                             <div className={'flex'}>
-                                <p>
-                                    خدمات
-                                </p>
-                                {/*<HiOutlineMail color={'#d0a94d'} className={'ml-2 mt-2'} size={"18px"}/>*/}
-                            </div>
-                            <div className={'flex'}>
-                                <p>
-                                    خدمات
-                                </p>
-                                {/*<HiOutlineMail color={'#d0a94d'} className={'ml-2 mt-2'} size={"18px"}/>*/}
+                                <a className="hover:text-gold" href="https://isti.ir/" target="_blank">معاونت علمی ریاست جمهوری</a>
                             </div>
                         </div>
                     </div>
