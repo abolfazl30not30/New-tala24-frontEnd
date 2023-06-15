@@ -28,7 +28,6 @@ export default function Blog() {
                     <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-1">
                         <div className="bg-cardDark box-border border-solid border border-[#6F6F6F] shadow-[0_1rem_1rem_1rem]_rgba(0,0,0,0.09) rounded-3xl flex flex-col w-full   md:my-0 my-2">
                         <img src={blog_1} className='mx-4 my-4' alt="" />
-                            
                             <div>
                                 <p className=" text-[#CECECE] sm:text-base text-sm mx-4 my-4" >جهش خیره کننده نرخ طلای جهانی</p>
                             </div>
