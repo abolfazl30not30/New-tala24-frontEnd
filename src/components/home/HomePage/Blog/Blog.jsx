@@ -35,9 +35,9 @@ export default function Blog() {
                                 <p className="text-[#CECECE] my-4 mx-4 sm:text-sm text-xs ">در ۲ روز پایانی هفته قبل یک جزر و مد قیمتی را تجربه کرد. بامداد پنجشنبه در واکنش  توسط فدرال رزرو جهش خیره کننده ای را در کارنامه خود ثبت کرد</p>
                             </div>
                             <div className="flex justify-between my-4  mx-2 ">
-                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
+                                <button className='flex box-border bg-mainGold hover:opacity-80 rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
                                     <div className='md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
-                                    <p className='text-[#DFAF3D] lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
+                                    <p className='text-black lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
                                 </button>
                                 <button className="flex bg-[#373737] rounded-xl  lg:px-2  px-2">
                                     <p className=" md:text-base text-sm  text-[rgb(206,206,206)] my-auto">21.3K</p>
@@ -55,9 +55,9 @@ export default function Blog() {
                                 <p className="text-[#CECECE] my-4 mx-4 sm:text-sm text-xs ">در ۲ روز پایانی هفته قبل یک جزر و مد قیمتی را تجربه کرد. بامداد پنجشنبه در واکنش  توسط فدرال رزرو جهش خیره کننده ای را در کارنامه خود ثبت کرد</p>
                             </div>
                             <div className="flex justify-between my-4  mx-2 ">
-                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
+                            <button className='flex box-border bg-mainGold hover:opacity-80 rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
                                     <div className='md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
-                                    <p className='text-[#DFAF3D] lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
+                                    <p className='text-black lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
                                 </button>
                                 <button className="flex bg-[#373737] rounded-xl  lg:px-2  px-2">
                                     <p className=" md:text-base text-sm  text-[rgb(206,206,206)] my-auto">21.3K</p>
@@ -75,9 +75,9 @@ export default function Blog() {
                                 <p className="text-[#CECECE] my-4 mx-4 sm:text-sm text-xs ">در ۲ روز پایانی هفته قبل یک جزر و مد قیمتی را تجربه کرد. بامداد پنجشنبه در واکنش  توسط فدرال رزرو جهش خیره کننده ای را در کارنامه خود ثبت کرد</p>
                             </div>
                             <div className="flex justify-between my-4  mx-2 ">
-                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
+                            <button className='flex box-border bg-mainGold hover:opacity-80 rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
                                     <div className='md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
-                                    <p className='text-[#DFAF3D] lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
+                                    <p className='text-black lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
                                 </button>
                                 <button className="flex bg-[#373737] rounded-xl  lg:px-2  px-2">
                                     <p className=" md:text-base text-sm  text-[rgb(206,206,206)] my-auto">21.3K</p>
@@ -95,9 +95,9 @@ export default function Blog() {
                                 <p className="text-[#CECECE] my-4 mx-4 sm:text-sm text-xs ">در ۲ روز پایانی هفته قبل یک جزر و مد قیمتی را تجربه کرد. بامداد پنجشنبه در واکنش  توسط فدرال رزرو جهش خیره کننده ای را در کارنامه خود ثبت کرد</p>
                             </div>
                             <div className="flex justify-between my-4  mx-2 ">
-                                <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
+                            <button className='flex box-border bg-mainGold hover:opacity-80 rounded-xl justify-evenly lg:px-2 px-2 md:py-2 py-1'>
                                     <div className='md:px-1 my-auto text-[#6F6F6F] text-2xl'>< FiArrowRightCircle/></div>
-                                    <p className='text-[#DFAF3D] lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
+                                    <p className='text-black lg:text-sm xl:text-base md:text-sm text-sm md:mx-0 xl:mx-1 lg:mx-[0.2rem] my-auto '>مطالعه مطلب </p>
                                 </button>
                                 <button className="flex bg-[#373737] rounded-xl  lg:px-2  px-2">
                                     <p className=" md:text-base text-sm  text-[rgb(206,206,206)] my-auto">21.3K</p>
@@ -175,9 +175,9 @@ export default function Blog() {
                                 </div>
                             </div>
                         </div>
-                        <button className='flex box-border border border-solid border-[#6F6F6F] rounded-xl mx-auto p-2 my-2'>
+                        <button className='flex box-border bg-mainGold hover:opacity-80 rounded-xl mx-auto p-2 my-2'>
                             <div className='  text-[#6F6F6F]  text-2xl mx-2'>< FiArrowRightCircle/></div>
-                            <div className='text-[#DFAF3D] xl:text-base md:text-sm my-auto'>مطالب بیشتر</div>
+                            <div className='text-black xl:text-base md:text-sm my-auto'>مطالب بیشتر</div>
                         </button>
                     </div>
                     </div>
