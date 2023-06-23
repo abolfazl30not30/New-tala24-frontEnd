@@ -37,7 +37,7 @@ class Comments extends Component {
             <>
                 <div className="comments-container mb-10">
                     <div className={"flex justify-center pt-7"}>
-                        <h2 className={"heading-title-comment font-bold "}>بلاگ</h2>
+                        <h2 className={"heading-title-comment font-bold "}>مطالب پر بازدید</h2>
                     </div>
                     <div className="w-[70%] m-auto mt-14">
                         <Slider {...settings}>

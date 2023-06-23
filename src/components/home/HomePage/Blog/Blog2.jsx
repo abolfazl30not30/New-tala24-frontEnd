@@ -10,6 +10,9 @@ import {AiFillLinkedin} from "react-icons/ai";
 import {BsTwitter} from "react-icons/bs";
 import {BsInstagram} from "react-icons/bs";
 import {BsFacebook} from "react-icons/bs";
+import {RxEnter} from "react-icons/rx";
+import {Link} from "react-router-dom";
+
 
 
 export default function Blog2(){
@@ -29,20 +32,21 @@ export default function Blog2(){
         <MainNavbar/>
           <div className='flex md:flex-row flex-col gap-8 mx-2 sm:mx-8  md:mx-7'>
           <div className='md:w-4/5 '>
-          <div className="  bg-cardDark rounded-2xl">
-            <div className="text-white  text-center text-sm sm:text-xl md:text-lg lg:text-xl  xl:text-2xl py-4 mx-2">تب قیمت طلا فروکش کرد /نوسان محدود قیمت دلار</div>
-            <div className="border w-11/12 mx-auto border-[#6F6F6F] h-0 border-solid"></div>
-            <div className="flex justify-between mx-4 my-4 ">
-                <div className="text-[#747474] flex my-auto">
-                    <div className="sm:text-xl md:text-base lg:text-xl "><BsCalendar4Week/></div>
-                    <div className="px-2 text-xs sm:text-sm lg:text-base ">۱۶ اردیبهشت ۱۴۰۲</div>
+          <div className="p-10 bg-cardDark rounded-2xl">
+            <div className="text-white text-sm sm:text-xl md:text-lg lg:text-xl xl:text-2xl mb-10 font-bold">تب قیمت طلا فروکش کرد /نوسان محدود قیمت دلار</div>
+            <div className="border mx-auto border-[#6F6F6F] h-0 border-solid"></div>
+            <div className="flex justify-between my-4 ">
+                <div className="text-neutral-300 flex my-auto">
+                    <div className="sm:text-xl md:text-base lg:text-xl text-mainGold "><BsCalendar4Week/></div>
+
+                    <div className="px-2 text-xs sm:text-sm lg:text-[0.9rem] ">۱۶ اردیبهشت ۱۴۰۲</div>
                 </div>
-                <div className="pb-2"><span className="text-[#606060] text-xs sm:text-sm lg:text-base ">نویسنده : </span><span className="text-[#DFAF3D] text-xs sm:text-sm lg:text-base"> غزاله فراهانی</span></div>
+                <div className="pb-2"><span className="text-neutral-300 text-xs sm:text-sm lg:text-[0.9rem] ">نویسنده : </span><span className="text-[#DFAF3D] text-xs sm:text-sm lg:text-[0.9rem]"> غزاله فراهانی</span></div>
             </div>
             <div className="">
                 <img src={blog_1} className='w-2/3 mx-auto rounded-xl' alt="" />
             </div>
-            <div className="flex flex-col" >
+            <div className="flex flex-col">
                 <div>
                     <p className="text-white opacity-80 text-right  my-6 sm:text-base md:text-base lg:text-base text-sm mx-4">در شروع معاملات نقدی امروز شنبه 16 اردیبهشت ماه 
                             بازار ارز ، نسبت به روز قبل رنج بود اما در در نیمه
@@ -62,30 +66,53 @@ export default function Blog2(){
                     </p>
                 </div>
                 <div className="flex justify-between my-2 mx-1">
-                    <button className=" flex  rounded-md p-1 bg-mainGold hover:opacity-80">
-                        <div className="text-[#6F6F6F] self-center text-xl lg:text-2xl "><IoShareSocialSharp/></div>
-                        <div className="text-black   self-center text-xs sm:text-sm lg:text-base ">اشتراک گذاری </div>
+                    <button
+                        className="flex items-center bg-transparent text-sm hover:bg-gold text-white  hover:text-bgGray py-2 px-4 border border-gold hover:border-transparent rounded">
+                        <IoShareSocialSharp fontSize="15px" className="transform"/>
+                        <Link to="/login">
+                            <spna className="mr-2">اشتراک گذاری</spna>
+                        </Link>
                     </button>
                     <div className='flex'>
-                      <div className="text-[#6F6F6F] text-2xl self-center mx-2"><a href=""><AiFillLinkedin/></a></div>
-                      <div className="text-[#6F6F6F] text-2xl self-center mx-2"><a href=""><BsTwitter/></a></div>
-                      <div className="text-[#6F6F6F] text-2xl self-center mx-2 "><a href=""><BsInstagram/></a></div>
-                      <div className="text-[#6F6F6F] text-2xl self-center mx-2"><a href=""><BsFacebook/></a></div>
+                      <div className="text-[#6F6F6F] hover:text-mainGold text-2xl self-center mx-2"><a href=""><AiFillLinkedin/></a></div>
+                      <div className="text-[#6F6F6F] hover:text-mainGold text-2xl self-center mx-2"><a href=""><BsTwitter/></a></div>
+                      <div className="text-[#6F6F6F] hover:text-mainGold text-2xl self-center mx-2 "><a href=""><BsInstagram/></a></div>
+                      <div className="text-[#6F6F6F] hover:text-mainGold text-2xl self-center mx-2"><a href=""><BsFacebook/></a></div>
                     </div>
                 </div>
             </div>
           </div>
           </div>
                      <div className='md:w-1/2 lg:w-1/3'>
-                     <div className=" bg-cardDark rounded-2xl flex flex-col">
+                     <div className=" bg-cardDark rounded-2xl flex flex-col p-5">
                         <div className="flex my-2">
                             <div className="text-[#DFAF3D] text-3xl px-2 my-auto"><MdOutlineWatchLater/></div>
                             <h3 className=" text-white sm:text-base   px-2 md:px-4 my-auto">آخرین مطالب</h3>
                             <div className="h-0 border-2 border-[#DFAF3D] border-solid opacity-10   mx-auto w-2/5 md:w-1/5 xl:w-1/3 my-auto"></div>
                             
                         </div>
+                        <div className="flex xl:justify-around mx-1 my-2">
+                            <div className="rounded-2xl w-2/5 sm:w-2/5 sm:mx-2 md:mx-3 md:w-4/5 lg:w-3/5">
+                                <a href="#"><img className="rounded-xl" src={blog_1} alt=""/></a>
+                            </div>
+                            <div className="flex flex-col mx-2 sm:mx-4 md:mx-1">
+                                <div className=" text-white  text-xs sm:text-sm md:text-xs">
+                                    <a href="#">
+                                    <p>
+                                        ثبت رکورد تاریخی طلا و اوج‌گیری بیت کوین  ثبت رکورد
+                                        تاریخی طلا و اوج‌گیری بیت کوین
+                                    </p>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="#">
+                                    <p className="text-xs sm:text-sm md:text-xs  text-[#B12323]">غزاله فراهانی  <span className=" text-[#DFAF3D] rounded-full text-2xl">.</span> ۱۶ اردیبهشت ۱۴۰۲</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <div className="flex xl:justify-around mx-1  my-2">
-                            <div className="rounded-2xl w-2/5 sm:w-2/5 sm:mx-2 md:mx-0 md:w-4/5 lg:w-3/5">
+                        <div className="rounded-2xl w-2/5 sm:w-2/5 sm:mx-2 md:mx-3 md:w-4/5 lg:w-3/5">
                                 <a href="#"><img className=" rounded-xl  " src={blog_1} alt=""/></a>
                             </div>
                             <div className="flex flex-col mx-2 sm:mx-4 md:mx-1">
@@ -105,8 +132,8 @@ export default function Blog2(){
                             </div>
                         </div>
                         <div className="flex xl:justify-around mx-1  my-2">
-                        <div className="rounded-2xl w-2/5 sm:w-2/5 sm:mx-2 md:mx-0 md:w-4/5 lg:w-3/5">
-                                <a href="#"><img className=" rounded-xl  " src={blog_1} alt=""/></a>
+                        <div className="rounded-2xl w-2/5 sm:w-2/5 sm:mx-2 md:mx-3 md:w-4/5 lg:w-3/5">
+                                <a href="#"><img className="rounded-xl" src={blog_1} alt=""/></a>
                             </div>
                             <div className="flex flex-col mx-2 sm:mx-4 md:mx-1">
                                 <div className=" text-white  text-xs sm:text-sm md:text-xs">
@@ -124,30 +151,15 @@ export default function Blog2(){
                                 </div>
                             </div>
                         </div>
-                        <div className="flex xl:justify-around mx-1  my-2">
-                        <div className="rounded-2xl w-2/5 sm:w-2/5 sm:mx-2 md:mx-0 md:w-4/5 lg:w-3/5">
-                                <a href="#"><img className=" rounded-xl  " src={blog_1} alt=""/></a>
-                            </div>
-                            <div className="flex flex-col mx-2 sm:mx-4 md:mx-1">
-                                <div className=" text-white  text-xs sm:text-sm md:text-xs">
-                                    <a href="#">
-                                    <p>
-                                        ثبت رکورد تاریخی طلا و اوج‌گیری بیت کوین  ثبت رکورد
-                                        تاریخی طلا و اوج‌گیری بیت کوین
-                                    </p>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a href="#">
-                                    <p className="text-xs sm:text-sm md:text-xs  text-[#B12323]">غزاله فراهانی  <span className=" text-[#DFAF3D] rounded-full text-2xl">.</span> ۱۶ اردیبهشت ۱۴۰۲</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <button className='flex box-border  rounded-xl mx-auto p-1 my-2 bg-mainGold hover:opacity-80'>
-                            <div className='text-[#6F6F6F]  text-2xl mx-1 my-auto'>< FiArrowRightCircle/></div>
-                            <div className='text-black xl:text-base text-sm  my-auto mx-1'>مطالب بیشتر</div>
-                        </button>
+                         <div className="flex justify-center mt-5">
+                             <button
+                                 className="flex items-center bg-transparent text-sm hover:bg-gold text-white  hover:text-bgGray py-2 px-4 border border-gold hover:border-transparent rounded">
+                                 <FiArrowRightCircle fontSize="15px" className="transform"/>
+                                 <Link to="/login">
+                                     <spna className="mr-2">مطالب بیشتر</spna>
+                                 </Link>
+                             </button>
+                         </div>
                     </div>
                      </div>
                 </div>
