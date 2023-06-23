@@ -145,7 +145,7 @@ export default function Blog2(){
                             </div>
                         </div>
                         <button className='flex box-border  rounded-xl mx-auto p-1 my-2 bg-mainGold hover:opacity-80'>
-                            <div className='  text-[#6F6F6F]  text-2xl mx-1 my-auto'>< FiArrowRightCircle/></div>
+                            <div className='text-[#6F6F6F]  text-2xl mx-1 my-auto'>< FiArrowRightCircle/></div>
                             <div className='text-black xl:text-base text-sm  my-auto mx-1'>مطالب بیشتر</div>
                         </button>
                     </div>
