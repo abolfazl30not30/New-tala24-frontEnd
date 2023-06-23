@@ -29,48 +29,48 @@ function Navbar() {
     }
     return (
         <div className="navbar-dashboard">
-            <div className='d-flex flex-row align-items-center'>
+            <div className='flex flex-row align-items-center'>
                 <button className='text-white ms-3 text-2xl' onClick={toggleSidebar}>
                     <BsList/>
                 </button>
+                <div className="flex mx-10">
+                    <div className="text-white mx-2">
+                        <div className='flex flex-col justify-center items-center'>
+                            <div className="flex justify-center items-center">
+                                <BsCashCoin className="text-mainBlue mt-2"/>
+                                <span className="mr-2 text-mainBlue text-[0.7rem]">موجودی کیف پول</span>
+                            </div>
+                            <div className="text-[0.8rem]">
+                                <span>{EnglishToPersian(SeparateNumber(context.accountInfo.wallet.inventory))}</span>
+                                <span className="mr-2">ریال</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="text-white mx-2">
+                        <div className='flex flex-col justify-center items-center'>
+                            <div className="flex justify-center items-center">
+                                <GiTwoCoins className="text-gold mt-2"/>
+                                <span className="mr-2 text-gold text-[0.7rem]">موجودی طلایی</span>
+                            </div>
+                            <div className="text-[0.8rem]">
+                                <span>{EnglishToPersian(context.accountInfo.wallet.weight.toString())}</span>
+                                <span className="mr-2">گرم</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="flex">
-                <div className="text-white mx-2">
-                    <div className='flex flex-col justify-center items-center'>
-                        <div className="flex justify-center items-center">
-                            <BsCashCoin className="text-labelGreen mt-2"/>
-                            <span className="mr-2 text-labelGreen text-[0.7rem]">موجودی کیف پول</span>
-                        </div>
-                        <div className="text-[0.8rem]">
-                            <span>{EnglishToPersian(SeparateNumber(context.accountInfo.wallet.inventory))}</span>
-                            <span className="mr-2">ریال</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="text-white mx-2">
-                    <div className='flex flex-col justify-center items-center'>
-                        <div className="flex justify-center items-center">
-                            <GiTwoCoins className="text-gold mt-2"/>
-                            <span className="mr-2 text-gold text-[0.7rem]">موجودی طلایی</span>
-                        </div>
-                        <div className="text-[0.8rem]">
-                            <span>{EnglishToPersian(context.accountInfo.wallet.weight.toString())}</span>
-                            <span className="mr-2">گرم</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="mx-3">
-                    <Button
-                        id="navbar-dropdown-button"
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
-                        sx={{color: '#fff'}}
-                    >
-                        <BsPersonCircle className="text-3xl text-white"/>
-                    </Button>
-                </div>
+            <div className="mx-3">
+                <Button
+                    id="navbar-dropdown-button"
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+                    sx={{color: '#fff'}}
+                >
+                    <BsPersonCircle className="text-3xl text-white"/>
+                </Button>
             </div>
             <Menu
                 id="basic-menu"

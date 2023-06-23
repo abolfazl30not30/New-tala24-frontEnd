@@ -15,7 +15,8 @@ module.exports =
                     'dark': 'rgb(23, 26, 30)',
                     'cardDark': '#252525',
                     'footerColor': '#212121',
-                    'labelGreen':'#21BA55'
+                    'labelGreen':'#21BA55',
+                    'mainBlue' : '#3498DB',
                 },
                 height: {
                     '-100%': '-100%',

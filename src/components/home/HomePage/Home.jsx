@@ -34,7 +34,7 @@ const Home = () => {
                     <MainNavbar/>
                     <Slider/>
                     <Cards/>
-                    <Stream/>
+                    {/*<Stream/>*/}
                     <HomePageChart/>
                     <Comments/>
                     <Footer/>

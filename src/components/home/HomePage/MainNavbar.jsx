@@ -77,6 +77,18 @@ const MainNavbar = () => {
                                              className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">خدمات</Link>
                                 </li>
                                 <li>
+                                    <Link to="/rules" activeClassName="active"
+                                          className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">قوانین و مقرارت</Link>
+                                </li>
+                                <li>
+                                    <Link to="/education" activeClassName="active"
+                                          className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">آموزش</Link>
+                                </li>
+                                <li>
+                                    <Link to="/blog" activeClassName="active"
+                                          className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">بلاگ</Link>
+                                </li>
+                                <li>
                                     <Link to="/about-us" activeClassName="active"
                                              className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">درباره
                                         ما</Link>
@@ -85,10 +97,6 @@ const MainNavbar = () => {
                                     <Link to="/contact-us" activeClassName="active"
                                              className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">تماس
                                         با ما</Link>
-                                </li>
-                                <li>
-                                    <Link to="/blog" activeClassName="active"
-                                          className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">بلاگ</Link>
                                 </li>
                                 <li>
                                     {

@@ -145,7 +145,7 @@ const Bazaar = () => {
                         </div>
                     </div>
                     <div className={'bg-bgGray flex flex-col items-center px-12 py-4 mx-2 rounded-2xl my-2 md:my-0'}>
-                        <div className="text-labelGreen mb-2 flex items-center">
+                        <div className="text-mainBlue mb-2 flex items-center">
                             <span className="ml-2"><BsCashCoin/></span>
                             <h2 className="text-[0.9rem]">موجودی ریالی</h2>
                         </div>
