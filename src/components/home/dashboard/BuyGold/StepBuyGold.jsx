@@ -11,7 +11,19 @@ import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 import {RiHandCoinFill} from "react-icons/ri";
 import signup from "../../../../contexts/signup";
 import {SeparateNumber} from "../../../../helper/SeparateNumber";
+import {createTheme} from "@mui/material/styles";
+import createCache from "@emotion/cache";
+import rtlPlugin from "stylis-plugin-rtl";
+import {prefixer} from 'stylis';
 
+const theme = createTheme({
+    direction: 'rtl', // Both here and <body dir="rtl">
+});
+// Create rtl cache
+const cacheRtl = createCache({
+    key: 'muirtl',
+    stylisPlugins: [prefixer, rtlPlugin],
+});
 
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
     props,
@@ -83,11 +95,9 @@ function StepBuyGold(props) {
                                     <TextField
                                         fullWidth
                                         label="مبلغ پرداختی"
-                                        error={props.priceErrors.length !== 0}
                                         value={props.valuePrice}
                                         onChange={props.handleChangePrice}
                                         sx={{input: {color: '#fff !important'}}}
-                                        type="number"
                                         name="numberformat"
                                         id="formatted-numberformat-input"
                                         InputProps={{

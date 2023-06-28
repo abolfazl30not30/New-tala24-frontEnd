@@ -13,6 +13,8 @@ import {PersianToEnglish} from "../../../helper/PersianToEnglish";
 import FormControl from "@mui/material/FormControl";
 import api from "../../../api/api";
 import {toast} from "react-toastify";
+import {LiveSeparate} from "../../../helper/LiveSeparate";
+import {RemoveComma} from "../../../helper/RemoveComma";
 
 const theme = createTheme({
     direction: 'rtl', // Both here and <body dir="rtl">
@@ -77,12 +79,12 @@ function WithDrawMoney() {
     };
 
     const handleChangeAmount = (e) => {
-        const value = EnglishToPersian(e.target.value)
+        const value = LiveSeparate(e.target.value)
         setAmountEntered(value)
     }
 
     const convertRialToToman = (amount) => {
-        const number = parseInt(PersianToEnglish(amount))
+        const number = parseInt(RemoveComma(amount))
         const toman = Math.floor(number / 10)
         return Num2persian(toman)
     }
@@ -208,23 +210,23 @@ function WithDrawMoney() {
 
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 w-3/4">
                     <button className='mx-2 my-2 bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
-                        setAmountEntered(EnglishToPersian("1000000"))
+                        setAmountEntered("1,000,000")
                     }}>{EnglishToPersian("1,000,000")} ریال
                     </button>
                     <button className='mx-2 my-2 bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
-                        setAmountEntered(EnglishToPersian("5000000"))
+                        setAmountEntered("5,000,000")
                     }}>{EnglishToPersian("5,000,000")} ریال
                     </button>
                     <button className='mx-2 my-2 bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
-                        setAmountEntered(EnglishToPersian("10000000"))
+                        setAmountEntered("10,000,000")
                     }}>{EnglishToPersian("10,000,000")} ریال
                     </button>
                     <button className='mx-2 my-2 bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
-                        setAmountEntered(EnglishToPersian("20000000"))
+                        setAmountEntered("20,000,000")
                     }}>{EnglishToPersian("20,000,000")} ریال
                     </button>
                     <button className='mx-2 my-2 bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
-                        setAmountEntered(EnglishToPersian("50000000"))
+                        setAmountEntered("50,000,000")
                     }}>{EnglishToPersian("50,000,000")} ریال
                     </button>
                 </div>

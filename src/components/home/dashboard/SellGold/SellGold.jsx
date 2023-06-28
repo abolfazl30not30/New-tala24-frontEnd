@@ -18,6 +18,8 @@ import {Fragment} from "react";
 import {Dialog, Transition} from "@headlessui/react";
 import {toast} from "react-toastify";
 import signup from "../../../../contexts/signup";
+import {LiveSeparate} from "../../../../helper/LiveSeparate";
+import {RemoveComma} from "../../../../helper/RemoveComma";
 
 
 const ColorlibConnector = styled(StepConnector)(({theme}) => ({
@@ -216,8 +218,10 @@ export default function SellGold(props) {
         if(event.target.value === ""){
             setValueWeight("")
         }
-        setValuePrice(event.target.value)
-        convertPriceToWeight(event.target.value)
+        let value = event.target.value;
+        value = LiveSeparate(value)
+        setValuePrice(value)
+        convertPriceToWeight(RemoveComma(value))
     };
 
     const handleChangeWeight = async (event) => {

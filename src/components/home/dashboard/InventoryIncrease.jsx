@@ -9,7 +9,9 @@ import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis';
 import Num2persian from 'num2persian';
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
-import {PersianToEnglish} from "../../../helper/PersianToEnglish";
+import {SeparateNumber} from "../../../helper/SeparateNumber";
+import {LiveSeparate} from "../../../helper/LiveSeparate";
+import {RemoveComma} from "../../../helper/RemoveComma";
 
 const theme = createTheme({
     direction: 'rtl', // Both here and <body dir="rtl">
@@ -19,6 +21,7 @@ const cacheRtl = createCache({
     key: 'muirtl',
     stylisPlugins: [prefixer, rtlPlugin],
 });
+
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
     props,
     ref,
@@ -52,14 +55,17 @@ NumericFormatCustom.propTypes = {
 };
 
 function InventoryIncrease() {
-    const [amountEntered, setAmountEntered] = useState("۰")
+
+    const [amountEntered, setAmountEntered] = useState("")
 
     const handleChangeAmount = (e) => {
-        const value = EnglishToPersian(e.target.value)
+        let value = e.target.value;
+        value = LiveSeparate(value)
         setAmountEntered(value)
     }
+
     const convertRialToToman = (amount) => {
-        const number = parseInt(PersianToEnglish(amount))
+        const number = parseInt(RemoveComma(amount))
         const toman = Math.floor(number / 10)
         return Num2persian(toman)
     }
@@ -103,23 +109,23 @@ function InventoryIncrease() {
 
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 w-3/4">
                     <button className='mx-2 my-2 bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
-                        setAmountEntered(EnglishToPersian("1000000"))
+                        setAmountEntered("1,000,000")
                     }}>{EnglishToPersian("1,000,000")} ریال
                     </button>
                     <button className='mx-2 my-2 bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
-                        setAmountEntered(EnglishToPersian("5000000"))
+                        setAmountEntered("5,000,000")
                     }}>{EnglishToPersian("5,000,000")} ریال
                     </button>
                     <button className='mx-2 my-2 bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
-                        setAmountEntered(EnglishToPersian("10000000"))
+                        setAmountEntered("10,000,000")
                     }}>{EnglishToPersian("10,000,000")} ریال
                     </button>
                     <button className='mx-2 my-2 bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
-                        setAmountEntered(EnglishToPersian("20000000"))
+                        setAmountEntered("20,000,000")
                     }}>{EnglishToPersian("20,000,000")} ریال
                     </button>
                     <button className='mx-2 my-2 bg-[#2a2a2a] text-gold p-4 rounded-lg text-xs' onClick={() => {
-                        setAmountEntered(EnglishToPersian("50000000"))
+                        setAmountEntered("50,000,000")
                     }}>{EnglishToPersian("50,000,000")} ریال
                     </button>
                 </div>

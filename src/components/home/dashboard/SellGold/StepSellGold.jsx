@@ -88,7 +88,6 @@ function StepSellGold(props) {
                                         value={props.valuePrice}
                                         onChange={props.handleChangePrice}
                                         sx={{input: {color: '#fff !important'}}}
-                                        type="number"
                                         name="numberformat"
                                         id="formatted-numberformat-input"
                                         InputProps={{
