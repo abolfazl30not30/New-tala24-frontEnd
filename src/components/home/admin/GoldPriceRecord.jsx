@@ -14,6 +14,8 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import {SeparateNumber} from "../../../helper/SeparateNumber";
+import {LiveSeparate} from "../../../helper/LiveSeparate";
+import {RemoveComma} from "../../../helper/RemoveComma";
 
 // Create RTL MUI
 const theme = createTheme({
@@ -80,13 +82,28 @@ export default function Quote(props) {
         setIsOpen(false)
         setIsOpenConfirm(true)
     }
+    const handleBuyPrice = (e) =>{
+        let value = e.target.value;
+        value = LiveSeparate(value)
+        setQuoteBuyPrice(value)
+    }
+
+    const handleSellPrice = (e) =>{
+        let value = e.target.value;
+        value = LiveSeparate(value)
+        setQuoteSellPrice(value)
+    }
 
     async function recordNewPrice() {
         setIsOpenConfirm(false)
+
+        const updatedQuoteBuyPrice = RemoveComma(quoteBuyPrice)
+        const updatedQuoteSellPrice = RemoveComma(quoteSellPrice)
+
         await api.post("goldPrice",
             {
-                purchasePrice : quoteBuyPrice,
-                sellPrice : quoteSellPrice
+                purchasePrice : updatedQuoteBuyPrice,
+                sellPrice : updatedQuoteSellPrice
             }
         )
 
@@ -154,7 +171,7 @@ export default function Quote(props) {
                                                                 name="price"
                                                                 label="قیمت خرید"
                                                                 value={quoteBuyPrice}
-                                                                onChange={(e) => setQuoteBuyPrice(e.target.value)}
+                                                                onChange={handleBuyPrice}
                                                                 InputProps={{
                                                                     endAdornment: <InputAdornment position="end"><span
                                                                         style={{color: "#fff"}}>ریال</span></InputAdornment>,
@@ -174,7 +191,7 @@ export default function Quote(props) {
                                                                 name="price"
                                                                 label="قیمت فروش"
                                                                 value={quoteSellPrice}
-                                                                onChange={(e) => setQuoteSellPrice(e.target.value)}
+                                                                onChange={handleSellPrice}
                                                                 InputProps={{
                                                                     endAdornment: <InputAdornment position="end"><span
                                                                         style={{color: "#fff"}}>ریال</span></InputAdornment>,

@@ -9,7 +9,7 @@ import api from "../../../../api/api";
 
 function AdminChat(props) {
     useEffect(() => {
-        if (localStorage.getItem('role') !== "ADMIN") {
+        if (localStorage.getItem('role') !== "MANAGER") {
             localStorage.clear()
             props.history.push("/sign-in")
         }
@@ -18,12 +18,13 @@ function AdminChat(props) {
     const [constructorHasRun, setConstructorHasRun] = useState(false);
     const constructor = () => {
         if (constructorHasRun) return;
-        if (localStorage.getItem('role') !== "ADMIN") {
+        if (localStorage.getItem('role') !== "MANAGER") {
             localStorage.clear()
             window.location = ("/sign-in")
         }
         setConstructorHasRun(true);
     };
+
     constructor()
     const {id} = useParams()
     const getChat = async () => {

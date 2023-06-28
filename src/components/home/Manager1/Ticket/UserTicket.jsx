@@ -11,7 +11,7 @@ import api from "../../../../api/api";
 
 function AdminTicket(props) {
     useEffect(() => {
-        if (localStorage.getItem('role') !== "ADMIN") {
+        if (localStorage.getItem('role') !== "MANAGER") {
             localStorage.clear()
             props.history.push("/login")
         }
@@ -21,7 +21,7 @@ function AdminTicket(props) {
     const constructor = () => {
         if (constructorHasRun) return;
         // const navigate = useNavigate();
-        if (localStorage.getItem('role') !== "ADMIN") {
+        if (localStorage.getItem('role') !== "MANAGER") {
             localStorage.clear()
             window.location = ("/login")
         }
