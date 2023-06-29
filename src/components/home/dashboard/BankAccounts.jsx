@@ -10,6 +10,8 @@ import {MdArrowBackIosNew} from "react-icons/md";
 import {BsTrashFill} from "react-icons/bs";
 import {TbEdit} from "react-icons/tb";
 import api from "../../../api/api";
+import * as yup from "yup";
+import {toast} from "react-toastify";
 
 const cacheRtl = createCache({
     key: 'muirtl',
@@ -39,11 +41,38 @@ export default function BankAccounts() {
     const [isOpenDeleteAccount, setIsOpenDeleteAccount] = useState(false)
     const [targetAccountByDelete, setTargetAccountByDelete] = React.useState('');
 
+
+    const validation = async () => {
+        const accountSchema = yup.object().shape({
+            accountNumber: yup.string().required("لطفا شماره حساب خود را وارد کنید."),
+            cardNumber: yup.string().required("لطفا شماره کارت خود را وارد کنید.").min(16,"شماره کارت نمی تواند کمتر از 16 رقم باشد."),
+            shabaNumber: yup.string().required("لطفا شماره شبا خود را وارد کنید.").min(24,"شماره شبا نمی تواند کمتر از 24 رقم باشد."),
+            bankName: yup.string().required("لطفا نام بانک مورد نظر را وارد کنید."),
+        })
+
+        try {
+            return await accountSchema.validate(newAccount, {abortEarly: false})
+        } catch (error) {
+            toast.info(error.errors[0], {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+
+    }
+
     const getBankAccounts = async () => {
         const getBankAccounts = await api.get(`info/show/accountNumber`)
         console.log(getBankAccounts)
         setBankAccounts(getBankAccounts)
     }
+
     useEffect(() => {
         getBankAccounts()
     }, []);
@@ -77,9 +106,12 @@ export default function BankAccounts() {
     }*/
 
     const addNewAccounts = async () => {
-        await api.post("info/accountNumber", newAccount)
-        getBankAccounts();
-        setIsOpenNewAccounts(false)
+        const valid = await validation();
+        if (valid !== undefined) {
+            await api.post("info/accountNumber", newAccount)
+            getBankAccounts();
+            setIsOpenNewAccounts(false)
+        }
     }
 
     const editAccount = () => {
@@ -268,6 +300,13 @@ export default function BankAccounts() {
                                         <MdArrowBackIosNew className={"text-gold"}/>
                                         <div className="request-item-title text-gold ml-4 ">نام بانک:</div>
                                         <div>{EnglishToPersian(account.bankName?.toString())}</div>
+                                    </div>
+                                    <div className='flex flex-row items-center mb-2'>
+                                        <MdArrowBackIosNew className={"text-gold"}/>
+                                        <div className="request-item-title text-gold ml-4 ">وضعیت حساب:</div>
+                                        <div><span className={'authorizedFailed'}>
+                                                                     تایید نشده
+                                                                        </span></div>
                                     </div>
                                     {/*<div className="mt-6 flex flex-row justify-center space-x-2 space-x-reverse">
                                         <button className='bg-transparent p-3 hover:bg-bgGray hover:bg-opacity-20 rounded-2xl'

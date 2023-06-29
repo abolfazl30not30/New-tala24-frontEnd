@@ -10,7 +10,6 @@ import BuyGold from "./BuyGold/BuyGold";
 import SellGold from "./SellGold/SellGold";
 import UserTicket from "./Ticket/UserTicket";
 import UserChat from "./Ticket/UserChat";
-import CompleteRegistration from "./CompleteRegisteration/CompleteRegistration";
 import Dashboard from "./Dashboard";
 import dashboard from "../../../contexts/dashboard";
 import BuyCoin from "./BuyCoin/BuyCoin";
@@ -46,7 +45,6 @@ const MainSection = () => {
                 }
                 <Route path="/ticket" element={<ProtectedRoute><UserTicket/></ProtectedRoute>}/>
                 <Route path="/ticket/:id" element={<ProtectedRoute><UserChat/></ProtectedRoute>}/>
-                <Route path="/complete-info" element={<ProtectedRoute><CompleteRegistration/></ProtectedRoute>}/>
             </Routes>
         </>
     )

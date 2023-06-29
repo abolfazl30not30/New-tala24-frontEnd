@@ -120,6 +120,7 @@ const api = {
             });
             return response.data
         } catch (error) {
+
             if (error.response && error.response.status === 403) {
                 await LoginApi()
                 const response = await axiosInstance.post(url, body, {
