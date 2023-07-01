@@ -37,7 +37,7 @@ export default function Blog() {
                                     <div>
                                         <p className="text-[#CECECE] my-4 mx-4 sm:text-sm text-xs ">{blog.description.slice(3, 200) + "........"}</p>
                                     </div>
-                                    <div className="flex justify-center my-2  mx-2 ">
+                                    <div className="flex justify-center mt-2 mb-5 mx-2 ">
                                         <Link to={`/blog/${blog.id}`}
                                               className="flex items-center bg-transparent text-sm hover:bg-gold text-white  hover:text-bgGray py-2 px-4 border border-gold hover:border-transparent rounded" style={{border:"1px solid #DFAF3D"}}>
                                             <FiArrowRightCircle fontSize="15px" className="transform"/>
@@ -62,27 +62,25 @@ export default function Blog() {
                             </div>
                             {
                                 blogs.map((blog)=>(
-                                    <div className="flex xl:justify-around mx-1 my-2">
-                                        <div className="rounded-2xl w-2/5 sm:w-2/5 sm:mx-2 md:mx-3 md:w-4/5 lg:w-3/5">
-                                            <a href="#"><img className="rounded-xl" src={blog_1} alt=""/></a>
-                                        </div>
-                                        <div className="flex flex-col mx-2 sm:mx-4 md:mx-1">
-                                            <div className=" text-white  text-xs sm:text-sm md:text-xs">
-                                                <a href="#">
-                                                    <p>
+                                    <Link to={`/blog/${blog.id}`} className="hover:bg-mainGray rounded-xl">
+                                        <div className="flex justify-start mx-1 my-2">
+                                            <div className="rounded-2xl sm:mx-2 md:mx-3 w-[30%]">
+                                                <img className="rounded-xl object-cover" src={blog_1} alt=""/>
+                                            </div>
+                                            <div className="flex flex-col mx-2 sm:mx-4 md:mx-1">
+                                                <div className=" text-white  text-xs sm:text-sm md:text-[0.9rem]">
+                                                    <h4>
                                                         {blog.title}
-                                                    </p>
-                                                </a>
+                                                    </h4>
                                                 </div>
-                                            <div>
-                                                <a href="#">
-                                                    <p className="text-xs sm:text-sm md:text-xs  text-[#B12323]">{blog.writer}<span className=" text-[#DFAF3D] rounded-full text-2xl">.</span>
+                                                <div>
+                                                    <div className="text-xs sm:text-sm md:text-[0.8rem]  text-[#B12323]">{blog.writer}<span className="mx-2 text-[#DFAF3D] rounded-full text-2xl">.</span>
                                                         {EnglishToPersian(blog.createAt.slice(0,9))}
-                                                    </p>
-                                                </a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 ))
                             }
                             <div className="flex justify-center mt-5">
