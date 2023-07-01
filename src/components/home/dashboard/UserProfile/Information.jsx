@@ -10,6 +10,10 @@ import api from "../../../../api/api";
 import {prefixer} from 'stylis';
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
+import "react-multi-date-picker/styles/colors/yellow.css";
+import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
+import * as yup from "yup";
+import {toast} from "react-toastify";
 
 const cacheRtl = createCache({
     key: 'muirtl',
@@ -27,6 +31,40 @@ const Information = () =>{
     const [nationalCardImage, setNationalCardImage] = useState();
 
 
+    const validation = async () => {
+
+        const infoSchema = yup.object().shape({
+            firstName: yup.string().required("لطفا نام خود را وارد کنید."),
+            lastName: yup.string().required("لطفا نام خانوادگی خود را وارد کنید."),
+            // phoneNumber: yup.string().required("لطفا شماره تلفن ثابت خود را وارد کنید"),
+            email: yup.string().required("آدرس ایمیل خود را وارد کنید").email("آدرس ایمیل اشتباه است"),
+            nationalCode: yup.string().required("لطفا کد ملی خود را وارد کنید.").min(10,"کد ملی نمی تواند کمتر از 10 رقم باشد"),
+            dateOfBirth: yup.string().required("تاریخ تولد خود را وارد کنید"),
+        })
+
+        try {
+            return await infoSchema.validate({
+                firstName:firstName,
+                lastName:lastName,
+                email:email,
+                nationalCode:nationalCode,
+                dateOfBirth:dateOfBirth
+            }, {abortEarly: false})
+        } catch (error) {
+            toast.info(error.errors[0], {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+
+    }
+
     const getPersonalInformation = async () => {
         const getPersonalInformationResponse = await api.get(`info/show/personalInformation`)
         setFirstName(getPersonalInformationResponse.firstName)
@@ -42,16 +80,29 @@ const Information = () =>{
     }, []);
 
     const handleRecordUserInfo = async () => {
-        await api.post("info/personalInformation", {
-            firstName:firstName,
-            lastName:lastName,
-            telephoneNumber:phoneNumber,
-            nationalCode:nationalCode,
-            nationalCardFileName:nationalCardImage,
-            birthDate:dateOfBirth,
-            email: email
-        })
-        getPersonalInformation()
+        const valid = await validation();
+        if (valid !== undefined){
+            await api.post("info/personalInformation", {
+                firstName:firstName,
+                lastName:lastName,
+                telephoneNumber:phoneNumber,
+                nationalCode:nationalCode,
+                nationalCardFileName:nationalCardImage,
+                birthDate:dateOfBirth,
+                email: email
+            })
+            getPersonalInformation()
+            toast.success("تغییرات با موفقیت ثبت شد", {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
     }
 
     const handleDateEndInput = (value) => {
@@ -70,9 +121,9 @@ const Information = () =>{
                 <div className="flex flex-col justify-center">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
+                            <div className="text-neutral-300 mb-3">نام <span className="text-red-600 ml-1">*</span></div>
                             <TextField
                                 fullWidth
-                                label={"نام"}
                                 required
                                 // error={errors.length !== 0}
                                 /* disabled={!firstNameAllowed}*/
@@ -82,9 +133,9 @@ const Information = () =>{
                                 onChange={(e) => setFirstName(e.target.value)}/>
                         </div>
                         <div>
+                            <div className="text-neutral-300 mb-3">نام خانوادگی <span className="text-red-600 ml-1">*</span></div>
                             <TextField
                                 fullWidth
-                                label={"نام خانوادگی"}
                                 // error={errors.length !== 0}
                                 /* disabled={!firstNameAllowed}*/
                                 value={lastName}
@@ -94,9 +145,9 @@ const Information = () =>{
                             />
                         </div>
                         <div>
+                            <div className="text-neutral-300 mb-3">شماره تلفن ثابت</div>
                             <TextField
                                 fullWidth
-                                label={"شماره تلفن"}
                                 // error={errors.length !== 0}
                                 /* disabled={!firstNameAllowed}*/
                                 value={phoneNumber}
@@ -106,9 +157,9 @@ const Information = () =>{
                             />
                         </div>
                         <div>
+                            <div className="text-neutral-300 mb-3">ایمیل<span className="text-red-600 ml-1">*</span></div>
                             <TextField
                                 fullWidth
-                                label={"ایمیل"}
                                 // error={errors.length !== 0}
                                 /* disabled={!firstNameAllowed}*/
                                 value={email}
@@ -118,9 +169,9 @@ const Information = () =>{
                             />
                         </div>
                         <div>
+                            <div className="text-neutral-300 mb-3">کد ملی<span className="text-red-600 ml-1">*</span></div>
                             <TextField
                                 fullWidth
-                                label={"کد ملی"}
                                 // error={errors.length !== 0}
                                 /* disabled={!firstNameAllowed}*/
                                 value={nationalCode}
@@ -130,8 +181,9 @@ const Information = () =>{
                             />
                         </div>
                         <div>
-                            <div className="text-white mb-3">تاریخ تولد</div>
+                            <div className="text-neutral-300 mb-3">تاریخ تولد<span className="text-red-600 ml-1">*</span></div>
                             <DatePicker
+                                className="yellow bg-dark"
                                 // fixMainPosition={false}
                                 calendarPosition={`bottom`}
                                 digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
@@ -141,7 +193,7 @@ const Information = () =>{
                                 containerStyle={{
                                     width: "100%"
                                 }}
-                                inputClass={`field bg-[#212121] w-full h-[3.55rem] p-4 text-white border-gold rounded`}
+                                inputClass={`field bg-bgGray w-full h-[3.55rem] p-4 text-white border-gold rounded`}
                                 value={dateOfBirth}
                                 onChange={(value) => {
                                     handleDateEndInput(value)
@@ -169,10 +221,17 @@ const Information = () =>{
                                 calendar={persian}
                                 locale={persian_fa}
                             >
+                                <button className="mb-2 bg-gold text-mainGray rounded-3xl px-4 font-bold py-2"
+                                    onClick={() => {
+                                        setDateOfBirth("")                                    }
+                                    }>
+                                    ریست
+                                </button>
                             </DatePicker>
                         </div>
                     </div>
-                    <div className="flex items-center justify-center w-full">
+
+                    <div className="mt-6 flex items-center justify-center w-full">
                         <label htmlFor="dropzone-file"
                                className="flex flex-col items-center justify-center w-full h-32 border-2 border-[#DFAF3D] border-solid rounded-lg cursor-pointer hover:bg-[#2a2a2a]">
                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -208,8 +267,8 @@ const Information = () =>{
                     </div>
                     <div className="w-full flex justify-center">
                         <button
-                            className='mt-6 bg-[#DFAF3D] w-fit text-black px-4 py-2 rounded-md text-sm'
-                            onClick={handleRecordUserInfo}>ثبت تغیرات
+                            className='mt-10 font-bold bg-labelGreen text-black px-24 py-4 rounded-md text-sm hover:opacity-90'
+                            onClick={handleRecordUserInfo}>ثبت تغییرات
                         </button>
                     </div>
                 </div>

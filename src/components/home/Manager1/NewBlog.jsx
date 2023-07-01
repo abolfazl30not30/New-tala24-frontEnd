@@ -13,6 +13,8 @@ import {RiFileUploadFill} from "react-icons/ri";
 import ReactLoading from "react-loading";
 import Alert from "react-bootstrap/Alert";
 import {TextField} from "@mui/material";
+import * as yup from "yup";
+import {toast} from "react-toastify";
 
 const theme = createTheme({
     direction: 'rtl'
@@ -71,15 +73,18 @@ export default function NewBlog(props) {
     const [description, setDescription] = useState("");
     const [text, setText] = useState('');
     const editorRef = useRef(null);
+
     const log = () => {
         if (editorRef.current) {
             setProjectContent(editorRef.current.getContent())
         }
     };
 
+
     const [blogTitle,setBlogTitle] = useState();
     const [blogContent, setBlogContent] = useState();
     const [blogImage, setBlogImage] = useState();
+
     const handleReleaseProject = async () => {
         const newProject = {
             title: projectTitle,
@@ -98,6 +103,7 @@ export default function NewBlog(props) {
         setUploadFile(event.target.files)
         setFileName(event.target.files[0].name)
     }
+
     const handleUpload = async () => {
         setUploadLoading(true)
         let formData = new FormData();
@@ -117,6 +123,7 @@ export default function NewBlog(props) {
                 }
             )
     }
+
     const handleDeleteFile = async () => {
         setDeleteLoading(true)
         await api.delete(`file/${fileId}`)
@@ -128,11 +135,53 @@ export default function NewBlog(props) {
     const handleFileChange = (event) => {
         setBlogImage(event.target.files[0]);
     };
-    const handleAddBlog = async () => {
-        await api.post("blog", {
-            title: blogTitle,
-            description: description,
+
+    const validation = async () => {
+
+        const infoSchema = yup.object().shape({
+            title: yup.string().required("لطفا عنوان بلاگ را وارد کنید."),
+            description: yup.string().required("لطفا توضیحات بلاگ را وارد کنید."),
         })
+
+        try {
+            return await infoSchema.validate({
+                title:blogTitle,
+                description:description
+            }, {abortEarly: false})
+        } catch (error) {
+            toast.info(error.errors[0], {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+
+    }
+
+    const handleAddBlog = async () => {
+        const valid = await validation();
+        if (valid !== undefined){
+            await api.post("blog", {
+                title: blogTitle,
+                description: description,
+            })
+            toast.success("وبلاگ با موفقیت ثبت شد", {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+
     }
 
 
@@ -218,12 +267,13 @@ export default function NewBlog(props) {
                                 type="file"
                                 className="hidden"
                                 onChange={handleFileChange}
+                                disabled
                             />
                         </label>
                     </div>
                     <div className="w-full flex justify-center">
                         <button
-                            className='mt-6 bg-[#DFAF3D] w-fit text-black px-4 py-2 rounded-md text-sm'
+                            className='mt-5 font-bold bg-labelGreen text-black px-24 py-4 rounded-md text-sm hover:opacity-90'
                             onClick={handleAddBlog}>ثبت
                         </button>
                     </div>

@@ -124,7 +124,8 @@ const App = () => {
             <Route path="/services" element={<Services />} />
               <Route path="/rules" element={<Rules/>} />
               <Route path="/education" element={<Education/>} />
-            <Route path="/blog" element={<Blog2 />} />
+            <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<Blog2 />} />
             <Route path="/create-password" element={<CreatePassword />} />
             <Route
               path="/dashboard/*"

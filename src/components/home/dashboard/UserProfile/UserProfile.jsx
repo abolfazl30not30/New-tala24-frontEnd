@@ -17,8 +17,8 @@ function UserProfile() {
                 </h3>
                 {
                     context.accountInfo.verified
-                        ? <div className='bg-labelGreen p-2 rounded text-[0.7rem]'>تایید شده</div>
-                        : <div className='bg-red-600 p-2 rounded text-[0.7rem]'>تایید نشده</div>
+                        ? <div className='bg-labelGreen px-4 py-2 rounded text-[0.7rem]'>تایید شده</div>
+                        : <div className='bg-red-600 px-4 py-2 rounded text-[0.7rem]'>تایید نشده</div>
                 }
             </div>
 
@@ -54,7 +54,7 @@ function UserProfile() {
                                         selected ? 'bg-[#DFAF3D] text-black rounded-md px-4 py-2' : 'bg-transparent text-white px-4 py-2'
                                     }
                                 >
-                                    تغیر رمز عبور
+                                    تغییر رمز عبور
                                 </button>
                             )}
                         </Tab>

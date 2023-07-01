@@ -11,19 +11,28 @@ import Box from "@mui/material/Box";
 import {BiErrorCircle} from "react-icons/bi";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import signup from "../../../contexts/signup";
 
 function Sidebar() {
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        if(window.innerWidth <= 768){
+            closeSidebar()
+        }
+        setOpen(true)
+    };
     const navigate = useNavigate()
-    const context = useContext(dashboard)
+    const context = useContext(signup)
 
     const closeSidebar = () => {
         let sidebar = document.querySelector("#sidebar");
         sidebar.classList.toggle("close");
     }
-
+    const handleError = () =>{
+        navigate("/dashboard/user-profile")
+        setOpen(false)
+    }
     const style = {
         position: 'absolute',
         top: '50%',
@@ -88,7 +97,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
                     {
-                        context.completeRegistrationStatus ? (
+                        context.accountInfo.verified ? (
                             <NavLink to="/dashboard/buy-gold" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                                 <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -103,7 +112,7 @@ function Sidebar() {
                                 </div>
                             </NavLink>
                         ):(
-                            <div className='w-100' onClick={handleOpen} onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                            <a className='w-100' onClick={handleOpen}>
                                 <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5}
@@ -115,11 +124,11 @@ function Sidebar() {
                                         خرید طلا
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         )
                     }
                     {
-                        context.completeRegistrationStatus ? (
+                        context.accountInfo.verified ? (
                             <NavLink to="/dashboard/sell-gold" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                                 <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -134,7 +143,7 @@ function Sidebar() {
                                 </div>
                             </NavLink>
                         ):(
-                            <div onClick={handleOpen} className='w-100' onClick={window.innerWidth <= 768 && (closeSidebar)}>
+                            <a onClick={handleOpen} className='w-100' >
                                 <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5}
@@ -146,7 +155,7 @@ function Sidebar() {
                                         فروش طلا
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         )
                     }
 
@@ -198,7 +207,16 @@ function Sidebar() {
                                       d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                             <div className="sidebar-list-item-title">
-                                پروفایل کاربری
+                                <div className="w-full flex justify-between">
+                                    <div>
+                                        پروفایل کاربری
+                                    </div>
+                                    {
+                                        context.accountInfo.verified
+                                            ? <div className='bg-labelGreen p-1 rounded text-[0.5rem] mr-5'>تایید شده</div>
+                                            : <div className='bg-red-600 p-1 rounded text-[0.5rem] mr-5'>تایید نشده</div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </NavLink>
@@ -252,10 +270,7 @@ function Sidebar() {
                             براي انجام فرايند خريد و فروش بايد مشخصات خود را تكميل كنيد
                         </Typography>
                         <Typography id="transition-modal-description" sx={{mt: 2}}>
-                            <button className={"bg-gold py-2 px-5 rounded-2xl"} onClick={() => {
-                                navigate("/dashboard/user-profile")
-                            }}
-                            >
+                            <button className={"bg-gold py-2 px-5 rounded-2xl"} onClick={handleError}>
                                 رفتن به صفحه تكميل مشخصات
                             </button>
                         </Typography>

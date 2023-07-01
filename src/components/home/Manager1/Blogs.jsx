@@ -27,7 +27,7 @@ export default function Blogs(props) {
     useEffect(() => {
         if (localStorage.getItem('role') !== "MANAGER") {
             localStorage.clear()
-            props.history.push("/sign-in")
+            props.history.push("/login")
         }
     }, [props.history]);
 
@@ -37,7 +37,7 @@ export default function Blogs(props) {
         // const navigate = useNavigate();
         if (localStorage.getItem('role') !== "MANAGER") {
             localStorage.clear()
-            window.location = ("/sign-in")
+            window.location = ("/login")
         }
         setConstructorHasRun(true);
     };
@@ -69,10 +69,9 @@ export default function Blogs(props) {
                 <div className="flex flex-col md:flex-row md:justify-between space-y-4 md:space-y-0">
                     <div className="text-gold text-lg font-medium">بلاگ ها</div>
                     <button
-                        onClick={() => navigate("/admin/new-blog")}
+                        onClick={() => navigate("/manager/new-blog")}
                         type="button"
-                        className="rounded-md flex flex-row items-center bg-gold text-black px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                    >
+                        className="rounded-md flex flex-row items-center bg-gold text-black px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor" className="w-6 h-6 ml-1">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
