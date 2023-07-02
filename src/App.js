@@ -115,7 +115,7 @@ const App = () => {
                 </ProtectedLogin>
               }
             />
-            <Route path="/OTP-code" element={<Signup />} />
+            <Route path="/OTP-code/:id" element={<Signup />} />
             <Route path="/password" element={<Login />} />
             <Route path="/welcome" element={<Success />} />
             <Route path="/signup" element={<Signup />} />

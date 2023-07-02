@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import React from "react";
 import zxcvbn from "zxcvbn"
+
 const PasswordStrengthIndicator = (props) => {
     const [strength, setStrength] = useState(0)
     const strengthColor = () => {

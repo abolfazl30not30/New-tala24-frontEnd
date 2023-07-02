@@ -13,7 +13,8 @@ import axios from "axios";
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
-import SignInImage from "../../../images/GettyImages-1130532216.jpg";
+import SignInImage from "../../../images/loginBackground.jpg"
+import loginVector from "../../../images/loginVector.png";
 
 const Login = () => {
     const info = useContext(signup)
@@ -73,7 +74,7 @@ const Login = () => {
     return (
         <>
             <div className={'flex justify-center items-center h-screen'}>
-                <div className="flex justify-center bg-bgGray w-3/4 h-3/4 rounded-xl">
+                <div className="flex justify-center bg-bgGray w-3/4 h-3/4 rounded-3xl">
                     <div className={'w-full md:w-1/2'}>
                         <div className="px-6 py-2">
                             <div className={'flex justify-center'}>
@@ -129,53 +130,14 @@ const Login = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="w-1/2 rounded-l-xl opacity-60 hidden md:block" style={{backgroundImage: `url(${SignInImage})`,backgroundSize:"cover"}}></div>
+                    <div className="flex justify-center items-end w-1/2 rounded-l-3xl  hidden md:flex"
+                         style={{backgroundImage: `url(${SignInImage})`, backgroundSize: "cover"}}>
+                        <div>
+                            <img className="w-full" src={loginVector}/>
+                        </div>
+                    </div>
                 </div>
             </div>
-            {/*<div className={'flex justify-center items-center h-screen'}>*/}
-            {/*    <div className={'container w-[300px] h-[350px] bg-[#252525]'}>*/}
-            {/*        <div className={'flex justify-center'}>*/}
-            {/*            <img src={"https://cloud.tala24.co/images/logo192.png" } alt={'logo'} className={'w-[90px] mt-[30px]'}/>*/}
-            {/*        </div>*/}
-            {/*        <p className={'text text-center text-white mt-4 pb-4 mx-4'}>*/}
-            {/*            مطمئن ترین راه برای نگهداری <span className={'text-mainGold'}>طلا</span> شما*/}
-            {/*        </p>*/}
-            {/*        <p className={'text-[9px] mx-4 text-white mt-3'}>*/}
-            {/*            رمز عبور را وارد کنید*/}
-            {/*        </p>*/}
-
-            {/*        <div className={'flex flex-col justify-center mx-4 mt-4'}>*/}
-            {/*            <TextField*/}
-            {/*                error={errors.length !== 0}*/}
-            {/*                value={password}*/}
-            {/*                type={"password"}*/}
-            {/*                className={'field bg-[#212121] w-full rounded p-4 text-white'}*/}
-            {/*                sx={{ input: { color: '#fff !important' } }}*/}
-            {/*                onChange={(value) => handleInput(value)}*/}
-            {/*            />*/}
-            {/*            {*/}
-            {/*                errors.map((error, index) =>*/}
-            {/*                    <small key={index} className={"text-red-600 mt-5 text-[0.8rem]"}>{error}</small>*/}
-            {/*                )*/}
-            {/*            }*/}
-            {/*        </div>*/}
-
-            {/*        <button className={'text-white text-[12px] mx-8'} onClick={() => {*/}
-            {/*            navigate("/forgot-password")}}>*/}
-            {/*            <small>*/}
-            {/*                فراموشی رمز عبور*/}
-            {/*            </small>*/}
-            {/*        </button>*/}
-
-            {/*        <div className={'mx-4 mt-5'}>*/}
-            {/*            <button className={'flex justify-center items-center bg-mainGold w-full rounded h-[45px]'} onClick={() => handleSubmit()}>*/}
-            {/*                <span className={'text-black'}>*/}
-            {/*                    تایید*/}
-            {/*                </span>*/}
-            {/*            </button>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
         </>
     )
 }

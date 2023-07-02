@@ -107,7 +107,6 @@ const CreatePassword= () => {
                         <PasswordStrengthIndicator password={password}/>
                     </div>
 
-
                     <p className={'text-[9px] mx-4 text-white mt-4'}>
                         تکرار رمز عبور
                     </p>
