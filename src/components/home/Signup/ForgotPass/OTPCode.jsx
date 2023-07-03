@@ -18,7 +18,6 @@ const OTPCode = (props) =>{
 
     const renderer = ({ hours, minutes, seconds, completed }) => {
         if (completed) {
-            // Render a completed state
             return (
                 <button className="rounded-xl bg-mainGold text-bgGray px-3 py-2 text-[0.8rem]">
                     ارسال مجدد کد

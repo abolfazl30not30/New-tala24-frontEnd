@@ -13,7 +13,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import SignInImage from "../../../../images/loginBackground.jpg";
 import loginVector from "../../../../images/loginVector.png";
 
-const ResetPassword = () =>{
+const ResetPassword = (props) =>{
 
     const [errors, setErrors] = useState([])
     const [password, setPassword] = useState("")
@@ -60,10 +60,25 @@ const ResetPassword = () =>{
         const result = await validation()
         if (result !== undefined) {
             const res = await ResgisterApi.post("updatePassword", {
-                // phoneNumber: number,
-                // password: password
+                 phoneNumber: props.username,
+                 password: password
             })
-            navigate("/login")
+
+            if(res){
+                navigate("/login")
+            }else {
+                toast.error("خطا در سیستم", {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }
+
         }
     }
 

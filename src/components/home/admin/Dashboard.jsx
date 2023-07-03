@@ -20,7 +20,7 @@ function Routes(props) {
     return null;
 }
 
-const SOCKET_URL = 'https://api.tala24.co/api/v1/notification';
+const SOCKET_URL = 'http://localhost:8090/api/v1/notification';
 
 Routes.propTypes = {children: PropTypes.node};
 const Dashboard = () => {
@@ -55,7 +55,7 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        axios.post("https://api.tala24.co/login",
+        axios.post("http://localhost:8090/login",
             {username: localStorage.getItem("username"), password: localStorage.getItem("password")}, {
                 withCredentials: true,
                 headers: {

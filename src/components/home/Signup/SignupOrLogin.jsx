@@ -92,9 +92,9 @@ const SignupOrLogin = () => {
                                         aria-invalid={true}
                                         error={errors.length !== 0}
                                         value={EnglishToPersian(number)}
-                                        sx={{input: {color: '#fff !important'}}}
+                                        sx={{input: {color: '#fff !important',textAlign:"center"}}}
                                         type={"text"}
-                                        className={'field bg-[#212121] w-full rounded p-4 text-white'}
+                                        className={'field bg-[#212121] w-full rounded p-4 text-white text-center'}
                                         onChange={(value) => handleInput(value)}
                                     />
                                     {

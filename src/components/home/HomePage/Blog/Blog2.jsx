@@ -15,25 +15,25 @@ export default function Blog2() {
     const [blogs, setBlogs] = useState([])
     const [detailsOfBlog,setDetailsOfBlog] = useState({})
     const [currentURL,setCurrentURL] = useState("")
+    const [popularBlog, setPopularBlog] = useState([])
+    const [countOfBolg , setCountOfBlog] = useState(1)
 
     const params = useParams();
 
     const getDetailsOfBlog = async () => {
-        console.log(params.id)
-        const blogResponse = await api.get(`blog/search?id=${params.id}`)
-        console.log(blogResponse)
+        const blogResponse = await api.get(`blog/${params.id}`)
         setDetailsOfBlog(blogResponse)
     }
 
-    const getBlogs = async () => {
-        const blogResponse = await api.get("blog")
-        console.log(blogResponse)
-        setBlogs(blogResponse)
+    const getPopularBolg = async (count) => {
+        const blogResponse = await api.get(`blog/popular/${count}`)
+        setPopularBlog(blogResponse)
+        setCountOfBlog(countOfBolg + 1)
     }
 
     useEffect(() => {
         getDetailsOfBlog();
-        getBlogs()
+        getPopularBolg(countOfBolg)
         setCurrentURL(window.location.href)
     }, []);
 
@@ -53,11 +53,11 @@ export default function Blog2() {
                                 <div className="sm:text-xl md:text-base lg:text-xl text-mainGold "><BsCalendar4Week/>
                                 </div>
 
-                                <div className="px-2 text-xs sm:text-sm lg:text-[0.9rem] ">۱۶ اردیبهشت ۱۴۰۲</div>
+                                <div className="px-2 text-xs sm:text-sm lg:text-[0.9rem] ">{EnglishToPersian(detailsOfBlog.createAt)}</div>
                             </div>
                             <div className="pb-2"><span
                                 className="text-neutral-300 text-xs sm:text-sm lg:text-[0.9rem] ">نویسنده : </span><span
-                                className="text-[#DFAF3D] text-xs sm:text-sm lg:text-[0.9rem]"> غزاله فراهانی</span>
+                                className="text-[#DFAF3D] text-xs sm:text-sm lg:text-[0.9rem]">{detailsOfBlog.writer} </span>
                             </div>
                         </div>
                         <div className="">
@@ -65,22 +65,10 @@ export default function Blog2() {
                         </div>
                         <div className="flex flex-col">
                             <div>
-                                <p className="text-white opacity-80 text-right  my-6 sm:text-base md:text-base lg:text-base text-sm mx-4">در
-                                    شروع معاملات نقدی امروز شنبه 16 اردیبهشت ماه
-                                    بازار ارز ، نسبت به روز قبل رنج بود اما در در نیمه
-                                    ظهر امروز تقریبا 250 تومان کاهش را ثبت کرد در هرات نیز
-                                    بازیگران ارزی در ساعات اولیه معاملات
-                                    امروز شاهد ورود دلار به کانال
-                                    جدید بودند اما ظهر امروز اسکناس آمریکایی در بازار یاد شده
-                                    200 تومان پایین تر از
-                                    روز پنجشنبه گذشته به فروش رسید.در تهران هم،
-                                    طبق اعلام سایت ها نرخ دلار نوسان
-                                    محدودی را تجربه کرده است. تداوم ثبات نرخ ارز
-                                    در مرکز مبادله در سمت رسمی بازار؛
-                                    مرکز مبادله طلا و ارز قیمت دلار (اسکناس) را تغییر نداد.
-                                    قیمت دلار در مرکز مبادله ارز
-                                    و طلای ایران 42 هزار و 306 تومان اعلام شده که نسبته
-                                    به دو روز قبل ثابت مانده است.
+                                <p className="text-white opacity-80 text-right  my-6 sm:text-base md:text-base lg:text-base text-sm mx-4">
+                                    {
+                                        detailsOfBlog.description
+                                    }
                                 </p>
                             </div>
                             <div className="flex justify-between my-2 mx-1">
@@ -121,7 +109,7 @@ export default function Blog2() {
 
                         </div>
                         {
-                            blogs.map((blog)=>(
+                            popularBlog.map((blog)=>(
                                 <Link to={`/blog/${blog.id}`} className="hover:bg-mainGray rounded-xl">
                                     <div className="flex justify-start mx-1 my-2">
                                         <div className="rounded-2xl sm:mx-2 md:mx-3 w-[30%]">
@@ -147,9 +135,9 @@ export default function Blog2() {
                             <button
                                 className="flex items-center bg-transparent text-sm hover:bg-gold text-white  hover:text-bgGray py-2 px-4 border border-gold hover:border-transparent rounded">
                                 <FiArrowRightCircle fontSize="15px" className="transform"/>
-                                <Link to="/login">
+                                <span>
                                     <spna className="mr-2">مطالب بیشتر</spna>
-                                </Link>
+                                </span>
                             </button>
                         </div>
                     </div>

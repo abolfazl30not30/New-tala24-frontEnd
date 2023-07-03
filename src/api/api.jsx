@@ -3,7 +3,7 @@ import LoginApi from "./LoginApi";
 import { toast } from 'react-toastify';
 
 const axiosParams = {
-    baseURL: 'https://api.tala24.co/api/v1/'
+    baseURL: 'http://localhost:8090/api/v1/'
 }
 
 const axiosInstance = axios.create(axiosParams);

@@ -52,8 +52,11 @@ const Username = (props) =>{
             const res = await RegisterApi.post("forgotPassword", {
                 phoneNumber: props.username
             })
-            console.log(res)
-            if (res.response?.status === 500) {
+
+            if (res.data.exist) {
+                props.changeStep("OTPCode")
+            }
+            else{
                 toast.error("شماره موبایل وارد شده قبلا ثبت نام نشده است !!!", {
                     position: "bottom-center",
                     autoClose: 5000,
@@ -64,8 +67,6 @@ const Username = (props) =>{
                     progress: undefined,
                     theme: "colored",
                 });
-            } else if (res?.data.status === "OTPSent"){
-                props.changeStep("OTPCode")
             }
         }
         setLoading(false)

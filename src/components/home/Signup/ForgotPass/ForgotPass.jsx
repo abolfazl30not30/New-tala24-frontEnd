@@ -7,6 +7,7 @@ const ForgotPass = () =>{
     const [step,setStep] = useState("username")
     const [username,setUsername] = useState("")
     const [code,setCode] = useState("")
+
     const changeStep = (step) =>{
         setStep(step)
     }
@@ -16,7 +17,7 @@ const ForgotPass = () =>{
             {
                 step === "username" ? (<Username changeStep={changeStep} username={username} setUsername={setUsername}/>) : (
                     step === "OTPCode" ? (<OTPCode changeStep={changeStep} username={username} code={code} setCode={setCode} />) :
-                        (<ResetPassword />))
+                        (<ResetPassword username={username}/>))
             }
         </>
     )

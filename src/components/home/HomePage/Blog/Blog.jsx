@@ -9,6 +9,8 @@ import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 
 export default function Blog() {
     const [blogs, setBlogs] = useState([])
+    const [popularBlog, setPopularBlog] = useState([])
+    const [countOfBolg , setCountOfBlog] = useState(1)
 
     const getBlogs = async () => {
         const blogResponse = await api.get("blog")
@@ -16,8 +18,15 @@ export default function Blog() {
         setBlogs(blogResponse)
     }
 
+    const getPopularBolg = async (count) => {
+        const blogResponse = await api.get(`blog/popular/${count}`)
+        setPopularBlog(blogResponse)
+        setCountOfBlog(countOfBolg + 1)
+    }
+
     useEffect(() => {
         getBlogs()
+        getPopularBolg(countOfBolg);
     }, []);
 
     return (
@@ -55,13 +64,13 @@ export default function Blog() {
                         <div className=" bg-cardDark rounded-2xl flex flex-col p-5">
                             <div className="flex my-2">
                                 <div className="text-[#DFAF3D] text-3xl px-2 my-auto"><MdOutlineWatchLater/></div>
-                                <h3 className=" text-white sm:text-base   px-2 md:px-4 my-auto">آخرین مطالب</h3>
+                                <h3 className=" text-white sm:text-base   px-2 md:px-4 my-auto">مطالب پربازدید </h3>
                                 <div
                                     className="h-0 border-2 border-[#DFAF3D] border-solid opacity-10   mx-auto w-2/5 md:w-1/5 xl:w-1/3 my-auto"></div>
 
                             </div>
                             {
-                                blogs.map((blog)=>(
+                                popularBlog.map((blog)=>(
                                     <Link to={`/blog/${blog.id}`} className="hover:bg-mainGray rounded-xl">
                                         <div className="flex justify-start mx-1 my-2">
                                             <div className="rounded-2xl sm:mx-2 md:mx-3 w-[30%]">
@@ -85,11 +94,12 @@ export default function Blog() {
                             }
                             <div className="flex justify-center mt-5">
                                 <button
+                                    onClick={()=>getPopularBolg(countOfBolg)}
                                     className="flex items-center bg-transparent text-sm hover:bg-gold text-white  hover:text-bgGray py-2 px-4 border border-gold hover:border-transparent rounded">
                                     <FiArrowRightCircle fontSize="15px" className="transform"/>
-                                    <Link to="/login">
+                                    <span>
                                         <spna className="mr-2">مطالب بیشتر</spna>
-                                    </Link>
+                                    </span>
                                 </button>
                             </div>
                         </div>
