@@ -1,25 +1,19 @@
-
-import React from "react"
-import '../../../style/signupOrLogin.css';
-import {TextField} from "@mui/material";
-import {useContext, useEffect, useState} from "react";
-import * as yup from "yup";
-import PasswordStrengthIndicator from "../PasswordStrengthIndicator";
-import signup from "../../../contexts/signup";
+import React, {useState} from "react"
+import {useContext, useEffect} from "react";
+import signup from "../../../../contexts/signup";
 import {useNavigate} from "react-router-dom";
-import api from "../../../api/api";
-import ResgisterApi from "../../../api/RegisterApi";
-import LoginApi from "../../../api/LoginApi";
-import {EnglishToPersian} from "../../../helper/EnglishToPersian";
+import * as yup from "yup";
+import {toast} from "react-toastify";
+import ResgisterApi from "../../../../api/RegisterApi";
+import LoginApi from "../../../../api/LoginApi";
+import {TextField} from "@mui/material";
+import PasswordStrengthIndicator from "../../PasswordStrengthIndicator";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
-import SignInImage from "../../../images/loginBackground.jpg";
-import loginVector from "../../../images/loginVector.png";
-import {toast} from "react-toastify";
+import SignInImage from "../../../../images/loginBackground.jpg";
+import loginVector from "../../../../images/loginVector.png";
 
-const CreatePassword= () => {
-
-    const info = useContext(signup)
+const ResetPassword = () =>{
 
     const [errors, setErrors] = useState([])
     const [password, setPassword] = useState("")
@@ -27,12 +21,6 @@ const CreatePassword= () => {
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
-
-    useEffect(() => {
-        if (info.createPassAllowed === false) {
-            navigate("/")
-        }
-    }, [])
 
     const validation = async () => {
         const schema = yup.object().shape({
@@ -69,59 +57,13 @@ const CreatePassword= () => {
     }
 
     const handleSubmit = async () => {
-        setErrors([])
         const result = await validation()
         if (result !== undefined) {
-            setErrors([])
-            info.setNewUserPassword(password)
-
-            const res = await ResgisterApi.post("createCustomer", {
-                phoneNumber: info.newUserPhoneNumber,
-                password: password
+            const res = await ResgisterApi.post("updatePassword", {
+                // phoneNumber: number,
+                // password: password
             })
-
-            console.log(res)
-            if (res?.status === 201) {
-                info.setSuccessAllowed(true)
-                localStorage.setItem("password", password)
-                localStorage.setItem("username", info.newUserPhoneNumber)
-            } else {
-                toast.error(" خطا در اتصال", {
-                    position: "bottom-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-            }
-
-            const loginResponse = await LoginApi()
-            info.setAccountCompleteRegistrationAllowed(true)
-
-            if (loginResponse.status === 200) {
-                // info.setDashboardAllowed(true)
-                if (localStorage.getItem("role") === "ADMIN") {
-                    navigate("/admin")
-                } else if (localStorage.getItem("role") === "USER") {
-                    navigate("/dashboard/home")
-                } else if (localStorage.getItem("role") === "MANAGER") {
-                    navigate("/manager/add-admin")
-                }
-            } else if (loginResponse.status === 403) {
-                toast.error(" خطا در اتصال", {
-                    position: "bottom-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-            }
+            navigate("/login")
         }
     }
 
@@ -155,7 +97,7 @@ const CreatePassword= () => {
                                 </ul>
                             </div>
                             <div className={'text-[0.9rem] mx-4 text-white mt-4'}>
-                                 رمز عبور
+                                رمز عبور
                             </div>
 
                             <div className={'flex flex-col justify-center mx-4 mt-4'}>
@@ -216,5 +158,4 @@ const CreatePassword= () => {
         </>
     )
 }
-
-export default CreatePassword;
+export default ResetPassword;

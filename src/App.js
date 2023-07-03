@@ -31,6 +31,7 @@ import Blog from "./components/home/HomePage/Blog/Blog";
 import Blog2 from "./components/home/HomePage/Blog/Blog2";
 import Rules from "./components/home/HomePage/Rules/Rules";
 import Education from "./components/home/HomePage/Education/Education";
+import ForgotPass from "./components/home/Signup/ForgotPass/ForgotPass";
 
 const App = () => {
   const [OTPAllowed, setOTPAllowed] = useState(false);
@@ -202,7 +203,7 @@ const App = () => {
               />
             </Route>
             {/*<Route path="/manager/add-admin" element={(<ProtectedRoute><AddAdmin/></ProtectedRoute>)}/>*/}
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/forgot-password" element={<ForgotPass />} />
             {/*<Route path="/accountCompleteRegistration" element={(<CompleteRegistration/>)}/>*/}
           </Routes>
         </BrowserRouter>

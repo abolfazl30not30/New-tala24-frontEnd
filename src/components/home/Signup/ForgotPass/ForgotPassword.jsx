@@ -52,9 +52,6 @@ const ForgotPassword = () => {
                 password: password
             })
 
-            // info.setSuccessAllowed(true)
-            console.log(123)
-            console.log(res)
 
             navigate("/login")
         }

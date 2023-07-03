@@ -1,32 +1,20 @@
-
-import '../../../style/signupOrLogin.css';
-import React from "react"
-import {useContext, useEffect, useState} from "react";
+import React, {useState} from "react"
+import {useContext, useEffect} from "react";
+import signup from "../../../../contexts/signup";
+import {useNavigate, useParams} from "react-router-dom";
+import RegisterApi from "../../../../api/RegisterApi";
+import {toast} from "react-toastify";
+import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
+import OTPInput from "../../../OTPInput";
 import Countdown from "react-countdown";
-import {Link, useNavigate, useParams} from "react-router-dom";
-import OTPInput from "../../OTPInput";
-import RegisterApi from "../../../api/RegisterApi";
-import signup from "../../../contexts/signup";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
-import SignInImage from "../../../images/loginBackground.jpg";
-import loginVector from "../../../images/loginVector.png";
-import {EnglishToPersian} from "../../../helper/EnglishToPersian";
-import {toast} from "react-toastify";
+import SignInImage from "../../../../images/loginBackground.jpg";
+import loginVector from "../../../../images/loginVector.png";
 
-const Signup = () => {
-    const info = useContext(signup)
-    const params = useParams();
-    const [OTPCode, setOTPCode] = useState("")
-    const [loading, setLoading] = useState(false)
+const OTPCode = (props) =>{
 
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (info.OTPAllowed === false) {
-            navigate("/")
-        }
-    }, [])
+    const [loading, setLoading] = useState(false);
 
     const renderer = ({ hours, minutes, seconds, completed }) => {
         if (completed) {
@@ -44,13 +32,12 @@ const Signup = () => {
 
     const checkOTP = async (code) => {
         setLoading(true)
-
-        const res = await RegisterApi.post("checkOTP", {
-            phoneNumber: info.newUserPhoneNumber,
+        const res = await RegisterApi.post("forgotPassword/checkOTP", {
+            phoneNumber: props.username,
             otp: code
         })
 
-        if (res === undefined) {
+        if (res.data.status === "OTPDenied") {
             toast.error(" کد تایید اشتباه است", {
                 position: "bottom-center",
                 autoClose: 5000,
@@ -62,8 +49,7 @@ const Signup = () => {
                 theme: "colored",
             });
         } else {
-            info.setCreatePassAllowed(true)
-            navigate("/create-password")
+            props.changeStep("password")
         }
         setLoading(false)
     }
@@ -87,11 +73,11 @@ const Signup = () => {
                                 کد تایید را وارد کنید
                             </p>
                             <p className={'text-[0.8rem] mx-4 text-neutral-400 mt-3'}>
-                                حساب کاربری با شماره موبایل {EnglishToPersian(params.id)} وجود ندارد. برای ساخت حساب جدید کد تایید برای این شماره ارسال گردید.
+                                 کد تایید به حساب کاربری با شماره موبایل {EnglishToPersian(props.username)} ارسال گردید .
                             </p>
 
                             <div className={'flex justify-center mx-4 mt-4 w-100'}>
-                                <OTPInput handleCheckOTP={checkOTP} handleSetOTP={setOTPCode}/>
+                                <OTPInput handleCheckOTP={checkOTP} handleSetOTP={props.setCode}/>
                             </div>
 
                             <p className={'text-[9px] mx-4 text-[#6D6D6D] mt-3 text-center'}>
@@ -113,7 +99,7 @@ const Signup = () => {
                                             ادامه
                                         </LoadingButton>
                                     ) : (
-                                        <button onClick={() => checkOTP(OTPCode)} className={'flex justify-center items-center bg-mainGold w-full rounded h-[45px]'}><span className={'text-black'}>ادامه</span>
+                                        <button onClick={() => checkOTP(props.code)} className={'flex justify-center items-center bg-mainGold w-full rounded h-[45px]'}><span className={'text-black'}>ادامه</span>
                                         </button>
                                     )
                                 }
@@ -131,5 +117,4 @@ const Signup = () => {
         </>
     )
 }
-
-export default Signup;
+export default OTPCode;
