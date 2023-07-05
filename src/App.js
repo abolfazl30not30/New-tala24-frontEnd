@@ -9,7 +9,6 @@ import Login from "./components/home/Signup/Login";
 import CreatePassword from "./components/home/Signup/CreatePassword";
 import Dashboard from "./components/home/dashboard/Dashboard";
 import signup from "./contexts/signup";
-import ForgotPassword from "./components/home/Signup/ForgotPass/ForgotPassword";
 import AdminDashboard from "./components/home/admin/Dashboard";
 import ConfirmBuyGold from "./components/home/admin/ConfirmBuyGold";
 import ConfirmSellGold from "./components/home/admin/ConfirmSellGold";

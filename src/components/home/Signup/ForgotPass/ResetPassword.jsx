@@ -120,6 +120,7 @@ const ResetPassword = (props) =>{
                                     error={errors.length !== 0}
                                     value={password}
                                     type={"password"}
+                                    sx={{textAlign:"center"}}
                                     className={'field bg-[#212121] w-full rounded p-4 text-white'}
                                     onChange={(value) => handleInputPassword(value)}
                                 />

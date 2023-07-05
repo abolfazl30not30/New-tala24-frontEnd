@@ -95,7 +95,7 @@ const Login = () => {
                                     value={password}
                                     type={"password"}
                                     className={'field bg-[#212121] w-full rounded p-4 text-white'}
-                                    sx={{ input: { color: '#fff !important' } }}
+                                    sx={{ input: { color: '#fff !important',textAlign:"center" } }}
                                     onChange={(value) => handleInput(value)}
                                 />
                                 {

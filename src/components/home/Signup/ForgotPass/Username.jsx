@@ -103,7 +103,7 @@ const Username = (props) =>{
                                     <TextField
                                         aria-invalid={true}
                                         value={EnglishToPersian(props.username)}
-                                        sx={{input: {color: '#fff !important'}}}
+                                        sx={{input: {color: '#fff !important',textAlign:"center"}}}
                                         type={"text"}
                                         className={'field bg-[#212121] w-full rounded p-4 text-white'}
                                         onChange={(value) => handleInput(value)}/>

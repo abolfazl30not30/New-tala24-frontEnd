@@ -15,6 +15,7 @@ import Alert from "react-bootstrap/Alert";
 import {TextField} from "@mui/material";
 import * as yup from "yup";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 const theme = createTheme({
     direction: 'rtl'
@@ -38,6 +39,7 @@ const calendarStyles = {
 
 
 export default function NewBlog(props) {
+    const navigate = useNavigate()
     useEffect(() => {
         if (sessionStorage.getItem('role') !== "MANAGER") {
             sessionStorage.clear()
@@ -159,6 +161,7 @@ export default function NewBlog(props) {
                 progress: undefined,
                 theme: "colored",
             });
+
         }
 
     }
@@ -180,6 +183,7 @@ export default function NewBlog(props) {
                 progress: undefined,
                 theme: "colored",
             });
+            navigate("/manager/blogs")
         }
 
     }

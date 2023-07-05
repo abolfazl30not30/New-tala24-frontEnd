@@ -7,6 +7,7 @@ import {createTheme} from "@mui/material/styles";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis'
+import {toast} from "react-toastify";
 
 
 // Create RTL MUI
@@ -43,12 +44,12 @@ export default function Blogs(props) {
     };
     constructor()
     const navigate = useNavigate();
+
     const [blogs, setBlogs] = useState([])
     const [targetBlog, setTargetBlog] = useState();
     const [open, setOpen] = React.useState(false)
     const getBlogs = async () => {
         const blogResponse = await api.get("blog")
-        console.log(blogResponse)
         setBlogs(blogResponse)
     }
     useEffect(() => {
@@ -59,9 +60,28 @@ export default function Blogs(props) {
         setTargetBlog(blogId)
         setOpen(true);
     };
+
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleDeleteBlog = async () =>{
+        await api.delete(`blog/${targetBlog}`);
+        setOpen(false)
+        toast.success("بلاگ با موفقیت حذف شد", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+            getBlogs();
+
+    }
+
 
     return (
         <>
@@ -98,9 +118,9 @@ export default function Blogs(props) {
                                 <td className={'p-3'}>
                                     <button
                                         type="button"
-                                        className="rounded-md flex flex-row items-center bg-gold text-black px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                                    >
-                                        مشاهده
+                                        onClick={()=>{openModal(blog.id)}}
+                                        className="rounded-md flex flex-row items-center bg-red-600 text-white hover:opacity-80 px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                                        حذف
                                     </button>
                                 </td>
                             </tr>
@@ -108,6 +128,64 @@ export default function Blogs(props) {
                     }
                     </tbody>
                 </table>
+
+                <Transition appear show={open} as={Fragment}>
+                    <Dialog as="div" className="relative z-10" onClose={handleClose}>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <div className="fixed inset-0 bg-black bg-opacity-25"/>
+                        </Transition.Child>
+
+                        <div className="fixed inset-0 overflow-y-auto">
+                            <div className="flex min-h-full items-center justify-center p-4 text-center">
+                                <Transition.Child
+                                    as={Fragment}
+                                    enter="ease-out duration-300"
+                                    enterFrom="opacity-0 scale-95"
+                                    enterTo="opacity-100 scale-100"
+                                    leave="ease-in duration-200"
+                                    leaveFrom="opacity-100 scale-100"
+                                    leaveTo="opacity-0 scale-95"
+                                >
+                                    <Dialog.Panel
+                                        className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#303030] p-6 text-left align-middle shadow-xl transition-all">
+                                        <Dialog.Title
+                                            as="h3"
+                                            className="text-center text-lg font-medium leading-6 text-white"
+                                        >
+                                            حذف بلاگ
+                                        </Dialog.Title>
+                                        <div className="mt-6 text-center text-white">
+                                            آیا از حذف بلاگ مطئن هستید؟
+                                        </div>
+                                        <div className="mt-4 flex flex-row justify-center">
+                                            <button
+                                                type="button"
+                                                className="inline-flex justify-center rounded-md border border-transparent ml-4 bg-red-600 text-white px-4 py-2 text-sm font-medium"
+                                                onClick={handleDeleteBlog}>
+                                                حذف
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="inline-flex justify-center rounded-md border border-transparent bg-dark text-white px-4 py-2 text-sm font-medium"
+                                                onClick={handleClose}
+                                            >
+                                                بستن
+                                            </button>
+                                        </div>
+                                    </Dialog.Panel>
+                                </Transition.Child>
+                            </div>
+                        </div>
+                    </Dialog>
+                </Transition>
             </div>
         </>
     );
