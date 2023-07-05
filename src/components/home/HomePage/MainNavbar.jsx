@@ -21,6 +21,7 @@ import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
 
 const MainNavbar = () => {
+
     const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -43,7 +44,19 @@ const MainNavbar = () => {
             setIsOpenNav(true);
         }
     }
-
+    const handleNavigate = async () =>{
+            await LoginApi()
+            if (sessionStorage.getItem("role") === "ADMIN") {
+                navigate("/admin")
+            } else if (sessionStorage.getItem("role") === "USER") {
+                navigate("/dashboard/home")
+            } else if (sessionStorage.getItem("role") === "MANAGER") {
+                navigate("/manager/add-admin")
+            } else {
+                sessionStorage.clear()
+                navigate("/")
+            }
+    }
     return (
         <div className="mb-7">
             <nav className="border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900"
@@ -103,19 +116,7 @@ const MainNavbar = () => {
                                 <li>
                                     {
                                         sessionStorage.getItem("username") && sessionStorage.getItem("password") && sessionStorage.getItem("role") && sessionStorage.getItem("Authorization") ?
-                                            <Link onClick={async () => {
-                                                await LoginApi()
-                                                if (sessionStorage.getItem("role") === "ADMIN") {
-                                                    navigate("/admin")
-                                                } else if (sessionStorage.getItem("role") === "USER") {
-                                                    navigate("/dashboard/home")
-                                                } else if (sessionStorage.getItem("role") === "MANAGER") {
-                                                    navigate("/manager/add-admin")
-                                                } else {
-                                                    sessionStorage.clear()
-                                                    navigate("/")
-                                                }
-                                            }} activeClassName="active"
+                                            <Link onClick={async () => handleNavigate} activeClassName="active"
                                                      className="block py-2 pl-3 pr-4 text-white rounded  md:border-0 md:p-0 hover:text-gold font-light ">ورود به پنل
                                             </Link> :
                                             <Link to="/login" activeClassName="active"
@@ -129,7 +130,6 @@ const MainNavbar = () => {
                     </div>
                     {
                         sessionStorage.getItem("username") && sessionStorage.getItem("password") && sessionStorage.getItem("role") && sessionStorage.getItem("Authorization")
-
                             ? <div className="flex flex-1 flex-wrap items-center justify-end mx-auto">
                                 <Button
                                     id="navbar-dropdown-button"
@@ -170,7 +170,8 @@ const MainNavbar = () => {
                                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                 >
                                     <MenuItem>
-                                        <Link to="/dashboard/home" onClick={handleClose}>
+                                        <Link  onClick={()=>{handleNavigate();
+                                            handleClose();}}>
                                             <div className="flex items-center">
                                                 <img className="w-10"
                                                      src="https://cdn-icons-png.flaticon.com/512/149/149071.png"

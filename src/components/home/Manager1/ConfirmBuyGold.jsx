@@ -48,6 +48,10 @@ export default function ConfirmBuyGold(props) {
         setConstructorHasRun(true);
     };
     constructor()
+    const getTotalInfoPendRequests = async () =>{
+        const respond = await api.get(`request/admin/buyGold/pendRequest`)
+        setTotalInfo(respond)
+    }
 
     useEffect(() => {
         const getData = async () => {
@@ -57,6 +61,7 @@ export default function ConfirmBuyGold(props) {
             }
         }
         getData()
+        getTotalInfoPendRequests()
 
     }, []);
 
@@ -68,6 +73,7 @@ export default function ConfirmBuyGold(props) {
     let [adminConfirm, setAdminConfirm] = useState("accept")
     let [failedDescriptionContent, setFailedDescriptionContent] = useState()
     let [requestId, setRequestId] = useState()
+    let [totalInfo,setTotalInfo] = useState({});
 
     function closeModalProfile() {
         setIsOpenProfile(false)
@@ -120,7 +126,17 @@ export default function ConfirmBuyGold(props) {
 
     return (
         <div className="w-full bg-[#252525] mx-8 mt-8 p-4 rounded-lg overflow-scroll">
-            <div className="text-white text-2xl font-medium">درخواست خرید طلا</div>
+            <div className="flex justify-between">
+                <div className="text-white text-2xl font-medium">درخواست خرید طلا</div>
+                <div>
+                    <span className="text-gold mx-2"> کل مبلغ درخواست های در حال بررسی:</span>
+                    <span className="text-white">{EnglishToPersian(totalInfo.price)} ریال </span>
+                </div>
+                <div>
+                    <span className="text-gold mx-2"> کل وزن درخواست های در حال بررسی:</span>
+                    <span className="text-white">{EnglishToPersian(totalInfo.weight)} گرم </span>
+                </div>
+            </div>
             <table className='mt-8 text-white break-normal'>
                 <thead>
                 <tr>
