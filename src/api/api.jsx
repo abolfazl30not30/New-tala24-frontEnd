@@ -15,7 +15,7 @@ const api = {
                     ...config,
                     headers: {
                         ...config.headers,
-                        'Authorization': localStorage.getItem("Authorization"),
+                        'Authorization': sessionStorage.getItem("Authorization"),
                     }
                 });
                 return response.data
@@ -27,7 +27,7 @@ const api = {
                         ...config,
                         headers: {
                             ...config.headers,
-                            'Authorization': localStorage.getItem("Authorization"),
+                            'Authorization': sessionStorage.getItem("Authorization"),
                         }
                     });
                     return response.data
@@ -66,7 +66,7 @@ const api = {
                     ...config,
                     headers: {
                         ...config.headers,
-                        'Authorization': localStorage.getItem("Authorization"),
+                        'Authorization': sessionStorage.getItem("Authorization"),
                     }
                 });
                 return response.data
@@ -77,7 +77,7 @@ const api = {
                         ...config,
                         headers: {
                             ...config.headers,
-                            'Authorization': localStorage.getItem("Authorization"),
+                            'Authorization': sessionStorage.getItem("Authorization"),
                         }
                     });
                     return response.data
@@ -115,7 +115,7 @@ const api = {
                 ...config,
                 headers: {
                     ...config.headers,
-                    'Authorization': localStorage.getItem("Authorization"),
+                    'Authorization': sessionStorage.getItem("Authorization"),
                 }
             });
             return response.data
@@ -127,7 +127,7 @@ const api = {
                     ...config,
                     headers: {
                         ...config.headers,
-                        'Authorization': localStorage.getItem("Authorization"),
+                        'Authorization': sessionStorage.getItem("Authorization"),
                     }
                 });
                 return response.data
@@ -165,7 +165,7 @@ const api = {
                 ...config,
                 headers: {
                     ...config.headers,
-                    'Authorization': localStorage.getItem("Authorization"),
+                    'Authorization': sessionStorage.getItem("Authorization"),
                 }
             });
             return response.data
@@ -176,7 +176,7 @@ const api = {
                     ...config,
                     headers: {
                         ...config.headers,
-                        'Authorization': localStorage.getItem("Authorization"),
+                        'Authorization': sessionStorage.getItem("Authorization"),
                     }
                 });
                 return response.data

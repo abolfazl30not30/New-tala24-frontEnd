@@ -125,8 +125,8 @@ export default function SellGold(props) {
     const [constructorHasRun, setConstructorHasRun] = useState(false);
     const constructor = () => {
         if (constructorHasRun) return;
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "USER") {
+            sessionStorage.clear()
             window.location = ("/login")
         }
         setConstructorHasRun(true);
@@ -135,8 +135,8 @@ export default function SellGold(props) {
     constructor()
 
     useEffect(() => {
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "USER") {
+            sessionStorage.clear()
             props.history.push("/login")
         }
     }, [props.history]);

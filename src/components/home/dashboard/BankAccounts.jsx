@@ -304,9 +304,10 @@ export default function BankAccounts() {
                                     <div className='flex flex-row items-center mb-2'>
                                         <MdArrowBackIosNew className={"text-gold"}/>
                                         <div className="request-item-title text-gold ml-4 ">وضعیت حساب:</div>
-                                        <div><span className={'authorizedFailed'}>
-                                                                     تایید نشده
-                                                                        </span></div>
+                                        <div> {account.valid ? (<span className={'authorizedSuccessful'}>تاييد شده</span>):(
+                                            <span className={'authorizedFailed'}>تاييد نشده</span>
+                                        )}
+                                            </div>
                                     </div>
                                     {/*<div className="mt-6 flex flex-row justify-center space-x-2 space-x-reverse">
                                         <button className='bg-transparent p-3 hover:bg-bgGray hover:bg-opacity-20 rounded-2xl'

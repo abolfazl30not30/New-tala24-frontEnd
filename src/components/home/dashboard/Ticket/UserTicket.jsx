@@ -13,8 +13,8 @@ import signup from "../../../../contexts/signup";
 
 function UserTicket(props) {
     useEffect(() => {
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "USER") {
+            sessionStorage.clear()
             props.history.push("/login")
         }
     }, [props.history]);
@@ -23,8 +23,8 @@ function UserTicket(props) {
     const [constructorHasRun, setConstructorHasRun] = useState(false);
     const constructor = () => {
         if (constructorHasRun) return;
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "USER") {
+            sessionStorage.clear()
             window.location = ("/login")
         }
         setConstructorHasRun(true);
@@ -33,7 +33,7 @@ function UserTicket(props) {
 
     const [title, setTitle] = useState("");
     const getTickets = async () => {
-        const getTicketsResponse = await api.get(`ticket/search?userId=${localStorage.getItem("username")}`)
+        const getTicketsResponse = await api.get(`ticket/search?userId=${sessionStorage.getItem("username")}`)
         setTickets(getTicketsResponse)
     }
 

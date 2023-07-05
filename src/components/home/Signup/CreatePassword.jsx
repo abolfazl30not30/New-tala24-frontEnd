@@ -83,8 +83,8 @@ const CreatePassword= () => {
             console.log(res)
             if (res?.status === 201) {
                 info.setSuccessAllowed(true)
-                localStorage.setItem("password", password)
-                localStorage.setItem("username", info.newUserPhoneNumber)
+                sessionStorage.setItem("password", password)
+                sessionStorage.setItem("username", info.newUserPhoneNumber)
             } else {
                 toast.error(" خطا در اتصال", {
                     position: "bottom-center",
@@ -103,11 +103,11 @@ const CreatePassword= () => {
 
             if (loginResponse.status === 200) {
                 // info.setDashboardAllowed(true)
-                if (localStorage.getItem("role") === "ADMIN") {
+                if (sessionStorage.getItem("role") === "ADMIN") {
                     navigate("/admin")
-                } else if (localStorage.getItem("role") === "USER") {
+                } else if (sessionStorage.getItem("role") === "USER") {
                     navigate("/dashboard/home")
-                } else if (localStorage.getItem("role") === "MANAGER") {
+                } else if (sessionStorage.getItem("role") === "MANAGER") {
                     navigate("/manager/add-admin")
                 }
             } else if (loginResponse.status === 403) {

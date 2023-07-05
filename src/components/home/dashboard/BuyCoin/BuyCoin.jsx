@@ -117,8 +117,8 @@ const steps = ['تعیین تعداد سکه', 'پرداخت'];
 export default function BuyCoin(props) {
 
     useEffect(() => {
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "USER") {
+            sessionStorage.clear()
             props.history.push("/login")
         }
     }, [props.history]);
@@ -127,8 +127,8 @@ export default function BuyCoin(props) {
 
     const constructor = () => {
         if (constructorHasRun) return;
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "USER") {
+            sessionStorage.clear()
             window.location = ("/login")
         }
         setConstructorHasRun(true);

@@ -37,8 +37,8 @@ const calendarStyles= {
 
 export default function NewBlog(props) {
     useEffect(() => {
-        if (localStorage.getItem('role') !== "ADMIN") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "ADMIN") {
+            sessionStorage.clear()
             props.history.push("/sign-in")
         }
     }, [props.history]);
@@ -47,8 +47,8 @@ export default function NewBlog(props) {
     const constructor = () => {
         if (constructorHasRun) return;
         // const navigate = useNavigate();
-        if (localStorage.getItem('role') !== "ADMIN") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "ADMIN") {
+            sessionStorage.clear()
             window.location = ("/sign-in")
         }
         setConstructorHasRun(true);

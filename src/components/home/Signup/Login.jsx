@@ -52,18 +52,18 @@ const Login = () => {
         setLoading(true)
         if (result !== undefined) {
             setErrors([])
-            localStorage.setItem("password", password)
+            sessionStorage.setItem("password", password)
             const res = await LoginApi()
 
             if (res.status === 403) {
                 setErrors(["رمز عبور اشتباه است."])
             } else if (res.status === 200) {
                 // info.setDashboardAllowed(true)
-                if (localStorage.getItem("role") === "ADMIN") {
+                if (sessionStorage.getItem("role") === "ADMIN") {
                     navigate("/admin")
-                } else if (localStorage.getItem("role") === "USER") {
+                } else if (sessionStorage.getItem("role") === "USER") {
                     navigate("/dashboard/home")
-                } else if (localStorage.getItem("role") === "MANAGER") {
+                } else if (sessionStorage.getItem("role") === "MANAGER") {
                     navigate("/manager/add-admin")
                 }
             }

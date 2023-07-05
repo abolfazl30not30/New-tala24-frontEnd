@@ -77,7 +77,7 @@ function Navbar() {
                 </MenuItem>
                 <MenuItem>
                     <Link to='/' className="flex flex-row items-center" onClick={() => {
-                        localStorage.clear()
+                        sessionStorage.clear()
                     }}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" width='16' height='16' className="ml-2">

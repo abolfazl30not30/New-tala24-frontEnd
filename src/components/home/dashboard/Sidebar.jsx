@@ -97,7 +97,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
                     {
-                        context.accountInfo.verified ? (
+                        context.accountInfo.verified === "accept" ? (
                             <NavLink to="/dashboard/buy-gold" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                                 <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -128,7 +128,7 @@ function Sidebar() {
                         )
                     }
                     {
-                        context.accountInfo.verified ? (
+                        context.accountInfo.verified === "accept" ? (
                             <NavLink to="/dashboard/sell-gold" className='w-100' activeClassName="active" onClick={window.innerWidth <= 768 && (closeSidebar)}>
                                 <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -212,9 +212,13 @@ function Sidebar() {
                                         پروفایل کاربری
                                     </div>
                                     {
-                                        context.accountInfo.verified
-                                            ? <div className='bg-labelGreen p-1 rounded text-[0.5rem] mr-5'>تایید شده</div>
-                                            : <div className='bg-red-600 p-1 rounded text-[0.5rem] mr-5'>تایید نشده</div>
+                                        context.accountInfo.verified === "accept"
+                                            ? (<div className='bg-labelGreen p-1 rounded text-[0.5rem] mr-5'>تایید شده</div>)
+                                            : (context.accountInfo.verified === "notAccept" ? (
+                                                <div className='bg-red-600 p-1 rounded text-[0.5rem] mr-5'>تایید نشده</div>
+                                            ) : (
+                                                <div className='bg-neutral-400 p-1 rounded text-[0.5rem] mr-5'>ثبت نشده</div>
+                                            ))
                                     }
                                 </div>
                             </div>
@@ -235,7 +239,7 @@ function Sidebar() {
                         </div>
                     </NavLink>
 
-                    <Link onClick={() => localStorage.clear()} to="/" className={"w-100"}>
+                    <Link onClick={() => sessionStorage.clear()} to="/" className={"w-100"}>
                         <div className="d-flex flex-row align-items-center sidebar-list-item text-[0.9rem]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}
@@ -261,8 +265,7 @@ function Sidebar() {
                     backdrop: {
                         timeout: 500,
                     },
-                }}
-            >
+                }}>
                 <Fade in={open}>
                     <Box sx={style}>
                         <BiErrorCircle fontSize={'9rem'} color="#c0392b"/>

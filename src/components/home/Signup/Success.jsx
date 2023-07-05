@@ -9,9 +9,9 @@ const Success = () => {
 
     const info = useContext(signup)
     const [redirect, setRedirect] = useState(
-        localStorage.getItem("role") === "ADMIN" ? "/admin/gold-price" :
-            localStorage.getItem("role") === "USER" ? "/dashboard/home" :
-                localStorage.getItem("role") === "MANAGER" ? "/manager/add-admin" : null
+        sessionStorage.getItem("role") === "ADMIN" ? "/admin/gold-price" :
+            sessionStorage.getItem("role") === "USER" ? "/dashboard/home" :
+                sessionStorage.getItem("role") === "MANAGER" ? "/manager/add-admin" : null
     );
     const navigate = useNavigate()
 

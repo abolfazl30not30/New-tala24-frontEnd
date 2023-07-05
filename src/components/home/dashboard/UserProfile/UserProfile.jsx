@@ -16,9 +16,13 @@ function UserProfile() {
                     پروفایل کاربری
                 </h3>
                 {
-                    context.accountInfo.verified
-                        ? <div className='bg-labelGreen px-4 py-2 rounded text-[0.7rem]'>تایید شده</div>
-                        : <div className='bg-red-600 px-4 py-2 rounded text-[0.7rem]'>تایید نشده</div>
+                    context.accountInfo.verified === "accept"
+                        ? (<div className='bg-labelGreen px-4 py-2 rounded text-[0.7rem]'>تایید شده</div>)
+                        : (context.accountInfo.verified === "notAccept" ? (
+                            <div className='bg-red-600 px-4 py-2 rounded text-[0.7rem]'>تایید نشده</div>
+                        ) : (
+                            <div className='bg-neutral-400 px-4 py-2 rounded text-[0.7rem]'>ثبت نشده</div>
+                        ))
                 }
             </div>
 
@@ -30,8 +34,7 @@ function UserProfile() {
                                 <button
                                     className={
                                         selected ? 'bg-[#DFAF3D] text-black rounded-md px-4 py-2' : 'bg-transparent text-white px-4 py-2'
-                                    }
-                                >
+                                    }>
                                     مشخصات کاربری
                                 </button>
                             )}
@@ -41,8 +44,7 @@ function UserProfile() {
                                 <button
                                     className={
                                         selected ? 'bg-[#DFAF3D] text-black rounded-md px-4 py-2' : 'bg-transparent text-white px-4 py-2'
-                                    }
-                                >
+                                    }>
                                     آدرس ها
                                 </button>
                             )}

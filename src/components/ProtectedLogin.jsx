@@ -13,7 +13,7 @@ class ProtectedLogin extends Component {
             this.setState({isAuth: true})
             return this.state.isAuth
         } else if (loginResponse.status === 403) {
-            localStorage.clear()
+            sessionStorage.clear()
             this.setState({isAuth: false})
             return this.state.isAuth
         }
@@ -24,11 +24,11 @@ class ProtectedLogin extends Component {
             <>
                 {
                     this.state.isAuth === true ?
-                        (localStorage.getItem("role") === "ADMIN" ?
+                        (sessionStorage.getItem("role") === "ADMIN" ?
                             <Navigate to={"/admin/gold-price"} replace={true}/> :
-                            localStorage.getItem("role") === "USER" ?
+                            sessionStorage.getItem("role") === "USER" ?
                                 <Navigate to={"/dashboard/home"} replace={true}/> :
-                                localStorage.getItem("role") === "MANAGER" ?
+                                sessionStorage.getItem("role") === "MANAGER" ?
                                     <Navigate to={"/manager/add-admin"} replace={true}/> :
                                     <Navigate to={'/login'} replace={true}/>)
                         : this.state.isAuth === false ?

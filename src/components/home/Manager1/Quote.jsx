@@ -31,8 +31,8 @@ function RTL(props) {
 
 export default function Quote(props) {
     useEffect(() => {
-        if (localStorage.getItem('role') !== "MANAGER") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "MANAGER") {
+            sessionStorage.clear()
             props.history.push("/login")
         }
     }, [props.history]);
@@ -40,8 +40,8 @@ export default function Quote(props) {
     const [constructorHasRun, setConstructorHasRun] = useState(false);
     const constructor = () => {
         if (constructorHasRun) return;
-        if (localStorage.getItem('role') !== "MANAGER") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "MANAGER") {
+            sessionStorage.clear()
             window.location = ("/login")
         }
         setConstructorHasRun(true);

@@ -22,6 +22,8 @@ const cacheRtl = createCache({
 
 const Information = () =>{
 
+    const context = useContext(signup);
+
     const [firstName, setFirstName] = useState()
     const [lastName, setLastName] = useState()
     const [email, setEmail] = useState()
@@ -125,8 +127,7 @@ const Information = () =>{
                             <TextField
                                 fullWidth
                                 required
-                                // error={errors.length !== 0}
-                                /* disabled={!firstNameAllowed}*/
+                                disabled={context.accountInfo.verified === "accept"}
                                 value={firstName}
                                 type={"text"}
                                 sx={{label: {color: '#fff !important'}, input: {color: '#fff !important'}}}
@@ -137,7 +138,7 @@ const Information = () =>{
                             <TextField
                                 fullWidth
                                 // error={errors.length !== 0}
-                                /* disabled={!firstNameAllowed}*/
+                                disabled={context.accountInfo.verified === "accept"}
                                 value={lastName}
                                 type={"text"}
                                 sx={{label: {color: '#fff !important'}, input: {color: '#fff !important'}}}
@@ -149,7 +150,7 @@ const Information = () =>{
                             <TextField
                                 fullWidth
                                 // error={errors.length !== 0}
-                                /* disabled={!firstNameAllowed}*/
+                                disabled={context.accountInfo.verified === "accept"}
                                 value={phoneNumber}
                                 type={"text"}
                                 sx={{label: {color: '#fff !important'}, input: {color: '#fff !important'}}}
@@ -161,7 +162,7 @@ const Information = () =>{
                             <TextField
                                 fullWidth
                                 // error={errors.length !== 0}
-                                /* disabled={!firstNameAllowed}*/
+                                disabled={context.accountInfo.verified === "accept"}
                                 value={email}
                                 type={"text"}
                                 sx={{label: {color: '#fff !important'}, input: {color: '#fff !important'}}}
@@ -173,7 +174,7 @@ const Information = () =>{
                             <TextField
                                 fullWidth
                                 // error={errors.length !== 0}
-                                /* disabled={!firstNameAllowed}*/
+                                disabled={context.accountInfo.verified === "accept"}
                                 value={nationalCode}
                                 type='number'
                                 sx={{label: {color: '#fff !important'}, input: {color: '#fff !important'}}}
@@ -183,6 +184,7 @@ const Information = () =>{
                         <div>
                             <div className="text-neutral-300 mb-3">تاریخ تولد<span className="text-red-600 ml-1">*</span></div>
                             <DatePicker
+                                disabled={context.accountInfo.verified === "accept"}
                                 className="yellow bg-dark"
                                 // fixMainPosition={false}
                                 calendarPosition={`bottom`}
@@ -267,7 +269,8 @@ const Information = () =>{
                     </div>
                     <div className="w-full flex justify-center">
                         <button
-                            className='mt-10 font-bold bg-labelGreen text-black px-24 py-4 rounded-md text-sm hover:opacity-90'
+                            disabled={context.accountInfo.verified === "accept"}
+                            className='disabled:cursor-not-allowed disabled:bg-neutral-400 mt-10 font-bold bg-labelGreen text-black px-24 py-4 rounded-md text-sm hover:opacity-90'
                             onClick={handleRecordUserInfo}>ثبت تغییرات
                         </button>
                     </div>

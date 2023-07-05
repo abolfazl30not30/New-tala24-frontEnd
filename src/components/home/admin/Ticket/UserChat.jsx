@@ -9,8 +9,8 @@ import api from "../../../../api/api";
 
 function AdminChat(props) {
     useEffect(() => {
-        if (localStorage.getItem('role') !== "ADMIN") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "ADMIN") {
+            sessionStorage.clear()
             props.history.push("/sign-in")
         }
     }, [props.history]);
@@ -18,8 +18,8 @@ function AdminChat(props) {
     const [constructorHasRun, setConstructorHasRun] = useState(false);
     const constructor = () => {
         if (constructorHasRun) return;
-        if (localStorage.getItem('role') !== "ADMIN") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "ADMIN") {
+            sessionStorage.clear()
             window.location = ("/sign-in")
         }
         setConstructorHasRun(true);

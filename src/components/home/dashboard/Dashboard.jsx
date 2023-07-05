@@ -35,14 +35,14 @@ const Dashboard = () => {
 
     useEffect(() => {
         axios.post("http://localhost:8090/login",
-            {username: localStorage.getItem("username"), password: localStorage.getItem("password")}, {
+            {username: sessionStorage.getItem("username"), password: sessionStorage.getItem("password")}, {
                 withCredentials: true,
                 headers: {
                     'Access-Control-Allow-Headers': ['Set-Cookie', 'Content-Type', "x-xsrf-token"],
                 }
             }
         ).then((response) => {
-            localStorage.setItem("Authorization", response.headers["authorization"])
+            sessionStorage.setItem("Authorization", response.headers["authorization"])
         }).catch((error) => {
             navigate("/")
         })

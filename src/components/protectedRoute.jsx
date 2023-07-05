@@ -14,7 +14,7 @@ class ProtectedRoute extends Component {
             this.setState({isAuth: true})
             return this.state.isAuth
         } else if (loginResponse.status === 403) {
-            localStorage.clear()
+            sessionStorage.clear()
             this.setState({isAuth: false})
             return this.state.isAuth
         }

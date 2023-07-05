@@ -139,7 +139,7 @@ function Sidebar() {
                             </div>
                         </div>
                     </NavLink>
-                    <NavLink onClick={() => localStorage.clear()} to="/" className={"w-100"} activeClassName="active">
+                    <NavLink onClick={() => sessionStorage.clear()} to="/" className={"w-100"} activeClassName="active">
                         <div className="d-flex flex-row align-items-center sidebar-list-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5}

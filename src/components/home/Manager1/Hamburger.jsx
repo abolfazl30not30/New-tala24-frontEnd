@@ -98,7 +98,7 @@ const Hamburger = () => {
                             <ListItemText primary="تیکت"/>
                         </ListItemButton>
                     </NavLink>
-                    <NavLink onClick={() => localStorage.clear()} exact to="/" activeClassName="active-navbar">
+                    <NavLink onClick={() => sessionStorage.clear()} exact to="/" activeClassName="active-navbar">
                         <ListItemButton>
                             <ListItemIcon>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

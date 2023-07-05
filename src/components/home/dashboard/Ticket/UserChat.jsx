@@ -12,8 +12,8 @@ function UserChat(props) {
     const context = useContext(signup);
 
     useEffect(() => {
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "USER") {
+            sessionStorage.clear()
             props.history.push("/login")
         }
     }, [props.history]);
@@ -21,8 +21,8 @@ function UserChat(props) {
     const [constructorHasRun, setConstructorHasRun] = useState(false);
     const constructor = () => {
         if (constructorHasRun) return;
-        if (localStorage.getItem('role') !== "USER") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "USER") {
+            sessionStorage.clear()
             window.location = ("/login")
         }
         setConstructorHasRun(true);

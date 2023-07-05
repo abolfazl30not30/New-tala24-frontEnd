@@ -96,7 +96,12 @@ export default function Address() {
             });
         }
     }
-
+    const resetInputAddress = () =>{
+        setState("")
+        setCity("")
+        setAddressContent("")
+        setPostalCode("")
+    }
     const getAddress = async () => {
         const getAddressResponse = await api.get(`info/show/address`)
         setAddresses(getAddressResponse)
@@ -166,6 +171,7 @@ export default function Address() {
                 postalCode: postalCode
             })
             getAddress();
+            resetInputAddress();
             setIsOpenAddAddress(false)
         }
     }
@@ -182,20 +188,19 @@ export default function Address() {
     }
 
     const editAddress = async () => {
-        console.log(targetAddress)
-
         const valid = await editAddressValidation();
         console.log(targetAddress)
         if (valid !== undefined) {
-            await api.put(`info/address/${targetAddress.id}`, {targetAddress})
+            await api.put(`info/update/address/${targetAddress.id}`, targetAddress)
             getAddress();
             setIsOpenEditAddress(false)
         }
 
     }
 
-    const deleteAddress = () => {
-        console.log(targetAddressByDelete)
+    const deleteAddress = async () => {
+        await api.delete(`info/${targetAddressByDelete}`)
+        getAddress();
         setIsOpenDeleteAddress(false)
     }
 
@@ -571,8 +576,7 @@ export default function Address() {
                                             <button
                                                 type="button"
                                                 className="inline-flex justify-center rounded-md border border-transparent ml-4 bg-red-600 text-white px-4 py-2 text-sm font-medium"
-                                                onClick={deleteAddress}
-                                            >
+                                                onClick={deleteAddress}>
                                                 حذف
                                             </button>
                                             <button

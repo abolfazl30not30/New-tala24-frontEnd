@@ -53,7 +53,7 @@ const SignupOrLogin = () => {
                 navigate(`/OTP-code/${number}`)
             } else if (res?.data.status === "exist") {
                 info.setPasswordAllowed(true)
-                localStorage.setItem("username", number)
+                sessionStorage.setItem("username", number)
                 navigate("/password")
             }
         }

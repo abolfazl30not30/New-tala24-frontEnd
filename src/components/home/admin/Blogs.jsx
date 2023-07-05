@@ -25,8 +25,8 @@ function RTL(props) {
 
 export default function Blogs(props) {
     useEffect(() => {
-        if (localStorage.getItem('role') !== "ADMIN") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "ADMIN") {
+            sessionStorage.clear()
             props.history.push("/sign-in")
         }
     }, [props.history]);
@@ -35,8 +35,8 @@ export default function Blogs(props) {
     const constructor = () => {
         if (constructorHasRun) return;
         // const navigate = useNavigate();
-        if (localStorage.getItem('role') !== "ADMIN") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "ADMIN") {
+            sessionStorage.clear()
             window.location = ("/sign-in")
         }
         setConstructorHasRun(true);
