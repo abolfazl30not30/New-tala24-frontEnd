@@ -3,7 +3,7 @@ import {BsList} from 'react-icons/bs';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {BsPersonCircle} from "react-icons/bs";
 import signup from "../../../contexts/signup";
 import {BsCashCoin} from "react-icons/bs";
@@ -14,8 +14,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 
 function Navbar() {
-    const context = useContext(signup);
+    const navigate = useNavigate();
 
+    const context = useContext(signup);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -61,6 +62,7 @@ function Navbar() {
                     </div>
                 </div>
             </div>
+            <div className="profileMenu">
             <div className="mx-3">
                 <Button
                     id="navbar-dropdown-button"
@@ -75,43 +77,43 @@ function Navbar() {
                          alt="profile"/>
                 </Button>
             </div>
-            <Menu
-                anchorEl={anchorEl}
-                id="account-menu"
-                open={open}
-                onClose={handleClose}
-                onClick={handleClose}
-                PaperProps={{
-                    elevation: 0,
-                    sx: {
-                        bgcolor:"#252525",
-                        borderRadius:"1.5rem",
-                        overflow: 'visible',
-                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                        mt: 1.5,
-                        '& .MuiAvatar-root': {
-                            width: 32,
-                            height: 32,
-                            ml: -0.5,
-                            mr: 1,
+
+                <Menu
+                    anchorEl={anchorEl}
+                    id="account-menu"
+                    open={open}
+                    onClose={handleClose}
+                    onClick={handleClose}
+                    PaperProps={{
+                        elevation: 0,
+                        sx: {
+                            bgcolor:"#252525",
+                            borderRadius:"1.5rem",
+                            overflow: 'visible',
+                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                            mt: 1.5,
+                            '& .MuiAvatar-root': {
+                                width: 32,
+                                height: 32,
+                                ml: -0.5,
+                                mr: 1,
+                            },
                         },
-                    },
-                }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            >
-                <MenuItem>
-                    <Link to="/dashboard/home" onClick={handleClose}>
+                    }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                >
+                    <MenuItem onClick={()=>{handleClose();
+                        navigate("/dashboard/home")}}>
                         <div className="flex items-center">
                             <img className="w-10"
                                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
                                  alt="profile"/> <span className="mr-2">پنل کاربر</span>
                         </div>
-                    </Link>
-                </MenuItem>
-                <Divider className="bg-neutral-600" />
-                <MenuItem>
-                    <Link to="/"  className="flex items-center" onClick={handleClose}>
+                    </MenuItem>
+                    <Divider className="bg-neutral-600" />
+                    <MenuItem onClick={()=>{handleClose();
+                        navigate("/")}}>
                         <ListItemIcon>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                                  stroke="currentColor" width='16' height='16' className="ml-2 w-5 h-5 text-white">
@@ -120,10 +122,9 @@ function Navbar() {
                             </svg>
                         </ListItemIcon>
                         صفحه اصلی
-                    </Link>
-                </MenuItem>
-                <MenuItem >
-                    <Link to="/dashboard/inventory-increase" className="flex items-center" onClick={handleClose}>
+                    </MenuItem>
+                    <MenuItem onClick={()=>{handleClose();
+                        navigate("/dashboard/inventory-increase")}}>
                         <ListItemIcon>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5} stroke="currentColor" className="ml-2 w-5 h-5 text-white">
@@ -132,10 +133,10 @@ function Navbar() {
                             </svg>
                         </ListItemIcon>
                         افزایش موجودی
-                    </Link>
-                </MenuItem>
-                <MenuItem >
-                    <Link to="/" className="flex items-center" onClick={() => {sessionStorage.clear();handleClose}}>
+                    </MenuItem>
+                    <MenuItem onClick={() => {navigate('/');
+                        sessionStorage.clear();
+                        handleClose();}}>
                         <ListItemIcon>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                                  stroke="currentColor" width='16' height='16' className="ml-2 w-5 h-5 text-white">
@@ -144,51 +145,9 @@ function Navbar() {
                             </svg>
                         </ListItemIcon>
                         خروج
-                    </Link>
-                </MenuItem>
-            </Menu>
-            {/*<Menu*/}
-            {/*    id="basic-menu"*/}
-            {/*    anchorEl={anchorEl}*/}
-            {/*    open={open}*/}
-            {/*    onClose={handleClose}*/}
-            {/*    MenuListProps={{*/}
-            {/*        'aria-labelledby': 'basic-button',*/}
-            {/*    }}>*/}
-
-            {/*    <MenuItem>*/}
-            {/*        <Link to='/' className="flex flex-row items-center">*/}
-            {/*            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}*/}
-            {/*                 stroke="currentColor" width='16' height='16' className="ml-2">*/}
-            {/*                <path strokeLinecap="round" strokeLinejoin="round"*/}
-            {/*                      d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>*/}
-            {/*            </svg>*/}
-            {/*            صفحه اصلی*/}
-            {/*        </Link>*/}
-            {/*    </MenuItem>*/}
-            {/*    <MenuItem>*/}
-            {/*        <Link to='/dashboard/home' className="flex flex-row items-center">*/}
-            {/*            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}*/}
-            {/*                 stroke="currentColor" width='16' height='16' className="ml-2">*/}
-            {/*                <path strokeLinecap="round" strokeLinejoin="round"*/}
-            {/*                      d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>*/}
-            {/*            </svg>*/}
-            {/*            حساب کاربری*/}
-            {/*        </Link>*/}
-            {/*    </MenuItem>*/}
-            {/*    <MenuItem>*/}
-            {/*        <Link to='/' className="flex flex-row items-center" onClick={() => {*/}
-            {/*            sessionStorage.clear()*/}
-            {/*        }}>*/}
-            {/*            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}*/}
-            {/*                 stroke="currentColor" width='16' height='16' className="ml-2">*/}
-            {/*                <path strokeLinecap="round" strokeLinejoin="round"*/}
-            {/*                      d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/>*/}
-            {/*            </svg>*/}
-            {/*            خروج از حساب*/}
-            {/*        </Link>*/}
-            {/*    </MenuItem>*/}
-            {/*</Menu>*/}
+                    </MenuItem>
+                </Menu>
+            </div>
         </div>
     );
 }

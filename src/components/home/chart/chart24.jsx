@@ -95,9 +95,9 @@ const Chart24 = () => {
                     </h2>
                 </div>
                 <div className="flex justify-around flex-col md:flex-row">
-                    <div className={'w-[35%] p-5'}>
-                        <div className="flex flex-col md:flex-row">
-                            <div className={'w-[50%] bg-mainGray flex flex-col items-center px-10 py-4 mx-2 rounded-2xl my-2 md:my-0'}>
+                    <div className={'w-full md:w-[35%] p-5'}>
+                        <div className="flex flex-col items-center md:flex-row">
+                            <div className={'w-full md:w-[50%] bg-mainGray flex flex-col items-center px-10 py-4 mx-2 rounded-2xl my-2 md:my-0'}>
                                 <div className="text-labelGreen mb-2 flex items-center">
                                     <span className="ml-2"><BiCartDownload/></span>
                                     <h2 className="text-[0.9rem]">مظنه خرید</h2>
@@ -107,7 +107,7 @@ const Chart24 = () => {
                                     <span className="mr-2">ریال</span>
                                 </div>
                             </div>
-                            <div className={'w-[50%] bg-mainGray flex flex-col items-center px-10 py-4 mx-2 rounded-2xl my-2 md:my-0'}>
+                            <div className={'w-full md:w-[50%] bg-mainGray flex flex-col items-center px-10 py-4 mx-2 rounded-2xl my-2 md:my-0'}>
                                 <div className="text-red-600 mb-2 flex items-center">
                                     <span className="ml-2"><MdSell/></span>
                                     <h2 className="text-[0.9rem]" >مظنه فروش</h2>
@@ -124,7 +124,7 @@ const Chart24 = () => {
                                 نام در سامانه</Link>
                         </div>
                     </div>
-                    <div className={'w-[65%] p-5'}>
+                    <div className={'w-full md:w-[65%] p-5'}>
                         <div className={'mainPrice mb-3 pb-5'}>
                         <span className={'text-2xl text-white'}>
                             آخرین قیمت طلا

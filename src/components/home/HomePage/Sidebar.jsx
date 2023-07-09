@@ -32,6 +32,18 @@ const Sidebar = (props) => {
                                      className="block py-2 pl-3 pr-4 text-white rounded hover:text-gold md:hover:bg-transparent md:hover:text-gold md:border-0 md:hover:text-blue-700 md:p-0">خدمات</Link>
                         </li>
                         <li>
+                            <Link to="/rules" activeClassName="active"
+                                  className="block py-2 pl-3 pr-4 text-white rounded hover:text-gold md:hover:bg-transparent md:hover:text-gold md:border-0 md:hover:text-blue-700 md:p-0">قوانین و مقررات </Link>
+                        </li>
+                        <li>
+                            <Link to="/education" activeClassName="active"
+                                  className="block py-2 pl-3 pr-4 text-white rounded hover:text-gold md:hover:bg-transparent md:hover:text-gold md:border-0 md:hover:text-blue-700 md:p-0">آموزش</Link>
+                        </li>
+                        <li>
+                            <Link to="/blog" activeClassName="active"
+                                  className="block py-2 pl-3 pr-4 text-white rounded hover:text-gold md:hover:bg-transparent md:hover:text-gold md:border-0 md:hover:text-blue-700 md:p-0">بلاگ</Link>
+                        </li>
+                        <li>
                             <Link to="/about-us" activeClassName="active"
                                      className="block py-2 pl-3 pr-4 text-white  rounded hover:text-gold md:hover:bg-transparent md:hover:text-gold md:border-0 md:hover:text-blue-700 md:p-0 ">درباره ما</Link>
                         </li>

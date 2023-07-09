@@ -7,7 +7,7 @@ import '../../../style/footer.css'
 const Footer = () => {
 
     return (
-        <div className={'bg-footerColor xsm:mt-5 pt-16'}>
+        <div className={'px-10 md:px-0 bg-footerColor xsm:mt-5 pt-16'}>
             <div className={'footer-style flex justify-around flex-col md:flex-row items-start md:flex justify-center text-white text-right'}>
                 <div className={'w-full md:w-1/3'}>
                     <div>
@@ -26,7 +26,7 @@ const Footer = () => {
                     </div>
                     <div className={'f1 mt-4'}></div>
                 </div>
-                <div className={''}>
+                <div className={'mt-10 md:mt-0'}>
                     <div>
                         <h2 className={'footer-title text-sm md:mb-3 xsm:mb-5'}>
                             ارتباط با ما
@@ -57,8 +57,7 @@ const Footer = () => {
                     </div>
                     <div className={'f1 mt-4'}></div>
                 </div>
-
-                <div className={''}>
+                <div className={'mt-10 md:mt-0'}>
                     <div>
                         <h2 className={'footer-title text-sm mb-3'}>
                             لینک های مفید

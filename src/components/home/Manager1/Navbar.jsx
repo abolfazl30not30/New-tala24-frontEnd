@@ -3,12 +3,15 @@ import {BsList, BsPersonCircle} from 'react-icons/bs';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
 
 
 function Navbar() {
+
+    const navigate = useNavigate();
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -28,53 +31,55 @@ function Navbar() {
                     <BsList/>
                 </button>
             </div>
+            <div className="profileMenu">
             <Button
                 id="navbar-dropdown-button"
                 aria-controls={open ? 'basic-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
-                sx={{color: '#fff'}}
-            >
-                <BsPersonCircle className="text-3xl text-white"/>
+                sx={{color: '#fff'}}>
+
+                <img className="w-10"
+                     src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                     alt="profile"/>
             </Button>
-            <Menu
-                anchorEl={anchorEl}
-                id="account-menu"
-                open={open}
-                onClose={handleClose}
-                onClick={handleClose}
-                PaperProps={{
-                    elevation: 0,
-                    sx: {
-                        bgcolor:"#252525",
-                        borderRadius:"1.5rem",
-                        overflow: 'visible',
-                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                        mt: 1.5,
-                        '& .MuiAvatar-root': {
-                            width: 32,
-                            height: 32,
-                            ml: -0.5,
-                            mr: 1,
+                <Menu
+                    anchorEl={anchorEl}
+                    id="account-menu"
+                    open={open}
+                    onClose={handleClose}
+                    onClick={handleClose}
+                    PaperProps={{
+                        elevation: 0,
+                        sx: {
+                            bgcolor:"#252525",
+                            borderRadius:"1.5rem",
+                            overflow: 'visible',
+                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                            mt: 1.5,
+                            '& .MuiAvatar-root': {
+                                width: 32,
+                                height: 32,
+                                ml: -0.5,
+                                mr: 1,
+                            },
                         },
-                    },
-                }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            >
-                <MenuItem>
-                    <Link to="/manager/add-admin" onClick={handleClose}>
+                    }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                >
+                    <MenuItem onClick={()=>{handleClose();
+                        navigate("/manager/add-admin")}}>
                         <div className="flex items-center">
                             <img className="w-10"
                                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
                                  alt="profile"/> <span className="mr-2">پنل مدیر</span>
                         </div>
-                    </Link>
-                </MenuItem>
-                <Divider className="bg-neutral-600" />
-                <MenuItem>
-                    <Link to="/"  className="flex items-center" onClick={handleClose}>
+                    </MenuItem>
+                    <Divider className="bg-neutral-600" />
+                    <MenuItem onClick={()=>{handleClose();
+                        navigate("/")}}>
                         <ListItemIcon>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                                  stroke="currentColor" width='16' height='16' className="ml-2 w-5 h-5 text-white">
@@ -83,10 +88,9 @@ function Navbar() {
                             </svg>
                         </ListItemIcon>
                         صفحه اصلی
-                    </Link>
-                </MenuItem>
-                <MenuItem>
-                    <Link to="/manager/confirm-buy" className="flex items-center" onClick={handleClose}>
+                    </MenuItem>
+                    <MenuItem onClick={()=>{handleClose();
+                        navigate("/manager/confirm-buy")}}>
                         <ListItemIcon>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  strokeWidth={1.5} stroke="currentColor" className="ml-2 w-5 h-5 text-white">
@@ -95,10 +99,10 @@ function Navbar() {
                             </svg>
                         </ListItemIcon>
                         درخواست خرید
-                    </Link>
-                </MenuItem>
-                <MenuItem >
-                    <Link to="/" className="flex items-center" onClick={() => {sessionStorage.clear();handleClose}}>
+                    </MenuItem>
+                    <MenuItem onClick={() => {navigate('/');
+                        sessionStorage.clear();
+                        handleClose();}}>
                         <ListItemIcon>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                                  stroke="currentColor" width='16' height='16' className="ml-2 w-5 h-5 text-white">
@@ -107,9 +111,9 @@ function Navbar() {
                             </svg>
                         </ListItemIcon>
                         خروج
-                    </Link>
-                </MenuItem>
-            </Menu>
+                    </MenuItem>
+                </Menu>
+            </div>
         </div>
     );
 }

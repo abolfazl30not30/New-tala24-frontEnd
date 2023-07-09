@@ -10,6 +10,7 @@ import {AiFillLinkedin} from "react-icons/ai";
 import {Link, useParams} from "react-router-dom";
 import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 import { RWebShare } from "react-web-share";
+import { Markup } from 'interweave'
 
 export default function Blog2() {
     const [blogs, setBlogs] = useState([])
@@ -66,9 +67,7 @@ export default function Blog2() {
                         <div className="flex flex-col">
                             <div>
                                 <p className="text-white opacity-80 text-right  my-6 sm:text-base md:text-base lg:text-base text-sm mx-4">
-                                    {
-                                        detailsOfBlog.description
-                                    }
+                                    {<Markup content={detailsOfBlog.description}/> }
                                 </p>
                             </div>
                             <div className="flex justify-between my-2 mx-1">

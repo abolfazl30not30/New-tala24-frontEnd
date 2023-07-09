@@ -39,10 +39,10 @@ const Slider = () => {
             <div className="flex  flex-col items-center md:items-start md:flex-row  justify-center">
                 <div className="w-[85%] md:w-[30%] flex justify-center items-center mr-0 md:mr-6 text-center md:text-right">
                         <div className="mt-16 md:mt-20">
-                            <h2 className={'font-bold text-white whitespace-nowrap lg:text-[2rem] md:text-[1.5rem] mb-10 xsm:text-center xsm:text-[1.5rem] xsm:mt-3'}>
+                            <h2 className={'font-bold text-white whitespace-nowrap lg:text-[2rem] md:text-[1.2rem] mb-10 xsm:text-center xsm:text-[1.2rem] xsm:mt-3'}>
                                 مطمئن ترین راه برای <span className={"text-span text-gold"}>سرمایه گذاری در طلا </span>
                             </h2>
-                            <p className={'text-white lg:text-[1rem] md:text-[0.8rem] leading-7 font-thin xsm:text-[0.9rem]'}>
+                            <p className={'text-white text-[0.8rem] lg:text-[1rem] md:text-[0.9rem] font-thin'}>
                                 در طلا۲۴ میتوانید به صورت ۲۴ ساعته و با حداقل سرمایه و نقدیتگی ، کلیه درخواست های خود را ثبت و به صورت آنی و لحظه ای معامله طلایی بدون دستمزد داشته و پس انداز طلایی داشته باشید.
                             </p>
                         </div>
