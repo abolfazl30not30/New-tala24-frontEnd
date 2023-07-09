@@ -58,7 +58,9 @@ function Sidebar() {
                 </div>
 
                 <div className="logo">
-                    <img src={"https://cloud.tala24.co/images/logo192.png"} className="w-[40%] sm:w-[30%]  md:w-1/2" alt={'logo'}/>
+                    <Link to="/" className="flex justify-center items-center">
+                        <img src={"https://cloud.tala24.co/images/logo192.png"} className="w-[40%] sm:w-[30%]  md:w-1/2" alt={'logo'}/>
+                    </Link>
                 </div>
 
                 <div className="sidebar-list mt-4">
