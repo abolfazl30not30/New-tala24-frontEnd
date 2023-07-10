@@ -29,6 +29,7 @@ export default function Blog() {
         console.log(blogResponse)
         setBlogs(blogResponse)
     }
+
     const getPopularBolg = async (count) => {
         const blogResponse = await api.get(`blog/popular/${count}`)
         setPopularBlog(blogResponse)

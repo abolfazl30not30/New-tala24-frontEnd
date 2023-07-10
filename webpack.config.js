@@ -9,7 +9,6 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: "/"
     },
-
     performance: {
         hints: false,
         maxEntrypointSize: 512000,
