@@ -14,6 +14,8 @@ import "react-multi-date-picker/styles/colors/yellow.css";
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
 import * as yup from "yup";
 import {toast} from "react-toastify";
+import SaveIcon from "@mui/icons-material/Save";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const cacheRtl = createCache({
     key: 'muirtl',
@@ -31,7 +33,7 @@ const Information = () =>{
     const [dateOfBirth, setDateOfBirth] = useState()
     const [nationalCode, setNationalCode] = useState()
     const [nationalCardImage, setNationalCardImage] = useState();
-
+    const [loading, setLoading] = useState(false)
 
     const validation = async () => {
 
@@ -82,6 +84,7 @@ const Information = () =>{
     }, []);
 
     const handleRecordUserInfo = async () => {
+        setLoading(true)
         const valid = await validation();
         if (valid !== undefined){
             await api.post("info/personalInformation", {
@@ -105,6 +108,7 @@ const Information = () =>{
                 theme: "colored",
             });
         }
+        setLoading(false)
     }
 
     const handleDateEndInput = (value) => {
@@ -268,11 +272,25 @@ const Information = () =>{
                         </label>
                     </div>
                     <div className="w-full flex justify-center">
-                        <button
-                            disabled={context.accountInfo.verified === "accept"}
-                            className='disabled:cursor-not-allowed disabled:bg-neutral-400 mt-10 font-bold bg-labelGreen text-black px-24 py-4 rounded-md text-sm hover:opacity-90'
-                            onClick={handleRecordUserInfo}>ثبت تغییرات
-                        </button>
+                        {
+                            loading === true ? (
+                                <LoadingButton
+                                    className='mt-10 font-bold bg-green-400 text-black px-24 py-4 rounded-md text-sm hover:opacity-90'
+                                    loading
+                                    sx={{bgcolor:"#3EEF7BFF"}}
+                                    loadingPosition="start"
+                                    startIcon={<SaveIcon/>}
+                                    variant="outlined">
+                                    ثبت تغییرات
+                                </LoadingButton>
+                            ) : (
+                                <button
+                                    disabled={context.accountInfo.verified === "accept"}
+                                    className='disabled:cursor-not-allowed disabled:bg-neutral-400 mt-10 font-bold bg-labelGreen text-black px-24 py-4 rounded-md text-sm hover:opacity-90'
+                                    onClick={handleRecordUserInfo}>ثبت تغییرات
+                                </button>
+                            )
+                        }
                     </div>
                 </div>
             </CacheProvider>

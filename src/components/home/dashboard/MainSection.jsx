@@ -19,6 +19,7 @@ import UserProfile from './UserProfile/UserProfile'
 import BankAccounts from "./BankAccounts";
 import signup from "../../../contexts/signup";
 import WithDrawMoney from "./WithDrawMoney";
+import ProtectVerify from "./ProtectVerify";
 
 const MainSection = () => {
     const context = useContext(signup)

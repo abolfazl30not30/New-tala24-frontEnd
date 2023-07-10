@@ -53,7 +53,7 @@ const MainNavbar = () => {
 
     return (
         <div className="mb-7">
-            <nav className="border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900"
+            <nav className="border-gray-200 px-5 sm:px-12 py-2.5 rounded dark:bg-gray-900"
                  style={{backgroundColor: "transparent"}}>
                 <div className="container  flex flex-1 flex-wrap justify-between">
                     <div className="flex flex-wrap items-center justify-start mx-auto">
