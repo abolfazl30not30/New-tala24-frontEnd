@@ -27,6 +27,7 @@ function UserChat(props) {
         }
         setConstructorHasRun(true);
     };
+
     constructor()
 
     const {id} = useParams()
@@ -46,12 +47,11 @@ function UserChat(props) {
 
 
     const handleSendMessage = async () => {
-        const accountData = await api.get(`info/show/personalInformation`)
         await api.put(`ticket/${id}`, {
             status: "pending",
             chatList: [
                 {
-                    sender: accountData.firstName + " " + accountData.lastName,
+                    role:"user",
                     message: typedMessage
                 }
             ]
@@ -79,7 +79,7 @@ function UserChat(props) {
                             <div className="chat-messenger-body">
                                 {
                                     chat.chatList.map((mes) => (
-                                        mes.sender === 'admin'
+                                        mes.role === 'admin'
                                             ? (
                                                 <>
                                                     <div className="flex justify-center">
@@ -91,7 +91,7 @@ function UserChat(props) {
                                                         <div className="flex flex-col">
                                                             <div className='chat-messenger-item-info'>
                                                                 <Stack direction="row" spacing={1}>
-                                                                    <Avatar className='ml-2'>پ</Avatar>
+                                                                    <Avatar className='ml-2'>{mes.sender.slice(0, 1)}</Avatar>
                                                                 </Stack>
                                                                 <span
                                                                     className='text-xs text-gray-100 font-normal'>{mes.sender}</span>
@@ -139,11 +139,12 @@ function UserChat(props) {
                                     placeholder='یک پیام تایپ کنید...'
                                     className='basis-10/12 ml-2 outline-0 rounded bg-[#1e1e1e] p-2 border-[1px] border-gray-600 border-solid text-[12px] font-normal'
                                     onChange={(e) => updateTypedMessage(e.target.value)}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                                 />
                                 <button
+                                    type="submit"
                                     className='basis-2/12 rounded bg-[#dfaf3d] text-black p-2 text-base font-normal flex justify-center'
-                                    onClick={handleSendMessage}
-                                >
+                                    onClick={handleSendMessage} onKeyPress={(e) => console.log(e.key)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round"

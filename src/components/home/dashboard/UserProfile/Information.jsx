@@ -35,6 +35,10 @@ const Information = () =>{
     const [nationalCardImage, setNationalCardImage] = useState();
     const [loading, setLoading] = useState(false)
 
+    async function GetAccountInfo() {
+        const res = await api.get(`account/currentUser`)
+        context.setAccountInfo(res)
+    }
     const validation = async () => {
 
         const infoSchema = yup.object().shape({
@@ -108,6 +112,7 @@ const Information = () =>{
                 theme: "colored",
             });
         }
+        GetAccountInfo()
         setLoading(false)
     }
 
