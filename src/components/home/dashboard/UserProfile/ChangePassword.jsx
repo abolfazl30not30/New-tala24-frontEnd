@@ -23,6 +23,7 @@ const ChangePassword = () =>{
     const [newPassword, setNewPassword] = useState()
     const [repeatNewPassword, setRepeatNewPassword] = useState()
     const [isSendOTP,setIsSendOTP] = useState(false)
+    const [isSendAgainOTP,setIsSendAgainOTP] = useState(false)
 
     const validation = async () => {
         const schema = yup.object().shape({
@@ -54,14 +55,8 @@ const ChangePassword = () =>{
 
     const renderer = ({ hours, minutes, seconds, completed }) => {
         if (completed) {
-            // Render a completed state
-            return (
-                <button className="px-4 py-4 bg-labelGreen rounded" onClick={sendOTPCode}>
-                    ارسال مجدد كد
-                </button>
-            );
+            setIsSendOTP(false)
         } else {
-            // Render a countdown
             return <span className="text-[0.8rem] text-neutral-300">{minutes}:{seconds} مانده تا دریافت مجدد کد</span>;
         }
     };
@@ -108,6 +103,11 @@ const ChangePassword = () =>{
         setIsSendOTP(true)
     }
 
+    const sendOTPCodeAgain = async () => {
+        const res = await api.post("register/updatePassword/sendOTP/panel")
+        setIsSendOTP(false)
+        setIsSendAgainOTP(false)
+    }
     return(
         <div className="flex flex-col">
             <CacheProvider value={cacheRtl}>
@@ -115,6 +115,7 @@ const ChangePassword = () =>{
                     <div className="flex justify-around">
                         <div className="w-1/2">
                             <TextField
+                                disabled={!isSendOTP}
                                 fullWidth
                                 inputProps={{
                                     autocomplete: 'new-password',
@@ -124,7 +125,7 @@ const ChangePassword = () =>{
                                 }}
                                 label={"كد تاييد"}
                                 value={OTPCode}
-                                type={"text"}
+                                type={"number"}
                                 sx={{label: {color: '#fff !important'}, input: {color: '#fff !important'}}}
                                 onChange={(e) => setOTPCode(e.target.value)}/>
                         </div>
@@ -156,8 +157,7 @@ const ChangePassword = () =>{
                             value={newPassword}
                             type={"password"}
                             sx={{label: {color: '#fff !important'}, input: {color: '#fff !important'}}}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                        />
+                            onChange={(e) => setNewPassword(e.target.value)}/>
                         <TextField
                             label={"تکرار رمز عبور جدید"}
                             inputProps={{

@@ -84,6 +84,7 @@ export default function AddAdmin(props) {
         await api.post("user/admin", addAdmin)
         getAdmins()
         setIsOpen(false);
+
     }
 
     const handleDeleteAdmin = async (e) => {

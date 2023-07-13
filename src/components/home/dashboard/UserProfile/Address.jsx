@@ -17,6 +17,7 @@ import {BsTrashFill} from "react-icons/bs";
 import api from "../../../../api/api";
 import * as yup from "yup";
 import {toast} from "react-toastify";
+import Divider from "@mui/material/Divider";
 
 const cacheRtl = createCache({
     key: 'muirtl',
@@ -24,14 +25,19 @@ const cacheRtl = createCache({
 });
 
 export default function Address() {
+
+
     const [addresses, setAddresses] = useState([]);
     const [isOpenAddAddress, setIsOpenAddAddress] = useState(false)
     const [isOpenEditAddress, setIsOpenEditAddress] = useState(false)
     const [isOpenDeleteAddress, setIsOpenDeleteAddress] = useState(false)
+    const [searchProvince,setSearchProvince] = useState("")
+    const [searchCity,setSearchCity] = useState("")
     const [state, setState] = React.useState('');
     const [city, setCity] = React.useState('');
     const [addressContent, setAddressContent] = React.useState('');
     const [postalCode, setPostalCode] = React.useState('');
+    const [targetProvince,setTargetProvince] = useState("")
     const [targetAddress, setTargetAddress] = React.useState({
         province: '',
         city: '',
@@ -111,7 +117,7 @@ export default function Address() {
     }, []);
 
     const getStateList = async () => {
-        const getStateResponse = await api.get(`province/provinceName`)
+        const getStateResponse = await api.get(`province/provinceName?stateName=`)
         setStateList(getStateResponse)
     }
 
@@ -149,11 +155,12 @@ export default function Address() {
 
     const handleChangeState = async (state) => {
         setState(state.target.value);
+        setTargetProvince(state.target.value)
         await getCityList(state.target.value)
     };
 
     const getCityList = async (state) => {
-        const getCityResponse = await api.get(`province/city/${state}`)
+        const getCityResponse = await api.get(`province/${state}/city?cityName=`)
         setCityList(getCityResponse)
     }
 
@@ -204,6 +211,18 @@ export default function Address() {
         setIsOpenDeleteAddress(false)
     }
 
+    const handleProvinceSearch = async (e) =>{
+        console.log(e.target.value)
+        setSearchProvince(e.target.value)
+        const getStateResponse = await api.get(`province/provinceName?stateName=${e.target.value}`)
+        setStateList(getStateResponse)
+    }
+
+    const handleCitySearch = async (e) =>{
+        setSearchCity(e.target.value)
+        const getCityResponse = await api.get(`province/${targetProvince}/city?cityName=${e.target.value}`)
+        setCityList(getCityResponse)
+    }
     return (
         <>
             <div className="flex flex-col space-y-4">
@@ -226,8 +245,7 @@ export default function Address() {
                             enterTo="opacity-100"
                             leave="ease-in duration-200"
                             leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                        >
+                            leaveTo="opacity-0">
                             <div className="fixed inset-0 bg-black bg-opacity-25"/>
                         </Transition.Child>
 
@@ -266,6 +284,19 @@ export default function Address() {
                                                                 value={state}
                                                                 label="استان"
                                                                 onChange={handleChangeState}>
+                                                                {/*<div>*/}
+                                                                {/*    <TextField*/}
+                                                                {/*        label={"جستوجو...."}*/}
+                                                                {/*        value={searchProvince}*/}
+                                                                {/*        type={"number"}*/}
+                                                                {/*        style={{margin:"0.5rem 0.5rem"}}*/}
+                                                                {/*        sx={{*/}
+                                                                {/*            label: {color: '#fff !important'},*/}
+                                                                {/*            input: {color: '#fff !important'}*/}
+                                                                {/*        }}*/}
+                                                                {/*        onChange={(e)=>{handleProvinceSearch(e)}}/>*/}
+                                                                {/*</div>*/}
+                                                                <Divider/>
                                                                 {
                                                                     stateList.map((item, index) => (
                                                                         <MenuItem value={item}>{item}</MenuItem>
@@ -277,16 +308,27 @@ export default function Address() {
                                                             <InputLabel id="city-select-label" sx={{
                                                                 color: '#fff',
                                                                 textAlign: 'right',
-                                                                "&.Mui-focused": {color: '#fff'}
-                                                            }}>شهر</InputLabel>
+                                                                "&.Mui-focused": {color: '#fff'}}}>شهر</InputLabel>
                                                             <Select
                                                                 labelId="city-select-label"
                                                                 id="city-select"
                                                                 value={city}
                                                                 label="شهر"
                                                                 onChange={handleChangeCity}
-                                                                sx={{textAlign: 'right'}}
-                                                            >
+                                                                sx={{textAlign: 'right'}}>
+                                                                {/*<div>*/}
+                                                                {/*    <TextField*/}
+                                                                {/*        label={"جستوجو...."}*/}
+                                                                {/*        value={searchCity}*/}
+                                                                {/*        type={"number"}*/}
+                                                                {/*        style={{margin:"0.5rem 0.5rem"}}*/}
+                                                                {/*        sx={{*/}
+                                                                {/*            label: {color: '#fff !important'},*/}
+                                                                {/*            input: {color: '#fff !important'}*/}
+                                                                {/*        }}*/}
+                                                                {/*        onChange={(e)=>{handleCitySearch(e)}}/>*/}
+                                                                {/*</div>*/}
+                                                                <Divider/>
                                                                 {
                                                                     cityList?.map((item, index) => (
                                                                         <MenuItem value={item}>{item}</MenuItem>
@@ -297,8 +339,6 @@ export default function Address() {
                                                     </Box>
                                                     <TextField
                                                         label={"آدرس"}
-                                                        // error={errors.length !== 0}
-                                                        /* disabled={!firstNameAllowed}*/
                                                         value={addressContent}
                                                         type={"text"}
                                                         sx={{
