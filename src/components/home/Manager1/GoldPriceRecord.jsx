@@ -9,13 +9,11 @@ import {InputAdornment, TextField} from "@mui/material";
 import './../../../style/admin.css'
 import api from "../../../api/api";
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import {SeparateNumber} from "../../../helper/SeparateNumber";
 import {LiveSeparate} from "../../../helper/LiveSeparate";
 import {RemoveComma} from "../../../helper/RemoveComma";
+import * as yup from "yup";
+import {toast} from "react-toastify";
 
 // Create RTL MUI
 const theme = createTheme({
@@ -54,16 +52,35 @@ export default function Quote(props) {
     let [quoteBuyPrice, setQuoteBuyPrice] = useState(null)
     let [quoteSellPrice, setQuoteSellPrice] = useState(null)
     let [goldPriceHistory, setGoldPriceHistory] = useState([])
+    const [targetDeleteByDelete, setTargetDeleteByDelete] = useState('');
+    const [isOpenDeleteAdmin, setIsOpenDeleteAdmin] = useState(false)
+
+    const getData = async () => {
+        const getGoldPriceReq = await api.get("goldPrice")
+        if (getGoldPriceReq) {
+            setGoldPriceHistory(getGoldPriceReq)
+        }
+    }
 
     useEffect(() => {
-        const getData = async () => {
-            const getGoldPriceReq = await api.get("goldPrice")
-            if (getGoldPriceReq) {
-                setGoldPriceHistory(getGoldPriceReq)
-            }
-        }
         getData()
     }, []);
+
+    function openModalDeleteAdmin(e) {
+        setTargetDeleteByDelete(e.target.id);
+        setIsOpenDeleteAdmin(true)
+    }
+
+    function closeModalDeleteAdmin() {
+        setTargetDeleteByDelete('');
+        setIsOpenDeleteAdmin(false)
+    }
+
+    const handleDeleteAdmin = async () => {
+        await api.delete(`goldPrice/${targetDeleteByDelete}`)
+        getData()
+        closeModalDeleteAdmin()
+    }
 
     function closeModal() {
         setIsOpen(false)
@@ -78,34 +95,59 @@ export default function Quote(props) {
         setIsOpen(true)
     }
 
-    function openModalConfirm() {
-        setIsOpen(false)
-        setIsOpenConfirm(true)
+    async function openModalConfirm() {
+        const valid = await validation();
+        if (valid !== undefined) {
+            setIsOpen(false)
+            setIsOpenConfirm(true)
+        }
     }
 
-    const handleBuyPrice = (e) =>{
+    const handleBuyPrice = (e) => {
         let value = e.target.value;
         value = LiveSeparate(value)
         setQuoteBuyPrice(value)
     }
 
-    const handleSellPrice = (e) =>{
+    const handleSellPrice = (e) => {
         let value = e.target.value;
         value = LiveSeparate(value)
         setQuoteSellPrice(value)
     }
 
+    const validation = async () => {
+        const priceSchema = yup.object().shape({
+            quoteBuyPrice: yup.string().required("لطفا قیمت خرید را وارد کنید"),
+            quoteSellPrice: yup.string().required("لطفا قیمت فروش را وارد کنید"),
+        })
+
+        try {
+            return await priceSchema.validate({
+                quoteBuyPrice: quoteBuyPrice,
+                quoteSellPrice: quoteSellPrice
+            }, {abortEarly: false})
+        } catch (error) {
+            toast.info(error.errors[0], {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    }
+
     async function recordNewPrice() {
-
-        setIsOpenConfirm(false)
-
         const updatedQuoteBuyPrice = RemoveComma(quoteBuyPrice)
         const updatedQuoteSellPrice = RemoveComma(quoteSellPrice)
 
         await api.post("goldPrice",
             {
-                purchasePrice : updatedQuoteBuyPrice,
-                sellPrice : updatedQuoteSellPrice
+                purchasePrice: updatedQuoteBuyPrice,
+                sellPrice: updatedQuoteSellPrice
             }
         )
 
@@ -113,6 +155,9 @@ export default function Quote(props) {
         if (getGoldPriceReq) {
             setGoldPriceHistory(getGoldPriceReq)
         }
+        setIsOpenConfirm(false)
+        setQuoteSellPrice("")
+        setQuoteBuyPrice("")
     }
 
     return (
@@ -317,6 +362,7 @@ export default function Quote(props) {
                     <th className={'p-4'}>قیمت فروش بر حسب مثقال</th>
                     <th className={'p-4'}>قیمت خرید بر حسب گرم</th>
                     <th className={'p-4'}>قیمت خرید بر حسب مثقال</th>
+                    <th className={'p-4'}>عملیات</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -325,16 +371,82 @@ export default function Quote(props) {
                         <tr>
                             <td className={'p-3'}>{index + 1}</td>
                             <td className={'p-3'}>{item?.adminUserName}</td>
-                            <td className={'p-3'}>{item?.date}</td>
+                            <td className={'p-3'}>{EnglishToPersian(item?.date)}</td>
                             <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.sellPricePerGram.toString()))}</td>
                             <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.sellPricePerShekel.toString()))}</td>
                             <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.purchasePricePerGram.toString()))}</td>
                             <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.purchasePricePerShekel.toString()))}</td>
+                            <td className={'p-3'}>
+                                <button
+                                    className='px-2 py-1 text-sm rounded border-[1px] border-gray-300 border-solid hover:border-red-600 hover:bg-red-600 transition'
+                                    id={item.id}
+                                    onClick={openModalDeleteAdmin}>
+                                    حذف
+                                </button>
+                            </td>
                         </tr>
                     ))
                 }
                 </tbody>
             </table>
+
+            <Transition appear show={isOpenDeleteAdmin} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModalDeleteAdmin}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25"/>
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel
+                                    className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#303030] p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-center text-lg font-medium leading-6 text-white"
+                                    >
+                                        حذف قیمت
+                                    </Dialog.Title>
+                                    <div className="mt-6 text-center text-white">
+                                        آیا از حذف قیمت مطمئن هستید؟
+                                    </div>
+                                    <div className="mt-4 flex flex-row justify-center">
+                                        <button
+                                            type="button"
+                                            className="inline-flex justify-center rounded-md border border-transparent ml-4 bg-red-600 text-white px-4 py-2 text-sm font-medium"
+                                            onClick={handleDeleteAdmin}>
+                                            حذف
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="inline-flex justify-center rounded-md border border-transparent bg-dark text-white px-4 py-2 text-sm font-medium"
+                                            onClick={closeModalDeleteAdmin}
+                                        >
+                                            بستن
+                                        </button>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
         </div>
     )
 }

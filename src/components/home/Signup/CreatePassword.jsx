@@ -104,7 +104,7 @@ const CreatePassword= () => {
             if (loginResponse.status === 200) {
                 // info.setDashboardAllowed(true)
                 if (sessionStorage.getItem("role") === "ADMIN") {
-                    navigate("/admin")
+                    navigate("/admin/gold-price")
                 } else if (sessionStorage.getItem("role") === "USER") {
                     navigate("/dashboard/home")
                 } else if (sessionStorage.getItem("role") === "MANAGER") {

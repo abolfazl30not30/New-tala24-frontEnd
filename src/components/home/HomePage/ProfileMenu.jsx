@@ -160,7 +160,7 @@ const ProfileMenu = () => {
                             anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
                             <MenuItem onClick={() => {
                                 handleClose();
-                                navigate("/admin")
+                                navigate("/admin/gold-price")
                             }}>
                                 <div className="flex items-center">
                                     <img className="w-10"

@@ -16,6 +16,8 @@ import FormControl from "@mui/material/FormControl";
 import {SeparateNumber} from "../../../helper/SeparateNumber";
 import {LiveSeparate} from "../../../helper/LiveSeparate";
 import {RemoveComma} from "../../../helper/RemoveComma";
+import * as yup from "yup";
+import {toast} from "react-toastify";
 
 // Create RTL MUI
 const theme = createTheme({
@@ -77,11 +79,39 @@ export default function Quote(props) {
         setIsOpenConfirm(false)
         setIsOpen(true)
     }
+    const validation = async () => {
+        const priceSchema = yup.object().shape({
+            quoteBuyPrice: yup.string().required("لطفا قیمت خرید را وارد کنید"),
+            quoteSellPrice: yup.string().required("لطفا قیمت فروش را وارد کنید"),
+        })
 
-    function openModalConfirm() {
-        setIsOpen(false)
-        setIsOpenConfirm(true)
+        try {
+            return await priceSchema.validate({
+                quoteBuyPrice: quoteBuyPrice,
+                quoteSellPrice: quoteSellPrice
+            }, {abortEarly: false})
+        } catch (error) {
+            toast.info(error.errors[0], {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
     }
+
+    async function openModalConfirm() {
+        const valid = await validation();
+        if (valid !== undefined) {
+            setIsOpen(false)
+            setIsOpenConfirm(true)
+        }
+    }
+
     const handleBuyPrice = (e) =>{
         let value = e.target.value;
         value = LiveSeparate(value)
@@ -95,7 +125,6 @@ export default function Quote(props) {
     }
 
     async function recordNewPrice() {
-        setIsOpenConfirm(false)
 
         const updatedQuoteBuyPrice = RemoveComma(quoteBuyPrice)
         const updatedQuoteSellPrice = RemoveComma(quoteSellPrice)
@@ -111,6 +140,10 @@ export default function Quote(props) {
         if (getGoldPriceReq) {
             setGoldPriceHistory(getGoldPriceReq)
         }
+        setIsOpenConfirm(false)
+        setQuoteSellPrice("")
+        setQuoteBuyPrice("")
+
     }
 
     return (
@@ -323,7 +356,7 @@ export default function Quote(props) {
                         <tr>
                             <td className={'p-3'}>{index + 1}</td>
                             <td className={'p-3'}>{item?.adminUserName}</td>
-                            <td className={'p-3'}>{item?.date}</td>
+                            <td className={'p-3'}>{EnglishToPersian(item?.date)}</td>
                             <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.sellPricePerGram.toString()))}</td>
                             <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.sellPricePerShekel.toString()))}</td>
                             <td className={'p-3'}>{EnglishToPersian(SeparateNumber(item?.purchasePricePerGram.toString()))}</td>

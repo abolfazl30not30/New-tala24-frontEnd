@@ -24,7 +24,6 @@ function AdminChat(props) {
         }
         setConstructorHasRun(true);
     };
-
     constructor()
     const {id} = useParams()
     const getChat = async () => {
@@ -39,15 +38,15 @@ function AdminChat(props) {
         title: "",
         chatList: []
     })
-    const [typedMessage, updateTypedMessage] = useState()
 
+    const [typedMessage, updateTypedMessage] = useState()
 
     const handleSendMessage = async () => {
         await api.put(`ticket/${id}`, {
             status: "answered",
             chatList: [
                 {
-                    sender: "admin",
+                    role:"admin",
                     message: typedMessage
                 }
             ]
@@ -76,7 +75,7 @@ function AdminChat(props) {
                             <div className="chat-messenger-body">
                                 {
                                     chat.chatList.map((mes) => (
-                                        mes.sender === 'admin'
+                                        mes.role === 'admin'
                                             ? (
                                                 <>
                                                     <div className="flex justify-center">
@@ -88,10 +87,10 @@ function AdminChat(props) {
                                                         <div className="flex flex-col">
                                                             <div className='chat-messenger-item-info'>
                                                                 <Stack direction="row" spacing={1}>
-                                                                    <Avatar className='ml-2'>پ</Avatar>
+                                                                    <Avatar className='ml-2'>{mes.sender.slice(0, 1)}</Avatar>
                                                                 </Stack>
                                                                 <span
-                                                                    className='text-xs text-gray-100 font-normal'>پشتیبان</span>
+                                                                    className='text-xs text-gray-100 font-normal'>{mes.sender}</span>
                                                             </div>
                                                             <div className="bg-stone-700 color-gray-300 py-2 px-2 rounded-lg text-xs font-normal">
                                                                 {mes.message}
@@ -121,7 +120,6 @@ function AdminChat(props) {
                                                             <div className="bg-lime-300 text-black py-2 px-2 rounded-lg text-xs font-normal">
                                                                 {mes.message}
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </>
@@ -136,11 +134,12 @@ function AdminChat(props) {
                                     placeholder='یک پیام تایپ کنید...'
                                     className='basis-10/12 ml-2 outline-0 rounded bg-[#1e1e1e] p-2 border-[1px] border-gray-600 border-solid text-[12px] font-normal'
                                     onChange={(e) => updateTypedMessage(e.target.value)}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                                 />
                                 <button
+                                    type="submit"
                                     className='basis-2/12 rounded bg-[#dfaf3d] text-black p-2 text-base font-normal flex justify-center'
-                                    onClick={handleSendMessage}
-                                >
+                                    onClick={handleSendMessage} >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round"

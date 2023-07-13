@@ -11,6 +11,10 @@ import api from "../../../api/api";
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
 import Switch from '@mui/material/Switch';
 import {SeparateNumber} from "../../../helper/SeparateNumber";
+import {LiveSeparate} from "../../../helper/LiveSeparate";
+import {RemoveComma} from "../../../helper/RemoveComma";
+import * as yup from "yup";
+import {toast} from "react-toastify";
 
 // Create RTL MUI
 const theme = createTheme({
@@ -76,15 +80,43 @@ export default function AddCoin(props) {
         setIsOpen(true)
     }
 
-    function openModalConfirm() {
-        setIsOpen(false)
-        setIsOpenConfirm(true)
+    async function openModalConfirm() {
+        const valid = await validation();
+        if (valid !== undefined){
+            setIsOpen(false)
+            setIsOpenConfirm(true)
+        }
     }
 
+    const validation = async () => {
+        const coinSchema = yup.object().shape({
+            weight: yup.string().required("لطفا وزن سکه را وارد کنید"),
+            wage: yup.string().required("لطفا کارمزد سکه را وارد کنید"),
+        })
+
+        try {
+            return await coinSchema.validate({
+                weight: weight,
+                wage: wage
+            }, {abortEarly: false})
+        } catch (error) {
+            toast.info(error.errors[0], {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    }
     async function recordNewPrice() {
+        const updatedWage = RemoveComma(wage)
         await api.post("coin", {
             weight : weight,
-            wage : wage
+            wage : updatedWage
         })
         const getCoins = await api.get("coin")
         setCoins(getCoins)
@@ -109,12 +141,24 @@ export default function AddCoin(props) {
 
     function openModalChangeWage(id,wage) {
         setTargetCoinId(id)
-        setTargetCoinWage(wage)
+        setTargetCoinWage(SeparateNumber(wage))
         setIsOpenChangeWage(true)
     }
 
+    const handleWage = (e) =>{
+        let value = e.target.value;
+        value = LiveSeparate(value)
+        setWage(value)
+    }
+    const handleEditWage = (e) =>{
+        let value = e.target.value;
+        value = LiveSeparate(value)
+        setTargetCoinWage(value)
+    }
+
     async function handleChangeWage() {
-        await api.put(`coin/${targetCoinId}`, {wage: targetCoinWage})
+        const updateWage = RemoveComma(targetCoinWage)
+        await api.put(`coin/${targetCoinId}`, {wage: updateWage })
         const getCoins = await api.get("coin")
         setCoins(getCoins)
         setIsOpenChangeWage(false)
@@ -199,7 +243,7 @@ export default function AddCoin(props) {
                                                                 name="price"
                                                                 label="کارمزد"
                                                                 value={wage}
-                                                                onChange={(e) => setWage(e.target.value)}
+                                                                onChange={(e) => handleWage(e)}
                                                                 InputProps={{
                                                                     endAdornment: <InputAdornment position="end"><span
                                                                         style={{color: "#fff"}}>ریال</span></InputAdornment>,
@@ -274,9 +318,8 @@ export default function AddCoin(props) {
                                         className="w-full max-w-md transform overflow-hidden rounded-2xl bg-mainGray p-6 align-middle shadow-xl transition-all">
                                         <Dialog.Title
                                             as="h3"
-                                            className="text-lg font-medium leading-6 text-gold"
-                                        >
-                                            ثبت قیمت جدید
+                                            className="text-lg font-medium leading-6 text-gold">
+                                            ثبت سکه جدید
                                         </Dialog.Title>
                                         <div className="text-white mt-6">
                                             آیا از ثبت سکه جدید مطمئن هستید؟
@@ -342,8 +385,7 @@ export default function AddCoin(props) {
                                 <button
                                     type="button"
                                     onClick={() => openModalChangeWage(item.id,item.wage)}
-                                    className="rounded-md flex flex-row items-center bg-gold text-black px-4 py-2 text-sx focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                                >
+                                    className="rounded-md flex flex-row items-center bg-gold text-black px-4 py-2 text-sx focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                                     ویرایش کارمزد
                                 </button>
                                 <Transition appear show={isOpenChangeWage} as={Fragment}>
@@ -389,7 +431,7 @@ export default function AddCoin(props) {
                                                                                 name="price"
                                                                                 label="کارمزد"
                                                                                 value={targetCoinWage}
-                                                                                onChange={(e) => setTargetCoinWage(e.target.value)}
+                                                                                onChange={(e) => handleEditWage(e)}
                                                                                 InputProps={{
                                                                                     endAdornment: <InputAdornment position="end"><span
                                                                                         style={{color: "#fff"}}>ریال</span></InputAdornment>,

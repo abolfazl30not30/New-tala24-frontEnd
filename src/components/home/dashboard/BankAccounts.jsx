@@ -7,8 +7,6 @@ import rtlPlugin from "stylis-plugin-rtl";
 import {prefixer} from 'stylis';
 import {EnglishToPersian} from "../../../helper/EnglishToPersian";
 import {MdArrowBackIosNew} from "react-icons/md";
-import {BsTrashFill} from "react-icons/bs";
-import {TbEdit} from "react-icons/tb";
 import api from "../../../api/api";
 import * as yup from "yup";
 import {toast} from "react-toastify";
@@ -21,15 +19,13 @@ const cacheRtl = createCache({
 export default function BankAccounts() {
 
     const [bankAccounts, setBankAccounts] = useState([])
-    const [targetBankAccounts, setTargetBankAccounts] = useState([
-        {
+    const [targetBankAccounts, setTargetBankAccounts] = useState([{
             accountNumber: '',
             cardNumber: '',
             shabaNumber: '',
             bankName: '',
             id: ''
-        }
-    ])
+        }])
     const [newAccount,setNewAccount] = useState({
         accountNumber: '',
         cardNumber: '',

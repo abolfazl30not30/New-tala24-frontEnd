@@ -40,7 +40,7 @@ const MainNavbar = () => {
     const handleNavigate = async () =>{
             await LoginApi()
             if (sessionStorage.getItem("role") === "ADMIN") {
-                navigate("/admin")
+                navigate("/admin/gold-price")
             } else if (sessionStorage.getItem("role") === "USER") {
                 navigate("/dashboard/home")
             } else if (sessionStorage.getItem("role") === "MANAGER") {
