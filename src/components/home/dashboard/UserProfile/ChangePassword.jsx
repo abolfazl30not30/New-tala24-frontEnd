@@ -93,6 +93,7 @@ const ChangePassword = () =>{
                 setNewPassword("");
                 setRepeatNewPassword("");
                 setOTPCode("")
+                setIsSendOTP(false)
             }
 
         }
