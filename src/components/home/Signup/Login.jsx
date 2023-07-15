@@ -114,7 +114,7 @@ const Login = () => {
                                 {
                                     loading === true ? (
                                         <LoadingButton
-                                            className='flex justify-center items-center bg-mainGold w-full rounded h-[45px]'
+                                            className='flex justify-center items-center bg-mainGold w-full rounded h-[45px] mb-10'
                                             loading
                                             sx={{bgcolor:"#e8bd59"}}
                                             loadingPosition="start"
@@ -123,7 +123,7 @@ const Login = () => {
                                             ورود
                                         </LoadingButton>
                                     ) : (
-                                        <button onClick={() => handleSubmit()} className={'flex justify-center items-center bg-mainGold w-full rounded h-[45px]'}><span className={'text-black'}>ورود</span>
+                                        <button onClick={() => handleSubmit()} className={'flex justify-center items-center bg-mainGold w-full rounded h-[45px] mb-10'}><span className={'text-black'}>ورود</span>
                                         </button>
                                     )
                                 }

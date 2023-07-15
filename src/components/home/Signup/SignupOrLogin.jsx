@@ -71,7 +71,7 @@ const SignupOrLogin = () => {
         <>
             <Suspense fallback={<MyComponent {...props} customLoader={<BallPulseSync/>}/>}>
                 <div className={'flex justify-center items-center h-screen'}>
-                    <div className="flex justify-center bg-bgGray w-3/4 h-3/4 rounded-3xl">
+                    <div className="flex justify-center bg-bgGray w-3/4 min-h-3/4 rounded-3xl">
                         <div className={'w-full md:w-1/2'}>
                             <div className="px-6 py-2">
                                 <div className={'flex justify-center'}>
@@ -108,7 +108,7 @@ const SignupOrLogin = () => {
                                     {
                                         loading === true ? (
                                             <LoadingButton
-                                                className='flex justify-center items-center bg-mainGold w-full rounded h-[45px]'
+                                                className='flex justify-center items-center bg-mainGold w-full rounded h-[45px] mb-10'
                                                 loading
                                                 sx={{bgcolor: "#e8bd59"}}
                                                 loadingPosition="start"
@@ -118,7 +118,7 @@ const SignupOrLogin = () => {
                                             </LoadingButton>
                                         ) : (
                                             <button onClick={() => handleSubmit()}
-                                                    className={'flex justify-center items-center bg-mainGold w-full rounded h-[45px]'}>
+                                                    className={'flex justify-center items-center bg-mainGold w-full rounded h-[45px] mb-10'}>
                                                 <span className={'text-black'}>ورود/عضویت</span>
                                             </button>
                                         )

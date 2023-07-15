@@ -19,7 +19,7 @@ const Signup = () => {
     const params = useParams();
     const [OTPCode, setOTPCode] = useState("")
     const [loading, setLoading] = useState(false)
-
+    const [isSendOTP,setIsSendOTP] = useState(true)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -30,18 +30,20 @@ const Signup = () => {
 
     const renderer = ({ hours, minutes, seconds, completed }) => {
         if (completed) {
-            // Render a completed state
             return (
-                <button className="rounded-xl bg-mainGold text-bgGray px-3 py-2 text-[0.8rem]">
-                    ارسال مجدد کد
-                </button>
+                setIsSendOTP(false)
             );
         } else {
             // Render a countdown
             return <span className="text-[0.7rem] text-neutral-400">{minutes}:{seconds} مانده تا دریافت مجدد کد</span>;
         }
     };
-
+    const sendAgainCode = async () =>{
+        const res = await RegisterApi.post("init", {
+            phoneNumber: params.id
+        })
+        setIsSendOTP(true)
+    }
     const checkOTP = async (code) => {
         setLoading(true)
 
@@ -94,11 +96,19 @@ const Signup = () => {
                                 <OTPInput handleCheckOTP={checkOTP} handleSetOTP={setOTPCode}/>
                             </div>
 
-                            <p className={'text-[9px] mx-4 text-[#6D6D6D] mt-3 text-center'}>
-                                <Countdown
-                                    date={Date.now() + 120000}
-                                    renderer={renderer}/>
-                            </p>
+                            <div className={'text-[9px] mx-4 text-[#6D6D6D] mt-3 flex justify-center'}>
+                                {
+                                    isSendOTP ? (
+                                        <Countdown
+                                            date={Date.now() + 120000}
+                                            renderer={renderer}/>
+                                    ):(
+                                        <button className="rounded-xl bg-mainGold text-bgGray px-3 py-2 text-[0.8rem]" onClick={sendAgainCode}>
+                                            ارسال مجدد کد
+                                        </button>
+                                    )
+                                }
+                            </div>
 
                             <div className={'mx-4 mt-7'}>
                                 {
