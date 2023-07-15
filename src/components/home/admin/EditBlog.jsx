@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useRef} from "react"
-import {Editor} from '@tinymce/tinymce-react';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import rtlPlugin from 'stylis-plugin-rtl';
@@ -291,36 +290,7 @@ export default function EditBlog(props) {
                                     />
                                 </div>
                                 {/*project description*/}
-                                <Editor
-                                    apiKey='your-api-key'
-                                    init={{
-                                        height: 500,
-                                        language: 'fa',
-                                        menubar: false,
-                                        plugins: [
-                                            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                                            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                                            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                                        ],
-                                        toolbar: 'undo redo | blocks | ' +
-                                            'bold italic forecolor | alignleft aligncenter ' +
-                                            'alignright alignjustify | bullist numlist outdent indent | ' +
-                                            'removeformat | help',
-                                        content_style: 'body { font-family:dana,Arial,sans-serif; font-size:16px }'
-                                    }}
-                                    onChange={log}
-                                    onInit={(evt, editor) => {
-                                        setText(editor.getContent({format: 'text'}));
-                                    }}
-                                    value={project.description}
-                                    onEditorChange={(newValue, editor) => {
-                                        setProject(existingValues => ({
-                                            ...existingValues,
-                                            description: newValue
-                                        }))
-                                        setText(editor.getContent({format: 'text'}));
-                                    }}
-                                />
+
                                 {/*project priority*/}
                                 <div className="col-6 my-2 px-2">
                                     <label htmlFor="product-category" className="font-bold pr-1">اولویت</label>
@@ -568,8 +538,6 @@ export default function EditBlog(props) {
                             {/*project release*/}
                             <Button className='mt-3 button-edit' onClick={handleEditProject}>انتشار</Button>
                             {/*<button onClick={uploadFiles}>Upload</button>*/}
-
-
                         </ThemeProvider>
                     </CacheProvider>
                 </div>

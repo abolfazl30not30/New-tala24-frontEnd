@@ -33,6 +33,7 @@ const Information = () =>{
     const [dateOfBirth, setDateOfBirth] = useState()
     const [nationalCode, setNationalCode] = useState()
     const [nationalCardImage, setNationalCardImage] = useState();
+    const [nationalCardImageURL, setNationalCardImageURL] = useState();
     const [loading, setLoading] = useState(false)
 
     async function GetAccountInfo() {
@@ -48,6 +49,7 @@ const Information = () =>{
             email: yup.string().required("آدرس ایمیل خود را وارد کنید").email("آدرس ایمیل اشتباه است"),
             nationalCode: yup.string().required("لطفا کد ملی خود را وارد کنید.").min(10,"کد ملی نمی تواند کمتر از 10 رقم باشد"),
             dateOfBirth: yup.string().required("تاریخ تولد خود را وارد کنید"),
+            nationalCardImageURL: yup.string().required("تصویر کارت ملی خود را آپلود کنید")
         })
 
         try {
@@ -56,7 +58,8 @@ const Information = () =>{
                 lastName:lastName,
                 email:email,
                 nationalCode:nationalCode,
-                dateOfBirth:dateOfBirth
+                dateOfBirth:dateOfBirth,
+                nationalCardImageURL:nationalCardImageURL,
             }, {abortEarly: false})
         } catch (error) {
             toast.info(error.errors[0], {
@@ -87,6 +90,7 @@ const Information = () =>{
         getPersonalInformation()
     }, []);
 
+
     const handleRecordUserInfo = async () => {
         setLoading(true)
         const valid = await validation();
@@ -96,9 +100,9 @@ const Information = () =>{
                 lastName:lastName,
                 telephoneNumber:phoneNumber,
                 nationalCode:nationalCode,
-                nationalCardFileName:nationalCardImage,
+                nationalCardFileName:nationalCardImageURL,
                 birthDate:dateOfBirth,
-                email: email
+                email: email,
             })
             getPersonalInformation()
             toast.success("تغییرات با موفقیت ثبت شد", {
@@ -122,8 +126,13 @@ const Information = () =>{
         let convertDate = value.year + '/' + month + '/' + day;
         setDateOfBirth(convertDate)
     }
-    const handleFileChange = (event) => {
+
+    const handleFileChange = async (event) => {
+        let formData = new FormData();
+        formData.append('file',event.target.files[0]);
+        const respond = await api.post("file/upload",formData);
         setNationalCardImage(event.target.files[0]);
+        setNationalCardImageURL(respond)
     };
 
     return(
@@ -150,7 +159,7 @@ const Information = () =>{
                                 disabled={context.accountInfo.verified === "accept"}
                                 value={lastName}
                                 type={"text"}
-                                sx={{label: {color: '#fff !important'}, input: {color: '#fff !important'}}}
+                                sx={{label: {color: '#fff !important'},input: {color: '#fff !important'}}}
                                 onChange={(e) => setLastName(e.target.value)}
                             />
                         </div>
@@ -204,7 +213,7 @@ const Information = () =>{
                                 containerStyle={{
                                     width: "100%"
                                 }}
-                                inputClass={`field bg-bgGray w-full h-[3.55rem] p-4 text-white border-gold rounded`}
+                                inputClass={`field bg-bgGray w-full h-[3.55rem] p-4 text-white border-gold rounded disabled:text-[#979797] disabled:bg-[#3A3A3A]`}
                                 value={dateOfBirth}
                                 onChange={(value) => {
                                     handleDateEndInput(value)
@@ -233,9 +242,7 @@ const Information = () =>{
                                 locale={persian_fa}
                             >
                                 <button className="mb-2 bg-gold text-mainGray rounded-3xl px-4 font-bold py-2"
-                                    onClick={() => {
-                                        setDateOfBirth("")                                    }
-                                    }>
+                                    onClick={() => {setDateOfBirth("")}}>
                                     ریست
                                 </button>
                             </DatePicker>
@@ -269,6 +276,7 @@ const Information = () =>{
                                     JPG or GIF (MAX. 800x400px)</p>
                             </div>
                             <input
+                                disabled={context.accountInfo.verified === "accept"}
                                 id='dropzone-file'
                                 type="file"
                                 className="hidden"

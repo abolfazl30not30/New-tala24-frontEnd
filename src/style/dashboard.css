@@ -225,3 +225,8 @@
 .tox .tox-edit-area__iframe {
     background-color: #303030 !important;
 }
+.muirtl-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled {
+    color: #979797 !important;
+    -webkit-text-fill-color : #979797!important;
+    background-color: #3A3A3A;
+}

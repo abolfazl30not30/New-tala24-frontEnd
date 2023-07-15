@@ -62,7 +62,7 @@ export default function Blog2() {
                             </div>
                         </div>
                         <div className="">
-                            <img src={blog_1} className='w-2/3 mx-auto rounded-xl' alt=""/>
+                            <img src={detailsOfBlog.fileName} className='w-2/3 mx-auto rounded-xl' alt=""/>
                         </div>
                         <div className="flex flex-col">
                             <div>
@@ -111,8 +111,8 @@ export default function Blog2() {
                             popularBlog.map((blog)=>(
                                 <Link to={`/blog/${blog.id}`} className="hover:bg-mainGray rounded-xl">
                                     <div className="flex justify-start mx-1 my-2">
-                                        <div className="rounded-2xl sm:mx-2 md:mx-3 w-[30%]">
-                                            <img className="rounded-xl object-cover" src={blog_1} alt=""/>
+                                        <div className="rounded-2xl sm:mx-2 md:mx-3 w-[30%] h-[5rem] w">
+                                            <img className="rounded-xl object-cover w-[100%] h-[100%]" src={blog.fileName} alt=""/>
                                         </div>
                                         <div className="flex flex-col mx-2 sm:mx-4 md:mx-1">
                                             <div className=" text-white  text-xs sm:text-sm md:text-[0.9rem]">

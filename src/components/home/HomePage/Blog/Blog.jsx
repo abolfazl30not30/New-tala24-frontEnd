@@ -41,6 +41,7 @@ export default function Blog() {
         result = result.slice(0, 250) + "...."
         return (result)
     }
+
     useEffect(() => {
         getBlogs()
         getPopularBolg(countOfBolg);
@@ -55,7 +56,9 @@ export default function Blog() {
                         {
                             blogs.map((blog) => (
                                 <div className="justify-between bg-cardDark  box-border  shadow-[0_1rem_1rem_1rem]_rgba(0,0,0,0.09) rounded-3xl flex flex-col w-full md:my-0 my-2">
-                                    <img src={blog_1} className='mx-4 my-4' alt=""/>
+                                    <div className="w-[100%] h-[20rem] flex justify-center pt-4">
+                                        <img src={blog.fileName} className='rounded-xl w-[90%] h-[100%] object-cover' alt=""/>
+                                    </div>
                                     <div>
                                         <p className=" text-white text-center sm:text-base text-xl font-bold mx-4 my-4">{blog.title}</p>
                                     </div>
@@ -89,8 +92,8 @@ export default function Blog() {
                                 popularBlog.map((blog) => (
                                     <Link to={`/blog/${blog.id}`} className="hover:bg-mainGray rounded-xl">
                                         <div className="flex justify-start mx-1 my-2">
-                                            <div className="rounded-2xl sm:mx-2 md:mx-3 w-[30%]">
-                                                <img className="rounded-xl object-cover" src={blog_1} alt=""/>
+                                            <div className="rounded-2xl sm:mx-2 md:mx-3 w-[30%] h-[5rem] w">
+                                                <img className="rounded-xl object-cover w-[100%] h-[100%]" src={blog.fileName} alt=""/>
                                             </div>
                                             <div className="flex flex-col mx-2 sm:mx-4 md:mx-1">
                                                 <div className=" text-white  text-xs sm:text-sm md:text-[0.9rem]">

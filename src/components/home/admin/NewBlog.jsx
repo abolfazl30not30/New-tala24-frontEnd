@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useRef} from "react"
-import {Editor} from '@tinymce/tinymce-react';
+import { Editor } from 'react-draft-wysiwyg';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import rtlPlugin from 'stylis-plugin-rtl';
 import {prefixer} from 'stylis';
 import {CacheProvider} from '@emotion/react';
 import createCache from '@emotion/cache';
+import "../../../style/blog.css"
 import Button from '@mui/material/Button';
 import api from "../../../api/api";
 import {MdCloudUpload, MdDelete} from "react-icons/md";
@@ -16,10 +17,14 @@ import {TextField} from "@mui/material";
 import * as yup from "yup";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import { EditorState, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 const theme = createTheme({
     direction: 'rtl'
 });
+
 const cacheRtl = createCache({
     key: 'muirtl',
     stylisPlugins: [prefixer, rtlPlugin],
@@ -75,18 +80,14 @@ export default function NewBlog(props) {
     const [description, setDescription] = useState("");
     const [text, setText] = useState('');
     const editorRef = useRef(null);
-
-    const log = () => {
-        if (editorRef.current) {
-            setProjectContent(editorRef.current.getContent())
-        }
-    };
-
-
     const [blogTitle,setBlogTitle] = useState();
     const [blogContent, setBlogContent] = useState();
     const [blogImage, setBlogImage] = useState();
+    const [imageURL,setImageURL] = useState()
 
+    const editorStateChange = (des) =>{
+        setDescription(des)
+    }
     const handleReleaseProject = async () => {
         const newProject = {
             title: projectTitle,
@@ -134,21 +135,27 @@ export default function NewBlog(props) {
         setDeleteLoading(false);
     }
 
-    const handleFileChange = (event) => {
+    const handleFileChange = async (event) => {
+        let formData = new FormData();
+        formData.append('file',event.target.files[0]);
+        const respond = await api.post("file/upload",formData);
         setBlogImage(event.target.files[0]);
+        setImageURL(respond)
     };
 
     const validation = async () => {
 
         const infoSchema = yup.object().shape({
             title: yup.string().required("لطفا عنوان بلاگ را وارد کنید."),
-            description: yup.string().required("لطفا توضیحات بلاگ را وارد کنید."),
+            description: yup.object().required("لطفا توضیحات بلاگ را وارد کنید."),
+            imageURL: yup.string().required("لطفا عکس را آپلود کنید")
         })
 
         try {
             return await infoSchema.validate({
                 title:blogTitle,
-                description:description
+                description:description,
+                imageURL:imageURL,
             }, {abortEarly: false})
         } catch (error) {
             toast.info(error.errors[0], {
@@ -161,17 +168,17 @@ export default function NewBlog(props) {
                 progress: undefined,
                 theme: "colored",
             });
-
         }
-
     }
 
     const handleAddBlog = async () => {
+        const updateDescription =draftToHtml(convertToRaw(description.getCurrentContent()))
         const valid = await validation();
         if (valid !== undefined){
             await api.post("blog", {
                 title: blogTitle,
-                description: description,
+                description: updateDescription,
+                fileName:imageURL
             })
             toast.success("وبلاگ با موفقیت ثبت شد", {
                 position: "bottom-center",
@@ -213,33 +220,12 @@ export default function NewBlog(props) {
                         </ThemeProvider>
                     </CacheProvider>
                     <Editor
-                        apiKey='your-api-key'
-                        onInit={(evt, editor) => editorRef.current = editor}
-                        init={{
-                            height: 500,
-                            language: 'fa',
-                            menubar: false,
-                            plugins: [
-                                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                            ],
-                            toolbar: 'undo redo | blocks | ' +
-                                'bold italic forecolor | alignleft aligncenter ' +
-                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                'removeformat | help',
-                            content_style: 'body { font-family:dana,Arial,sans-serif; font-size:16px;color:#fff }'
-                        }}
-                        onChange={log}
-                        onInit={(evt, editor) => {
-                            setText(editor.getContent({format: 'text'}));
-                        }}
-                        value={description}
-                        onEditorChange={(newValue, editor) => {
-                            setDescription(newValue)
-                            setText(editor.getContent({format: 'text'}));
-                        }}
-                    />
+                        wrapperClassName="wrapper-class"
+                        editorClassName="editor-class"
+                        toolbarClassName="toolbar-class"
+                        editorState={description}
+                        onEditorStateChange={editorStateChange}/>
+
                     <div className="flex items-center justify-center w-full">
                         <label htmlFor="dropzone-file"
                                className="flex flex-col items-center justify-center w-full h-32 border-2 border-[#DFAF3D] border-solid rounded-lg cursor-pointer hover:bg-[#2a2a2a]">
@@ -260,7 +246,6 @@ export default function NewBlog(props) {
                                             ? <span className='ml-2 text-labelGreen'>فایل آپلود شده:</span>
                                             : <span className='ml-2 text-red-600'>فایلی آپلود نشده</span>
                                     }
-
                                     <span>{blogImage?.name}</span>
                                 </div>
                                 <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG,
@@ -270,9 +255,7 @@ export default function NewBlog(props) {
                                 id='dropzone-file'
                                 type="file"
                                 className="hidden"
-                                onChange={handleFileChange}
-                                disabled
-                            />
+                                onChange={handleFileChange}/>
                         </label>
                     </div>
                     <div className="w-full flex justify-center">

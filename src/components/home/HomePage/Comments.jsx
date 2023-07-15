@@ -73,7 +73,9 @@ const Comments = () => {
                                         className="justify-between items-center bg-cardDark  box-border  shadow-[0_1rem_1rem_1rem]_rgba(0,0,0,0.09) rounded-3xl flex flex-col w-full md:my-0 my-2"
                                         style={{direction:'rtl'}}
                                     >
-                                        <img src={blog_1} className='mx-4 my-4' alt=""/>
+                                        <div className="w-[100%] h-[20rem] flex justify-center pt-4">
+                                            <img src={blog.fileName} className='rounded-xl w-[90%] h-[100%] object-cover' alt=""/>
+                                        </div>
                                         <div>
                                             <p className=" text-white text-center sm:text-base text-xl font-bold mx-4 my-4">{blog.title}</p>
                                         </div>

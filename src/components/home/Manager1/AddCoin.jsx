@@ -121,6 +121,8 @@ export default function AddCoin(props) {
         const getCoins = await api.get("coin")
         setCoins(getCoins)
         setIsOpenConfirm(false)
+        setWage("");
+        setWeight("")
     }
 
     const handleChangeActive = async (event) => {
