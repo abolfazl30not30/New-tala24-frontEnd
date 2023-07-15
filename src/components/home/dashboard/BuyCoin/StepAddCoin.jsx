@@ -16,6 +16,7 @@ import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 import signup from "../../../../contexts/signup";
 import api from "../../../../api/api";
 import * as yup from "yup";
+import {toast} from "react-toastify";
 
 
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
@@ -72,10 +73,9 @@ function StepAddCoin(props) {
     const [isOpenCoin, setIsOpenCoin] = useState(false)
 
     const [coinsWight, setCoinsWight] = useState(["0.05", "0.100", "0.150", "0.200", "0.300", "0.400", "0.500", "0.600", "0.700", "0.800", "0.900", "1.00", "1.100", "1.200", "1.300", "1.400", "1.500", "2.00"])
-    const [selectedCoin, setSelectedCoin] = useState(coinsWight[0])
+    const [selectedCoin, setSelectedCoin] = useState()
     const [countOfCoin,setCountOfCoin] = useState();
     const [paymentData,paymentDate] = useState()
-    const [countErrors,setCountErrors] = useState([])
 
     const handleOpenCoin = () => {
         setIsOpenCoin(true);
@@ -88,42 +88,55 @@ function StepAddCoin(props) {
         props.setTotalWage(newTotalWage);
     }
 
-    const calculateTotalWeight = () =>{
+    const calculateTotalWeight = () => {
         let newTotalWeight = props.totalWeight;
         newTotalWeight += (countOfCoin * selectedCoin)
         props.setTotalWeight(newTotalWeight)
     }
-
     const handleCountOfCoin = (event) =>{
-        console.log(typeof (event.target.value))
         setCountOfCoin(event.target.value)
     }
 
 
     const handleAddNewCoin = async () => {
         const valid = await validation()
-        console.log(valid)
         if (valid !== undefined){
-            setCountErrors([])
-            let updatedCoins = [...props.coins]
-            let updatedCoinsWight = [...coinsWight]
+            let newTotalWeight = props.totalWeight;
+            newTotalWeight += (countOfCoin * selectedCoin)
 
-            const newCoin = {
-                count: countOfCoin,
-                weight:selectedCoin
+            if(newTotalWeight <= context.accountInfo.wallet.weight ){
+                let updatedCoins = [...props.coins]
+                let updatedCoinsWight = [...coinsWight]
+
+                const newCoin = {
+                    count: countOfCoin,
+                    weight:selectedCoin
+                }
+                calculateTotalWeight()
+                calculateTotalWage();
+
+                updatedCoins.push(newCoin)
+                props.setCoins(updatedCoins)
+
+                updatedCoinsWight = updatedCoinsWight.filter(c => c !== selectedCoin)
+                setCoinsWight(updatedCoinsWight)
+                setSelectedCoin("")
+                setCountOfCoin("")
+                setIsOpenCoin(false)
+            }else {
+                toast.info("مقدار طلایی درخواستی از موجودی طلایی شما کمتر است", {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
-
-            calculateTotalWeight();
-            calculateTotalWage();
-
-            updatedCoins.push(newCoin)
-            props.setCoins(updatedCoins)
-
-            updatedCoinsWight = updatedCoinsWight.filter(c => c !== selectedCoin)
-            setCoinsWight(updatedCoinsWight)
-            setCountOfCoin(null)
-            setIsOpenCoin(false)
         }
+
 
     };
 
@@ -150,19 +163,30 @@ function StepAddCoin(props) {
     };
 
     const closeAddCoin = () => {
-        setCountErrors([])
         setIsOpenCoin(false)
+        setSelectedCoin("")
+        setCountOfCoin("")
     };
 
     const validation = async () => {
         const priceSchema = yup.object().shape({
+            selectedCoin: yup.string().required("لطفا سکه مورد نظر را انتخاب کنید"),
             count: yup.number().required("لطفا تعداد مورد نظر خود را وارد کنید.").min(1,"تعداد نمی تواند کمتر از 1 باشد")
         })
         const count = parseInt(countOfCoin)
         try {
-            return await priceSchema.validate({count}, {abortEarly: false})
+            return await priceSchema.validate({count:countOfCoin,selectedCoin:selectedCoin}, {abortEarly: false})
         } catch (error) {
-            setCountErrors(error.errors)
+            toast.info(error.errors[0], {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
     }
 
@@ -295,20 +319,12 @@ function StepAddCoin(props) {
                                                     <TextField
                                                         fullWidth
                                                         label="تعداد"
-                                                        error={countErrors.length !== 0}
                                                         value={countOfCoin}
                                                         onChange={handleCountOfCoin}
                                                         sx={{input: {color: '#fff !important'}}}
                                                         type="number"
                                                         name="numberformat"
                                                         id="formatted-numberformat-input"/>
-
-                                                    {
-                                                        countErrors.map((error, index) =>
-                                                            <small key={index}
-                                                                   className={"text-red-600 mt-1 text-[0.6rem]"}>{error}</small>
-                                                        )
-                                                    }
                                                 </div>
                                             </CacheProvider>
                                         </div>
