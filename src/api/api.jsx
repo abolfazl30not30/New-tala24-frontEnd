@@ -1,8 +1,9 @@
 import axios from "axios";
 import LoginApi from "./LoginApi";
+import { toast } from 'react-toastify';
 
 const axiosParams = {
-    baseURL: 'https://api.tala24.co/api/v1/'
+    baseURL: 'http://localhost:8090/api/v1/'
 }
 
 const axiosInstance = axios.create(axiosParams);
@@ -14,10 +15,11 @@ const api = {
                     ...config,
                     headers: {
                         ...config.headers,
-                        'Authorization': localStorage.getItem("Authorization"),
+                        'Authorization': sessionStorage.getItem("Authorization"),
                     }
                 });
                 return response.data
+
             } catch (error) {
                 if (error.response && error.response.status === 403) {
                     await LoginApi()
@@ -25,12 +27,35 @@ const api = {
                         ...config,
                         headers: {
                             ...config.headers,
-                            'Authorization': localStorage.getItem("Authorization"),
+                            'Authorization': sessionStorage.getItem("Authorization"),
                         }
                     });
                     return response.data
-                } else {
-                    console.log("error in main get api")
+                    }
+                else {
+                    if(error.response.status === 500){
+                        toast.info(error.response.data.message, {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }else {
+                        toast.error(" خطا در اتصال", {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }
                 }
             }
         },
@@ -41,7 +66,7 @@ const api = {
                     ...config,
                     headers: {
                         ...config.headers,
-                        'Authorization': localStorage.getItem("Authorization"),
+                        'Authorization': sessionStorage.getItem("Authorization"),
                     }
                 });
                 return response.data
@@ -52,12 +77,34 @@ const api = {
                         ...config,
                         headers: {
                             ...config.headers,
-                            'Authorization': localStorage.getItem("Authorization"),
+                            'Authorization': sessionStorage.getItem("Authorization"),
                         }
                     });
                     return response.data
-                } else {
-                    console.log("error in main delete api")
+                } else{
+                    if(error.response.status === 500){
+                        toast.info(error.response.data.message, {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }else {
+                        toast.error(" خطا در اتصال", {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }
                 }
             }
         },
@@ -68,23 +115,46 @@ const api = {
                 ...config,
                 headers: {
                     ...config.headers,
-                    'Authorization': localStorage.getItem("Authorization"),
+                    'Authorization': sessionStorage.getItem("Authorization"),
                 }
             });
             return response.data
         } catch (error) {
+
             if (error.response && error.response.status === 403) {
                 await LoginApi()
                 const response = await axiosInstance.post(url, body, {
                     ...config,
                     headers: {
                         ...config.headers,
-                        'Authorization': localStorage.getItem("Authorization"),
+                        'Authorization': sessionStorage.getItem("Authorization"),
                     }
                 });
                 return response.data
             } else {
-                console.log("error in main post api")
+                if(error.response.status === 500){
+                    toast.info(error.response.data.message, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+                }else {
+                    toast.error(" خطا در اتصال", {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+                }
             }
         }
     },
@@ -95,7 +165,7 @@ const api = {
                 ...config,
                 headers: {
                     ...config.headers,
-                    'Authorization': localStorage.getItem("Authorization"),
+                    'Authorization': sessionStorage.getItem("Authorization"),
                 }
             });
             return response.data
@@ -106,12 +176,21 @@ const api = {
                     ...config,
                     headers: {
                         ...config.headers,
-                        'Authorization': localStorage.getItem("Authorization"),
+                        'Authorization': sessionStorage.getItem("Authorization"),
                     }
                 });
                 return response.data
-            } else {
-                console.log("error in main put api")
+            }else {
+                toast.info(" خطا در اتصال", {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
         }
     }

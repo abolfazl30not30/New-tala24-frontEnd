@@ -1,0 +1,37 @@
+.inventory-box{
+    position: relative !important;
+}
+.inventory-box::after{
+    content: "";
+    width: 248px;
+    height: 310px;
+    background-image: url(https://cloud.tala24.co/images/group1.svg);
+    background-repeat: no-repeat;
+    background-size: 306px;
+    position: absolute;
+    top: -28px;
+    left: 1px;
+}
+.inventory-box::before{
+    content: "";
+    width: 253px;
+    height: 286px;
+    background-image: url(https://cloud.tala24.co/images/group2.svg);
+    background-repeat: no-repeat;
+    position: absolute;
+    background-size: 253px;
+    top: 0px;
+    right: 0;
+    opacity: 0.5;
+}
+
+@media (max-width: 768px){
+    .inventory-box::after{
+        content: "";
+        background-image: none;
+    }
+    .inventory-box::before{
+        content: "";
+        background-image: none;
+    }
+}

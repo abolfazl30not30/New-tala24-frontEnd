@@ -8,11 +8,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import api from "../../../../api/api";
+import {EnglishToPersian} from "../../../../helper/EnglishToPersian";
 
 function AdminTicket(props) {
     useEffect(() => {
-        if (localStorage.getItem('role') !== "ADMIN") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "ADMIN") {
+            sessionStorage.clear()
             props.history.push("/login")
         }
     }, [props.history]);
@@ -21,8 +22,8 @@ function AdminTicket(props) {
     const constructor = () => {
         if (constructorHasRun) return;
         // const navigate = useNavigate();
-        if (localStorage.getItem('role') !== "ADMIN") {
-            localStorage.clear()
+        if (sessionStorage.getItem('role') !== "ADMIN") {
+            sessionStorage.clear()
             window.location = ("/login")
         }
         setConstructorHasRun(true);
@@ -31,7 +32,7 @@ function AdminTicket(props) {
 
     const [tickets, setTickets] = useState([])
     const getTickets = async () => {
-        const getTicketsResponse = await api.get(`ticket`)
+        const getTicketsResponse = await api.get(`ticket/admin`)
         setTickets(getTicketsResponse)
     }
 
@@ -39,57 +40,48 @@ function AdminTicket(props) {
         getTickets()
     }, []);
 
-
     return (
-        <div className="mx-9 mt-5 text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold overflow-scroll">
+        <div className="w-full mx-9 mt-5 text-white bg-[#252525] mt-10 rounded-[8px] p-5 font-bold overflow-scroll">
             <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row justify-between items-center mb-6">
                 <h2 className="text-lg font-medium">
                     سوابق تیکت ها
                 </h2>
             </div>
 
-            <div className="table w-full shadow-sm overflow-hidden">
-                <div className="table-header-group bg-[#2a2a2a] font-medium shadow-sm overflow-hidden">
-                    <div className="table-row">
-                        <div className="table-cell p-4 rounded-r-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                                 stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"/>
-                            </svg>
-                        </div>
-                        <div className="table-cell p-4">عنوان</div>
-                        <div className="table-cell p-4">وضعیت</div>
-                        <div className="table-cell p-4">تاریخ</div>
-                        <div className="table-cell p-4 rounded-l-lg">عملیات</div>
-                    </div>
-                </div>
-                <div class="table-row-group p-4 text-sm font-medium">
+            <div className="overflow-scroll">
+                <table>
+                    <tr>
+                        <th className={'p-4 text-center'}>شماره</th>
+                        <th className={'p-4 text-center'}>عنوان</th>
+                        <th className={'p-4 text-center'}>تاریخ</th>
+                        <th className={'p-4 text-center'}>وضعیت</th>
+                    </tr>
                     {
-                        tickets.map((t, i) => (
-                            <div className="table-row text-white transition">
-                                <div
-                                    className="table-cell px-2 py-3">{i + 1}</div>
-                                <div
-                                    className="table-cell px-2 py-3">{t.title}</div>
-                                <div
-                                    className="table-cell px-2 py-3">{
-                                    t.status === "pending" ? "در حال بررسی" : t.status === "answered" ? "پاسخ داده شده" : null
-                                }</div>
-                                <div
-                                    className="table-cell px-2 py-3">{t.date}</div>
-                                <div
-                                    className="table-cell px-2 py-3">
-                                    <Link to={t.id}>
-                                        <button
-                                            className='bg-[#dfaf3d] text-black px-2 py-1 font-normal rounded hover:cursor-pointer transition'>مشاهده
-                                        </button>
-                                    </Link>
-                                </div>
-                            </div>
+                        tickets?.map((ticket, index) => (
+                            <tr key={index} className="hover:bg-neutral-700 rounded-2xl">
+                                <td className={'p-3 text-center'}>{ticket.ticketNumber}</td>
+                                <td className={'p-3 text-center'}>
+                                    {ticket.status === "closed" ? (
+                                        ticket.title
+                                    ):(
+                                        <Link className="text-mainBlue" to={ticket.id}>{ticket.title}</Link>
+                                    )}
+                                </td>
+                                <td className={'p-3 text-center'}>{EnglishToPersian(ticket.date)}</td>
+                                <td className={'p-3 text-center'}>
+                                    {
+                                        ticket.status === "pending"
+                                            ? <span className={'bg-neutral-600 text-neutral-200 rounded-3xl p-2'}>
+                                            در حال بررسی
+                                        </span>
+                                            : ticket.status === "answered"
+                                                ? <span className={'bg-labelGreen text-neutral-200 rounded-3xl p-2'}>پاسخ داده شده</span>
+                                                : <span className={'bg-blue-500 text-neutral-200 rounded-3xl p-2'}>بسته شده</span>
+                                    }</td>
+                            </tr>
                         ))
                     }
-                </div>
+                </table>
             </div>
         </div>
     )

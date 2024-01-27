@@ -9,7 +9,7 @@ const HomePageChart = () => {
 
     return (
         <>
-            <div className={'chart text-white mx-5'}>
+            <div className={'chart text-white mx-5 mt-20'}>
                 <Chart24 />
             </div>
         </>

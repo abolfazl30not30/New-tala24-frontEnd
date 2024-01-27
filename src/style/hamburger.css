@@ -49,4 +49,29 @@
         transform: translateX(250px);
     }
 }
+.MuiMenu-root ul{
+    background-color: #252525;
+}
 
+.profileMenu .MuiMenu-root ul{
+    background-color: #252525;
+    border-radius: 2rem;
+    color: white !important;
+
+}
+
+.MuiMenu-root ul li{
+    color: white !important;
+    padding: 0.9rem 1.8rem;
+    border-radius: 1rem;
+}
+.MuiMenu-root ul li a{
+    font-size: 1rem;
+    color: white !important;
+}
+.MuiMenu-root ul li div{
+    color: white !important;
+}
+.MuiMenu-root ul li:hover{
+    background-color: #3A3A3A;
+}

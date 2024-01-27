@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../../images/lastLogo.png";
 import {AiOutlineClose, AiOutlineStock} from "react-icons/ai";
 import {BiFirstAid} from "react-icons/bi";
 import {TbReportAnalytics} from "react-icons/tb";
@@ -15,18 +14,6 @@ import createCache from '@emotion/cache';
 import {prefixer} from 'stylis';
 
 const Hamburger = () => {
-    const info = useContext(signup)
-
-    const [openRequest, setOpenRequest] = useState(false);
-    const [openReport, setOpenReport] = useState(false);
-
-    const handleRequest = () => {
-        setOpenRequest(!openRequest);
-    };
-
-    const handleReport = () => {
-        setOpenReport(!openReport);
-    };
 
     const cacheRtl = createCache({
         key: 'muirtl',
@@ -43,11 +30,9 @@ const Hamburger = () => {
 
                 }}/>
             </div>
-
             <div className={'flex justify-center md1:pt-8'}>
-                <img src={logo} alt={'logo'} className={'w-1/2'}/>
+                <img src={"https://cloud.tala24.co/images/logo192.png"} alt={'logo'} className={'w-1/2'}/>
             </div>
-
             <CacheProvider value={cacheRtl}>
                 <List
                     sx={{width: '100%', maxWidth: 360, bgcolor: '#252525', color: "#fff"}}
@@ -60,6 +45,14 @@ const Hamburger = () => {
                             </ListItemIcon>
 
                             <ListItemText primary="قیمت طلا"/>
+                        </ListItemButton>
+                    </NavLink>
+                    <NavLink exact to="/admin/add-coin" activeClassName="active-navbar">
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <AiOutlineStock size={'25'} color="#fff" className={'cursor-pointer'}/>
+                            </ListItemIcon>
+                            <ListItemText primary="افزودن سکه"/>
                         </ListItemButton>
                     </NavLink>
                     <NavLink exact to="/admin/confirm-buy" activeClassName="active-navbar">
@@ -77,7 +70,6 @@ const Hamburger = () => {
 
                         </ListItemButton>
                     </NavLink>
-
                     <NavLink exact to="/admin/confirm-sell" activeClassName="active-navbar">
                         <ListItemButton>
                             <ListItemIcon>
@@ -93,7 +85,6 @@ const Hamburger = () => {
 
                         </ListItemButton>
                     </NavLink>
-
                     <NavLink exact to="/admin/ticket" activeClassName="active-navbar">
                         <ListItemButton>
                             <ListItemIcon>
@@ -107,8 +98,7 @@ const Hamburger = () => {
                             <ListItemText primary="تیکت"/>
                         </ListItemButton>
                     </NavLink>
-
-                    <NavLink onClick={() => localStorage.clear()} exact to="/" activeClassName="active-navbar">
+                    <NavLink onClick={() => sessionStorage.clear()} exact to="/" activeClassName="active-navbar">
                         <ListItemButton>
                             <ListItemIcon>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

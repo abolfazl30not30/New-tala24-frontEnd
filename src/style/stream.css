@@ -1,6 +1,6 @@
 @media (min-width: 1000px) {
     .stream-style {
-        background-image: url(../images/bgTala24.svg);
+        background-image: url("https://cloud.tala24.co/images/bgTala24.svg" );
         background-repeat: no-repeat;
         background-position: 80%;
     }
@@ -8,7 +8,7 @@
 
 @media (max-width: 1000px) {
     .stream-style {
-        background-image: url(../images/bgTala24.svg);
+        background-image: url("https://cloud.tala24.co/images/bgTala24.svg" );
         background-repeat: no-repeat;
         background-position: 50% 10%;
     }

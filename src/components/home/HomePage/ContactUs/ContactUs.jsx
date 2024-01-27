@@ -9,10 +9,10 @@ const ContactUs = () => {
     return (
         <>
             <MainNavbar/>
-            <div className="px-10">
+            <div className="px-1 md:px-10">
                 <div className="flex justify-center"><h2 className="heading-title-comment text-[2rem]">تماس با ما</h2>
                 </div>
-                <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+                <div className="mt-3 p-2 md:p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
                     <div className="rounded-2xl p-2 bg-[#252525] text-white p-7">
                         <div className={"flex justify-center"}>
                             <BsTelephone color={'#DFAF3D'} className={'md:ml-2 md:mt-2 xsm:-mt-1 xsm:mb-3 xsm:ml-2'} size={"2rem"}/>

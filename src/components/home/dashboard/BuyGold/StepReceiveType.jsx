@@ -13,11 +13,13 @@ import api from "../../../../api/api";
 
 function StepReceiveType(props) {
     const getAddress = async () => {
-        const accountData = await api.get(`account/user/${localStorage.getItem("username")}`)
+        const accountData = await api.get(`account/user/${sessionStorage.getItem("username")}`)
         const addressesResponse = await api.get(`info/address/${accountData.id}`)
 
         setAddress(addressesResponse)
     }
+
+
     useEffect(() => {
         getAddress()
     }, []);
@@ -48,7 +50,7 @@ function StepReceiveType(props) {
     };
     const handleAddNewAddress = async (event) => {
         await api.post(`info`, {
-            accountId: localStorage.getItem("id"),
+            accountId: sessionStorage.getItem("id"),
             value: newAddress,
             infoType: "address"
         })

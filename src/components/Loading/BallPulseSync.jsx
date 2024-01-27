@@ -6,11 +6,7 @@ const BallPulseSync = () => {
 
     return (
         <>
-            <div className="la-ball-pulse-sync  la-2x">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
+            <div className="loader"></div>
         </>
     )
 

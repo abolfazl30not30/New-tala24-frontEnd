@@ -18,6 +18,19 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import {MdArrowBackIosNew} from "react-icons/md";
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+
+const RedTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: 'rgb(229, 76, 76)',
+        color: 'rgba(250, 250, 250)',
+        boxShadow: theme.shadows[1],
+        fontSize: 15,
+    },
+}));
 
 const SellRequest = () => {
     const [showErrorModal, setShowErrorModal] = useState(false)
@@ -28,7 +41,7 @@ const SellRequest = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const getDataRes = await api.get(`account/${localStorage.getItem("id")}`)
+            const getDataRes = await api.get(`account/${sessionStorage.getItem("id")}`)
             if (getDataRes) {
                 setData([...getDataRes.sellReqs])
             }
@@ -44,14 +57,14 @@ const SellRequest = () => {
                 let authority = currentURL.slice(-46, -10)
                 const verifyRes = await api.post("zarinpal/purchase/verify", {
                     Authority: authority,
-                    Amount: parseInt(localStorage.getItem("price"))
+                    Amount: parseInt(sessionStorage.getItem("price"))
                 })
                 if (verifyRes?.Status === 100 || verifyRes?.Status === 101) {
                     setShowSuccessModal(true)
-                    await api.post(`zarinpal/purchase/verifySuccess/${localStorage.getItem("paymentID")}`, {...verifyRes})
+                    await api.post(`zarinpal/purchase/verifySuccess/${sessionStorage.getItem("paymentID")}`, {...verifyRes})
                     console.log("OK")
                 } else {
-                    await api.post(`zarinpal/purchase/verifyFail/${localStorage.getItem("paymentID")}`, {})
+                    await api.post(`zarinpal/purchase/verifyFail/${sessionStorage.getItem("paymentID")}`, {})
                     setShowErrorModal(true)
                     console.log("Not OK")
                 }
@@ -87,7 +100,7 @@ const SellRequest = () => {
 
     useEffect(() => {
         // const zarinHandle = async () => {
-        //     const getRes = await api.post(`payment/search/${localStorage.getItem("id")}`, {})
+        //     const getRes = await api.post(`payment/search/${sessionStorage.getItem("id")}`, {})
         //
         //     if (getRes) {
         //         setData(getRes)
@@ -101,11 +114,11 @@ const SellRequest = () => {
         //         let authority = currentURL.slice(-46, -10)
         //         const verifyRes = await api.post("zarinpal/purchase/verify", {
         //             Authority: authority,
-        //             Amount: parseInt(localStorage.getItem("price"))
+        //             Amount: parseInt(sessionStorage.getItem("price"))
         //         })
         //         if (verifyRes?.Status === 100 || verifyRes?.Status === 101) {
         //             setShowSuccessModal(true)
-        //             await api.post(`zarinpal/purchase/verifySuccess/${localStorage.getItem("paymentID")}`, {...verifyRes})
+        //             await api.post(`zarinpal/purchase/verifySuccess/${sessionStorage.getItem("paymentID")}`, {...verifyRes})
         //             console.log("OK")
         //         } else {
         //             setShowErrorModal(true)
@@ -145,13 +158,13 @@ const SellRequest = () => {
     };
 
     const handleBuyGold = async (log) => {
-        localStorage.setItem("paymentID", log.id)
-        localStorage.setItem("price", log.price)
+        sessionStorage.setItem("paymentID", log.id)
+        sessionStorage.setItem("price", log.price)
         const initRes = await api.post("zarinpal/purchase/init", {
             Amount: log.price,
             Description: "شارژ اکانت",
             CallbackURL: "http://localhost:3000/dashboard/request",
-            accountId: localStorage.getItem("id")
+            accountId: sessionStorage.getItem("id")
         })
         if (initRes?.Status === "100") {
             window.location.replace(`https://sandbox.zarinpal.com/pg/StartPay/${initRes.Authority}`)
@@ -437,9 +450,13 @@ const SellRequest = () => {
                                                             در حال بررسی
                                                         </p>
                                                         : data.status === "failed"
-                                                            ? <p className={'statusFailed'}>
-                                                                رد شده
-                                                            </p>
+                                                            ? (
+                                                                <RedTooltip  title={`دلیل:  ${data.failureReason.reason}`} arrow>
+                                                                    <span className={'statusFailed'}>
+                                                                     رد شده
+                                                                    </span>
+                                                                </RedTooltip >
+                                                            )
                                                             : data.status === "successful"
                                                                 ? <p className={'statusSuccessful'}>
                                                                     موفق

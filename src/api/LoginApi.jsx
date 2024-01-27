@@ -14,14 +14,14 @@ const LoginApi = () => {
 
 
     return (
-        axios.post("https://api.tala24.co/login",
-            {username: localStorage.getItem("username"), password: localStorage.getItem("password")}, {
+        axios.post("http://localhost:8090/login",
+            {username: sessionStorage.getItem("username"), password: sessionStorage.getItem("password")}, {
                 withCredentials: true,
             }
         ).then((response) => {
-            localStorage.setItem("Authorization", response.headers["authorization"])
-            let json = parseJwt(localStorage.getItem("Authorization"))
-            localStorage.setItem("role", json.role)
+            sessionStorage.setItem("Authorization", response.headers["authorization"])
+            let json = parseJwt(sessionStorage.getItem("Authorization"))
+            sessionStorage.setItem("role", json.role)
             return response
         }).catch((error) => {
             return error.response;

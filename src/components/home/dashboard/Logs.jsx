@@ -50,7 +50,7 @@ const Logs = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const getDataRes = await api.get(`account/${localStorage.getItem("id")}`)
+            const getDataRes = await api.get(`account/${sessionStorage.getItem("id")}`)
             if (getDataRes) {
                 setData([...getDataRes.payments, ...getDataRes.orders, ...getDataRes.sellReqs])
             }
@@ -66,14 +66,14 @@ const Logs = () => {
                 let authority = currentURL.slice(-46, -10)
                 const verifyRes = await api.post("zarinpal/purchase/verify", {
                     Authority: authority,
-                    Amount: parseInt(localStorage.getItem("price"))
+                    Amount: parseInt(sessionStorage.getItem("price"))
                 })
                 if (verifyRes?.Status === 100 || verifyRes?.Status === 101) {
                     setShowSuccessModal(true)
-                    await api.post(`zarinpal/purchase/verifySuccess/${localStorage.getItem("paymentID")}`, {...verifyRes})
+                    await api.post(`zarinpal/purchase/verifySuccess/${sessionStorage.getItem("paymentID")}`, {...verifyRes})
                     console.log("OK")
                 } else {
-                    await api.post(`zarinpal/purchase/verifyFail/${localStorage.getItem("paymentID")}`, {})
+                    await api.post(`zarinpal/purchase/verifyFail/${sessionStorage.getItem("paymentID")}`, {})
                     setShowErrorModal(true)
                     console.log("Not OK")
                 }
@@ -95,7 +95,7 @@ const Logs = () => {
 
     useEffect(() => {
         // const zarinHandle = async () => {
-        //     const getRes = await api.post(`payment/search/${localStorage.getItem("id")}`, {})
+        //     const getRes = await api.post(`payment/search/${sessionStorage.getItem("id")}`, {})
         //
         //     if (getRes) {
         //         setData(getRes)
@@ -109,11 +109,11 @@ const Logs = () => {
         //         let authority = currentURL.slice(-46, -10)
         //         const verifyRes = await api.post("zarinpal/purchase/verify", {
         //             Authority: authority,
-        //             Amount: parseInt(localStorage.getItem("price"))
+        //             Amount: parseInt(sessionStorage.getItem("price"))
         //         })
         //         if (verifyRes?.Status === 100 || verifyRes?.Status === 101) {
         //             setShowSuccessModal(true)
-        //             await api.post(`zarinpal/purchase/verifySuccess/${localStorage.getItem("paymentID")}`, {...verifyRes})
+        //             await api.post(`zarinpal/purchase/verifySuccess/${sessionStorage.getItem("paymentID")}`, {...verifyRes})
         //             console.log("OK")
         //         } else {
         //             setShowErrorModal(true)
@@ -153,13 +153,13 @@ const Logs = () => {
     };
 
     const handleBuyGold = async (log) => {
-        localStorage.setItem("paymentID", log.id)
-        localStorage.setItem("price", log.price)
+        sessionStorage.setItem("paymentID", log.id)
+        sessionStorage.setItem("price", log.price)
         const initRes = await api.post("zarinpal/purchase/init", {
             Amount: log.price,
             Description: "شارژ اکانت",
             CallbackURL: "http://localhost:3000/dashboard/request",
-            accountId: localStorage.getItem("id")
+            accountId: sessionStorage.getItem("id")
         })
         if (initRes?.Status === "100") {
             window.location.replace(`https://sandbox.zarinpal.com/pg/StartPay/${initRes.Authority}`)

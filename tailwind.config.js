@@ -1,5 +1,5 @@
 const withMT = require("@material-tailwind/react/utils/withMT");
-module.exports = withMT(
+module.exports =
     {
         content: ['./src/**/*.{js,jsx}', './build/index.html'],
         theme: {
@@ -14,7 +14,9 @@ module.exports = withMT(
                     'mainGold': '#DFAF3D',
                     'dark': 'rgb(23, 26, 30)',
                     'cardDark': '#252525',
-                    'footerColor': '#212121'
+                    'footerColor': '#212121',
+                    'labelGreen':'#21BA55',
+                    'mainBlue' : '#3498DB',
                 },
                 height: {
                     '-100%': '-100%',
@@ -32,4 +34,3 @@ module.exports = withMT(
         },
         plugins: [],
     }
-)

@@ -3,7 +3,12 @@
     src: url("../font/Qs_Iranyekan.ttf");
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
 body{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     direction: rtl;
     font-family: IRANYekan;
     background-color: #303030;

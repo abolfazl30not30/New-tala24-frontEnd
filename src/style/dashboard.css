@@ -1,0 +1,232 @@
+
+.navbar-dashboard,
+.main,
+.footer-dashboard {
+    width: calc(100% - 260px);
+    position: relative;
+    top: 60px;
+    right: 260px;
+    display: flex;
+    justify-content: center;
+    transition: all 0.5s ease;
+}
+
+.sidebar-dashboard.close ~ .navbar-dashboard,
+.sidebar-dashboard.close ~ .main,
+.sidebar-dashboard.close ~ .footer-dashboard {
+    right: 78px;
+    width: calc(100% - 78px);
+}
+
+.main {
+    /*background-color: #252525;*/
+    direction: rtl;
+    min-height: 573px;
+    padding: 2rem 1rem 0 1rem;
+}
+
+.navbar-dashboard {
+    background: #252525;
+    position: fixed;
+    top: 0;
+    z-index: 9;
+    transition: width 300ms;
+    box-shadow: 0 0 10px 0 #0000001a;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-dashboard .dropdown-item {
+    text-align: right;
+}
+
+.navbar-dashboard .dropdown-item a {
+    width: 100%;
+    color: #000;
+}
+
+.navbar-dashboard .dropdown button {
+    background-color: transparent;
+    color: #00000091;
+    border: none;
+}
+
+.navbar-dashboard .dropdown .dropdown-toggle::after {
+    display: none;
+}
+
+.navbar-dashboard .navbar-item {
+    margin-left: 1rem;
+}
+
+.navbar-dashboard .navbar-item svg {
+    margin-left: 0.5rem;
+}
+
+.sidebar-dashboard {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 260px;
+    background: #252525;
+    z-index: 10;
+    transition: all 1s ease;
+    box-shadow: 0 0 10px 0 #0000001a;
+    font-weight: 400;
+}
+
+.navbar-extra .dropdown-item a {
+    width: 100%;
+    color: #000;
+}
+
+.MuiPaper-root a {
+    color: #000;
+    font-size: .9rem;
+}
+
+.MuiPaper-root a:hover {
+    color: #000;
+}
+
+#navbar-dropdown-button:hover {
+    background-color: #dfaf3d;
+    color: #252525;
+}
+
+.sidebar-dashboard.close {
+    width: 78px;
+    opacity: 1;
+}
+
+.sidebar-dashboard .logo {
+    display: flex;
+    justify-content: center;
+    padding: .5rem;
+}
+
+.sidebar-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sidebar-list-item svg {
+    min-width: 78px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sidebar-dashboard.close .sidebar-list-item-title {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#close_sidebar_mobile {
+    display: none;
+    text-align: left;
+    margin-left: 1rem;
+    color: #fff;
+}
+
+.footer-dashboard {
+    background: #001d23;
+    color: #252525;
+    padding: 2rem 0;
+}
+
+@media (max-width: 768px) {
+    .sidebar-dashboard.close {
+        display: none;
+    }
+
+    .sidebar-dashboard {
+        width: 100%;
+        padding-top: 1rem;
+    }
+
+    .close-sidebar {
+        position: fixed;
+        left: 20px;
+        top: 22px;
+        font-size: 36px;
+        display: inline;
+    }
+
+    .sidebar-dashboard.close ~ .navbar-dashboard,
+    .sidebar-dashboard.close ~ .main,
+    .sidebar-dashboard.close ~ .footer-dashboard {
+        width: 100%;
+        right: 0;
+    }
+
+    .navbar-dashboard,
+    .main,
+    .footer-dashboard {
+        width: 100%;
+        right: 0px;
+    }
+
+    #close_sidebar_mobile {
+        display: block;
+    }
+}
+
+@media (max-width: 520px) {
+    .navbar-item-title {
+        display: none;
+    }
+}
+
+.box {
+    background-color: #252525;
+    width: 100%;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 0 20px 0 #4c577d05;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.box-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.box-content {
+    margin-top: 2rem;
+}
+
+.sidebar-list a {
+    height: 50px;
+    color: #ffffff;
+    transition: .1ms;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sidebar-list a:hover {
+    background-color: #444444;
+}
+
+.active {
+    background-color: #dfaf3d !important;
+}
+
+.tox .tox-edit-area__iframe {
+    background-color: #303030 !important;
+}
+.muirtl-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled {
+    color: #979797 !important;
+    -webkit-text-fill-color : #979797!important;
+    background-color: #3A3A3A;
+}

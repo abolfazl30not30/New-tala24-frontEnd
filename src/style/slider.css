@@ -5,7 +5,7 @@
     --carousel-item-height: 14rem;
     --carousel-item-width: 10rem;
     width: 60%;
-    background: url("../images/Vector.svg") no-repeat 93% 79%;
+    background: url("https://cloud.tala24.co/images/Vector.svg") no-repeat 93% 79%;
 }
 
 .carousel-container {
@@ -100,7 +100,7 @@
     position: relative;
 }
 .text-span::after{
-    content: url("../images/Vector (1).svg");
+    content: url("https://cloud.tala24.co/images/Vector (1).svg" );
     position: absolute;
     top: 2rem;
     right: 0;

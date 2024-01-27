@@ -1,7 +1,8 @@
 import axios from "axios";
+import {toast} from "react-toastify";
 
 const axiosParams = {
-    baseURL: 'https://api.tala24.co/api/v1/register'
+    baseURL: 'http://localhost:8090/api/v1/register'
 }
 
 const axiosInstance = axios.create(axiosParams);
@@ -16,7 +17,16 @@ const RegisterApi = (axios) => {
                 .then((response) => {
                     return response
                 }).catch((error) => {
-                    return error
+                toast.error(" خطا در اتصال", {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             })
     }
 
